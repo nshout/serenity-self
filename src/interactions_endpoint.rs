@@ -39,7 +39,7 @@ impl std::error::Error for InvalidKey {
 /// If incoming requests are not verified, Discord will reject the URL for security reasons.
 ///
 /// ```rust
-/// use serenity::interactions_endpoint::Verifier;
+/// use serenity_self::interactions_endpoint::Verifier;
 ///
 /// let verifier =
 ///     Verifier::new("67c6bd767ca099e79efac9fcce4d2022a63bf7dea780e7f3d813f694c1597089");

@@ -151,8 +151,8 @@ impl Invite {
     /// Retrieve the URL for an invite with the code `WxZumR`:
     ///
     /// ```rust
-    /// # use serenity::json::{json, from_value};
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::json::{json, from_value};
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # fn main() {
     /// # let invite = from_value::<Invite>(json!({
@@ -252,7 +252,7 @@ impl InviteGuild {
     /// Retrieve the Id of the shard for a guild with Id `81384788765712384`, using 17 shards:
     ///
     /// ```rust,ignore
-    /// use serenity::utils;
+    /// use serenity_self::utils;
     ///
     /// // assumes a `guild` has already been bound
     ///
@@ -342,8 +342,8 @@ impl RichInvite {
     /// Retrieve the URL for an invite with the code `WxZumR`:
     ///
     /// ```rust
-    /// # use serenity::json::{json, from_value};
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::json::{json, from_value};
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # fn main() {
     /// # let invite = from_value::<RichInvite>(json!({

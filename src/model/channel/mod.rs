@@ -58,7 +58,7 @@ impl Channel {
     /// Basic usage:
     ///
     /// ```rust,no_run
-    /// # use serenity::model::channel::Channel;
+    /// # use serenity_self::model::channel::Channel;
     /// # fn run(channel: Channel) {
     /// match channel.guild() {
     ///     Some(guild_channel) => {
@@ -88,7 +88,7 @@ impl Channel {
     /// Basic usage:
     ///
     /// ```rust,no_run
-    /// # use serenity::model::channel::Channel;
+    /// # use serenity_self::model::channel::Channel;
     /// # fn run(channel: Channel) {
     /// #
     /// match channel.private() {

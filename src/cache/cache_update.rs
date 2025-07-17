@@ -13,10 +13,10 @@ use super::Cache;
 /// ```rust,ignore
 /// use std::collections::hash_map::Entry;
 ///
-/// use serenity::json::json;
-/// use serenity::cache::{Cache, CacheUpdate};
-/// use serenity::model::id::UserId;
-/// use serenity::model::user::User;
+/// use serenity_self::json::json;
+/// use serenity_self::cache::{Cache, CacheUpdate};
+/// use serenity_self::model::id::UserId;
+/// use serenity_self::model::user::User;
 ///
 /// // For example, an update to the user's record in the database was
 /// // published to a pubsub channel.

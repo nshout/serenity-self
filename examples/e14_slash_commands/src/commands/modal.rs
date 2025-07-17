@@ -1,7 +1,7 @@
-use serenity::builder::*;
-use serenity::model::prelude::*;
-use serenity::prelude::*;
-use serenity::utils::CreateQuickModal;
+use serenity_self::builder::*;
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
+use serenity_self::utils::CreateQuickModal;
 
 pub async fn run(ctx: &Context, interaction: &CommandInteraction) -> Result<(), serenity::Error> {
     let modal = CreateQuickModal::new("About you")

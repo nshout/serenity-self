@@ -467,10 +467,10 @@ impl BucketBuilder {
     ///
     /// ```rust
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    /// use serenity::framework::standard::macros::{command, group};
-    /// use serenity::framework::standard::{BucketBuilder, Configuration, CommandResult, StandardFramework};
-    /// use serenity::model::channel::Message;
-    /// use serenity::prelude::*;
+    /// use serenity_self::framework::standard::macros::{command, group};
+    /// use serenity_self::framework::standard::{BucketBuilder, Configuration, CommandResult, StandardFramework};
+    /// use serenity_self::model::channel::Message;
+    /// use serenity_self::prelude::*;
     ///
     /// #[command]
     /// #[bucket = "example_bucket"]

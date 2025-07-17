@@ -41,9 +41,9 @@ use crate::model::gateway::GatewayIntents;
 /// # use std::error::Error;
 /// #
 /// # #[cfg(feature = "voice")]
-/// # use serenity::model::id::UserId;
+/// # use serenity_self::model::id::UserId;
 /// # #[cfg(feature = "cache")]
-/// # use serenity::cache::Cache;
+/// # use serenity_self::cache::Cache;
 /// #
 /// # #[cfg(feature = "framework")]
 /// # async fn run() -> Result<(), Box<dyn Error>> {
@@ -51,12 +51,12 @@ use crate::model::gateway::GatewayIntents;
 /// use std::env;
 /// use std::sync::{Arc, OnceLock};
 ///
-/// use serenity::client::{EventHandler, RawEventHandler};
-/// use serenity::framework::{Framework, StandardFramework};
-/// use serenity::gateway::{ShardManager, ShardManagerOptions};
-/// use serenity::http::Http;
-/// use serenity::model::gateway::GatewayIntents;
-/// use serenity::prelude::*;
+/// use serenity_self::client::{EventHandler, RawEventHandler};
+/// use serenity_self::framework::{Framework, StandardFramework};
+/// use serenity_self::gateway::{ShardManager, ShardManagerOptions};
+/// use serenity_self::http::Http;
+/// use serenity_self::model::gateway::GatewayIntents;
+/// use serenity_self::prelude::*;
 /// use tokio::sync::{Mutex, RwLock};
 ///
 /// struct Handler;
@@ -221,8 +221,8 @@ impl ShardManager {
     /// Restarting a shard by ID:
     ///
     /// ```rust,no_run
-    /// use serenity::model::id::ShardId;
-    /// use serenity::prelude::*;
+    /// use serenity_self::model::id::ShardId;
+    /// use serenity_self::prelude::*;
     ///
     /// # async fn run(client: Client) {
     /// // restart shard ID 7

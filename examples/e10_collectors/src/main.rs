@@ -5,10 +5,10 @@ use std::collections::HashSet;
 use std::env;
 use std::time::Duration;
 
-use serenity::async_trait;
-use serenity::collector::MessageCollector;
-use serenity::framework::standard::macros::{command, group, help};
-use serenity::framework::standard::{
+use serenity_self::async_trait;
+use serenity_self::collector::MessageCollector;
+use serenity_self::framework::standard::macros::{command, group, help};
+use serenity_self::framework::standard::{
     help_commands,
     Args,
     CommandGroup,
@@ -18,10 +18,10 @@ use serenity::framework::standard::{
     StandardFramework,
 };
 // Collectors are streams, that means we can use `StreamExt` and `TryStreamExt`.
-use serenity::futures::stream::StreamExt;
-use serenity::http::Http;
-use serenity::model::prelude::*;
-use serenity::prelude::*;
+use serenity_self::futures::stream::StreamExt;
+use serenity_self::http::Http;
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
 
 #[group("collector")]
 #[commands(challenge)]

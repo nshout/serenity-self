@@ -234,7 +234,7 @@ enum State {
 /// # Example
 ///
 /// ```rust
-/// use serenity::framework::standard::{Args, Delimiter};
+/// use serenity_self::framework::standard::{Args, Delimiter};
 ///
 /// let mut args = Args::new("hello world!", &[Delimiter::Single(' ')]); // A space is our delimiter.
 ///
@@ -247,7 +247,7 @@ enum State {
 /// We can also parse "quoted arguments" (no pun intended):
 ///
 /// ```rust
-/// use serenity::framework::standard::{Args, Delimiter};
+/// use serenity_self::framework::standard::{Args, Delimiter};
 ///
 /// // Let us imagine this scenario:
 /// // You have a `photo` command that grabs the avatar url of a user. This command accepts names only.
@@ -263,7 +263,7 @@ enum State {
 /// In case of a mistake, we can go back in time... er I mean, one step (or entirely):
 ///
 /// ```rust
-/// use serenity::framework::standard::{Args, Delimiter};
+/// use serenity_self::framework::standard::{Args, Delimiter};
 ///
 /// let mut args = Args::new("4 2", &[Delimiter::Single(' ')]);
 ///
@@ -296,7 +296,7 @@ enum State {
 /// The [`Self::current`] and [`Self::parse`] methods:
 ///
 /// ```rust
-/// use serenity::framework::standard::{Args, Delimiter};
+/// use serenity_self::framework::standard::{Args, Delimiter};
 ///
 /// let mut args = Args::new("trois cinq quatre six", &[Delimiter::Single(' ')]);
 ///
@@ -330,7 +330,7 @@ impl Args {
     /// # Example
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new(
     /// // Our message from which we'll parse over.
@@ -484,7 +484,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new("4 2", &[Delimiter::Single(' ')]);
     ///
@@ -512,7 +512,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::Args;
+    /// use serenity_self::framework::standard::Args;
     ///
     /// let mut args = Args::new("     42     ", &[]);
     ///
@@ -557,7 +557,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::Args;
+    /// use serenity_self::framework::standard::Args;
     ///
     /// let mut args = Args::new("\"42\"", &[]);
     ///
@@ -610,7 +610,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new("4 2", &[Delimiter::Single(' ')]);
     ///
@@ -635,7 +635,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new("4 2", &[Delimiter::Single(' ')]);
     ///
@@ -663,7 +663,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new(r#""4" "2""#, &[Delimiter::Single(' ')]);
     ///
@@ -693,7 +693,7 @@ impl Args {
     /// Assert that all of the numbers in the message are even.
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new("4 2", &[Delimiter::Single(' ')]);
     ///
@@ -721,7 +721,7 @@ impl Args {
     /// Join the arguments by a comma and a space.
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let args = Args::new("Harry Hermione Ronald", &[Delimiter::Single(' ')]);
     ///
@@ -744,7 +744,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let args = Args::new("Saw \"The Mist\" \"A Quiet Place\"", &[Delimiter::Single(' ')]);
     ///
@@ -774,7 +774,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new("c4 2", &[Delimiter::Single(' ')]);
     ///
@@ -814,7 +814,7 @@ impl Args {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::framework::standard::{Args, Delimiter};
+    /// use serenity_self::framework::standard::{Args, Delimiter};
     ///
     /// let mut args = Args::new("c4 2", &[Delimiter::Single(' ')]);
     ///

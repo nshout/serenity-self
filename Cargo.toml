@@ -1,6 +1,6 @@
 [package]
-name = "serenity"
-version = "0.13.1"
+name = "serenity_self"
+version = "0.13.2"
 authors = ["nshot", "Alex M. M. <acdenissk69@gmail.com>"]
 description = "A Rust library for the Discord API. Forked adding user token support."
 readme = "README.md"

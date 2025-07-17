@@ -273,14 +273,14 @@ impl GuildChannel {
     /// ```rust,no_run
     /// # #[cfg(feature = "cache")]
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    /// # use serenity::{cache::Cache, http::Http, model::id::{ChannelId, UserId}};
+    /// # use serenity_self::{cache::Cache, http::Http, model::id::{ChannelId, UserId}};
     /// # use std::sync::Arc;
     /// #
     /// # let http: Arc<Http> = unimplemented!();
     /// # let cache = Cache::default();
     /// # let (channel_id, user_id) = (ChannelId::new(1), UserId::new(1));
-    /// use serenity::model::channel::{PermissionOverwrite, PermissionOverwriteType};
-    /// use serenity::model::{ModelError, Permissions};
+    /// use serenity_self::model::channel::{PermissionOverwrite, PermissionOverwriteType};
+    /// use serenity_self::model::{ModelError, Permissions};
     /// let allow = Permissions::SEND_MESSAGES;
     /// let deny = Permissions::SEND_TTS_MESSAGES | Permissions::ATTACH_FILES;
     /// let overwrite = PermissionOverwrite {
@@ -304,14 +304,14 @@ impl GuildChannel {
     /// ```rust,no_run
     /// # #[cfg(feature = "cache")]
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    /// # use serenity::{cache::Cache, http::Http, model::id::{ChannelId, UserId, RoleId}};
+    /// # use serenity_self::{cache::Cache, http::Http, model::id::{ChannelId, UserId, RoleId}};
     /// # use std::sync::Arc;
     /// #
     /// # let http: Arc<Http> = unimplemented!();
     /// # let cache = Cache::default();
     /// # let (channel_id, user_id, role_id) = (ChannelId::new(1), UserId::new(1), RoleId::new(1));
-    /// use serenity::model::channel::{Channel, PermissionOverwrite, PermissionOverwriteType};
-    /// use serenity::model::{ModelError, Permissions};
+    /// use serenity_self::model::channel::{Channel, PermissionOverwrite, PermissionOverwriteType};
+    /// use serenity_self::model::{ModelError, Permissions};
     ///
     /// let allow = Permissions::SEND_MESSAGES;
     /// let deny = Permissions::SEND_TTS_MESSAGES | Permissions::ATTACH_FILES;
@@ -463,9 +463,9 @@ impl GuildChannel {
     /// Change a voice channels name and bitrate:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::EditChannel;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::id::ChannelId;
+    /// # use serenity_self::builder::EditChannel;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::id::ChannelId;
     /// # async fn run() {
     /// # let http: Http = unimplemented!();
     /// # let channel = ChannelId::new(1234);
@@ -543,13 +543,13 @@ impl GuildChannel {
     /// # #[cfg(feature = "cache")]
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # use std::sync::Arc;
-    /// # use serenity::{cache::Cache, http::Http, model::id::{ChannelId, UserId}};
+    /// # use serenity_self::{cache::Cache, http::Http, model::id::{ChannelId, UserId}};
     /// #
     /// # let http: Http = unimplemented!();
     /// # let cache = Cache::default();
     /// # let (channel_id, user_id) = (ChannelId::new(1), UserId::new(1));
-    /// use serenity::builder::EditVoiceState;
-    /// use serenity::model::ModelError;
+    /// use serenity_self::builder::EditVoiceState;
+    /// use serenity_self::model::ModelError;
     ///
     /// // assuming the cache has been unlocked
     /// let channel = cache.channel(channel_id).ok_or(ModelError::ItemMissing)?;
@@ -594,13 +594,13 @@ impl GuildChannel {
     /// # #[cfg(feature = "cache")]
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # use std::sync::Arc;
-    /// # use serenity::{cache::Cache, http::Http, model::id::ChannelId};
+    /// # use serenity_self::{cache::Cache, http::Http, model::id::ChannelId};
     /// #
     /// # let http: Http = unimplemented!();
     /// # let cache = Cache::default();
     /// # let channel_id = ChannelId::new(1);
-    /// use serenity::builder::EditVoiceState;
-    /// use serenity::model::ModelError;
+    /// use serenity_self::builder::EditVoiceState;
+    /// use serenity_self::model::ModelError;
     ///
     /// // assuming the cache has been unlocked
     /// let channel = cache.channel(channel_id).ok_or(ModelError::ItemMissing)?;
@@ -734,8 +734,8 @@ impl GuildChannel {
     /// Calculate the permissions of a [`User`] who posted a [`Message`] in a channel:
     ///
     /// ```rust,no_run
-    /// # use serenity::model::prelude::*;
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// # struct Handler;
     ///
     /// #[serenity::async_trait]
@@ -936,7 +936,7 @@ impl GuildChannel {
     /// ```rust,no_run
     /// # #[cfg(feature = "cache")]
     /// # async fn run() {
-    /// # use serenity::{cache::Cache, http::Http, model::channel::GuildChannel, Result};
+    /// # use serenity_self::{cache::Cache, http::Http, model::channel::GuildChannel, Result};
     /// # use std::sync::Arc;
     /// #
     /// # fn long_process() {}

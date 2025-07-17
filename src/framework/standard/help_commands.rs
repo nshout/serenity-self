@@ -8,9 +8,9 @@
 //! use std::collections::HashSet;
 //! use std::env;
 //!
-//! use serenity::client::{Client, Context, EventHandler};
-//! use serenity::framework::standard::macros::help;
-//! use serenity::framework::standard::{
+//! use serenity_self::client::{Client, Context, EventHandler};
+//! use serenity_self::framework::standard::macros::help;
+//! use serenity_self::framework::standard::{
 //!     help_commands,
 //!     Args,
 //!     CommandGroup,
@@ -18,7 +18,7 @@
 //!     HelpOptions,
 //!     StandardFramework,
 //! };
-//! use serenity::model::prelude::{Message, UserId};
+//! use serenity_self::model::prelude::{Message, UserId};
 //!
 //! struct Handler;
 //!
@@ -1118,20 +1118,20 @@ async fn send_error_embed(
 /// Use the command with [`StandardFramework::help`]:
 ///
 /// ```rust,no_run
-/// # use serenity::prelude::*;
+/// # use serenity_self::prelude::*;
 /// use std::collections::HashSet;
 /// use std::hash::BuildHasher;
 ///
-/// use serenity::framework::standard::help_commands::*;
-/// use serenity::framework::standard::macros::help;
-/// use serenity::framework::standard::{
+/// use serenity_self::framework::standard::help_commands::*;
+/// use serenity_self::framework::standard::macros::help;
+/// use serenity_self::framework::standard::{
 ///     Args,
 ///     CommandGroup,
 ///     CommandResult,
 ///     HelpOptions,
 ///     StandardFramework,
 /// };
-/// use serenity::model::prelude::*;
+/// use serenity_self::model::prelude::*;
 ///
 /// #[help]
 /// async fn my_help(
@@ -1324,20 +1324,20 @@ fn single_command_to_plain_string(help_options: &HelpOptions, command: &Command<
 /// Use the command with `exec_help`:
 ///
 /// ```rust,no_run
-/// # use serenity::prelude::*;
+/// # use serenity_self::prelude::*;
 /// use std::collections::HashSet;
 /// use std::hash::BuildHasher;
 ///
-/// use serenity::framework::standard::help_commands::*;
-/// use serenity::framework::standard::macros::help;
-/// use serenity::framework::standard::{
+/// use serenity_self::framework::standard::help_commands::*;
+/// use serenity_self::framework::standard::macros::help;
+/// use serenity_self::framework::standard::{
 ///     Args,
 ///     CommandGroup,
 ///     CommandResult,
 ///     HelpOptions,
 ///     StandardFramework,
 /// };
-/// use serenity::model::prelude::*;
+/// use serenity_self::model::prelude::*;
 ///
 /// #[help]
 /// async fn my_help(

@@ -16,9 +16,9 @@ use crate::model::prelude::*;
 /// Edit a channel, providing a new name and topic:
 ///
 /// ```rust,no_run
-/// # use serenity::builder::EditChannel;
-/// # use serenity::http::Http;
-/// # use serenity::model::channel::GuildChannel;
+/// # use serenity_self::builder::EditChannel;
+/// # use serenity_self::http::Http;
+/// # use serenity_self::model::channel::GuildChannel;
 /// #
 /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
 /// # let http: Http = unimplemented!();
@@ -207,17 +207,17 @@ impl<'a> EditChannel<'a> {
     /// Inheriting permissions from an existing channel:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::EditChannel;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::channel::GuildChannel;
+    /// # use serenity_self::builder::EditChannel;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::channel::GuildChannel;
     /// # use std::sync::Arc;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Arc<Http> = unimplemented!();
     /// # let mut channel: GuildChannel = unimplemented!();
-    /// use serenity::model::channel::{PermissionOverwrite, PermissionOverwriteType};
-    /// use serenity::model::id::UserId;
-    /// use serenity::model::permissions::Permissions;
+    /// use serenity_self::model::channel::{PermissionOverwrite, PermissionOverwriteType};
+    /// use serenity_self::model::id::UserId;
+    /// use serenity_self::model::permissions::Permissions;
     ///
     /// // Assuming a channel has already been bound.
     /// let permissions = vec![PermissionOverwrite {

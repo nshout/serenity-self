@@ -71,8 +71,8 @@ impl<T: std::str::FromStr> ArgumentConvert for T {
 ///
 /// # Examples
 /// ```rust
-/// use serenity::model::prelude::*;
-/// use serenity::utils::parse_message_id_pair;
+/// use serenity_self::model::prelude::*;
+/// use serenity_self::utils::parse_message_id_pair;
 ///
 /// assert_eq!(
 ///     parse_message_id_pair("673965002805477386-842482646604972082"),
@@ -97,8 +97,8 @@ pub fn parse_message_id_pair(s: &str) -> Option<(ChannelId, MessageId)> {
 ///
 /// # Examples
 /// ```rust
-/// use serenity::model::prelude::*;
-/// use serenity::utils::parse_message_url;
+/// use serenity_self::model::prelude::*;
+/// use serenity_self::utils::parse_message_url;
 ///
 /// assert_eq!(
 ///     parse_message_url(

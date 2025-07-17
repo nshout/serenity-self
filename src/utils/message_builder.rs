@@ -16,11 +16,11 @@ use crate::model::mention::Mentionable;
 /// value:
 ///
 /// ```rust,no_run
-/// # use serenity::model::prelude::*;
+/// # use serenity_self::model::prelude::*;
 /// #
 /// # fn run(user: UserId, emoji: Emoji) {
 /// #
-/// use serenity::utils::MessageBuilder;
+/// use serenity_self::utils::MessageBuilder;
 ///
 /// // assuming an `emoji` and `user` have already been bound
 ///
@@ -43,7 +43,7 @@ impl MessageBuilder {
     /// Create a new [`MessageBuilder`]:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let message = MessageBuilder::new();
     ///
@@ -63,8 +63,8 @@ impl MessageBuilder {
     /// it to retrieve the inner String:
     ///
     /// ```rust
-    /// use serenity::model::id::ChannelId;
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::model::id::ChannelId;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let channel_id = ChannelId::new(81384788765712384);
     ///
@@ -76,7 +76,7 @@ impl MessageBuilder {
     /// This is equivalent to simply retrieving the tuple struct's first value:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let mut content = MessageBuilder::new();
     /// content.push("test");
@@ -100,8 +100,8 @@ impl MessageBuilder {
     /// Mentioning a [`Channel`] by Id:
     ///
     /// ```rust
-    /// use serenity::model::id::ChannelId;
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::model::id::ChannelId;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let channel_id = ChannelId::new(81384788765712384);
     ///
@@ -132,10 +132,10 @@ impl MessageBuilder {
     /// Mention an emoji in a message's content:
     ///
     /// ```rust
-    /// # use serenity::json::{json, from_value};
-    /// # use serenity::model::guild::Emoji;
-    /// # use serenity::model::id::EmojiId;
-    /// # use serenity::utils::MessageBuilder;
+    /// # use serenity_self::json::{json, from_value};
+    /// # use serenity_self::model::guild::Emoji;
+    /// # use serenity_self::model::id::EmojiId;
+    /// # use serenity_self::utils::MessageBuilder;
     ///
     /// # let emoji = from_value::<Emoji>(json!({
     /// #     "id": EmojiId::new(302516740095606785),
@@ -167,7 +167,7 @@ impl MessageBuilder {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let mut message = MessageBuilder::new();
     /// message.push("test");
@@ -199,7 +199,7 @@ impl MessageBuilder {
     /// Pushing a Rust codeblock:
     ///
     /// ```rust,ignore
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let code = r#"
     /// fn main() {
@@ -222,7 +222,7 @@ impl MessageBuilder {
     /// 
     /// Pushing a codeblock without a language:
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new()
     ///     .push_codeblock("hello", None)
@@ -255,7 +255,7 @@ impl MessageBuilder {
     /// Display a server configuration value to the user:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let key = "prefix";
     /// let value = "&";
@@ -287,7 +287,7 @@ impl MessageBuilder {
     /// Emphasize information to the user:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new()
     ///     .push("You don't ")
@@ -360,7 +360,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_line("hello").push("world").build();
     ///
@@ -380,7 +380,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_mono_line("hello").push("world").build();
     ///
@@ -400,7 +400,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_italic_line("hello").push("world").build();
     ///
@@ -420,7 +420,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_bold_line("hello").push("world").build();
     ///
@@ -440,7 +440,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_underline_line("hello").push("world").build();
     ///
@@ -460,7 +460,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_strike_line("hello").push("world").build();
     ///
@@ -480,7 +480,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_spoiler_line("hello").push("world").build();
     ///
@@ -500,7 +500,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new().push_quote_line("hello").push("world").build();
     ///
@@ -647,7 +647,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_line_safe("Hello @everyone").push("How are you?").build();
@@ -668,7 +668,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_mono_line_safe("`hello @everyone`").push("world").build();
@@ -689,7 +689,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_italic_line_safe("@everyone").push("Isn't a mention.").build();
@@ -710,7 +710,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_bold_line_safe("@everyone").push("Isn't a mention.").build();
@@ -731,7 +731,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content = MessageBuilder::new()
     ///     .push_underline_line_safe("@everyone")
@@ -754,7 +754,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_strike_line_safe("@everyone").push("Isn't a mention.").build();
@@ -775,7 +775,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_spoiler_line_safe("@everyone").push("Isn't a mention.").build();
@@ -796,7 +796,7 @@ impl MessageBuilder {
     /// Push content and then append a newline:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     ///
     /// let content =
     ///     MessageBuilder::new().push_quote_line_safe("@everyone").push("Isn't a mention.").build();
@@ -860,7 +860,7 @@ impl fmt::Display for MessageBuilder {
     /// macro:
     ///
     /// ```rust
-    /// use serenity::utils::MessageBuilder;
+    /// use serenity_self::utils::MessageBuilder;
     /// ```
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Display::fmt(&self.0, f)
@@ -878,7 +878,7 @@ impl fmt::Display for MessageBuilder {
 /// Make a named link to Rust's GitHub organization:
 ///
 /// ```rust
-/// use serenity::utils::{EmbedMessageBuilding, MessageBuilder};
+/// use serenity_self::utils::{EmbedMessageBuilding, MessageBuilder};
 ///
 /// let msg = MessageBuilder::new()
 ///     .push_named_link("Rust's GitHub", "https://github.com/rust-lang")
@@ -894,7 +894,7 @@ pub trait EmbedMessageBuilding {
     /// Make a simple link to Rust's homepage for use in an embed:
     ///
     /// ```rust
-    /// use serenity::utils::{EmbedMessageBuilding, MessageBuilder};
+    /// use serenity_self::utils::{EmbedMessageBuilding, MessageBuilder};
     ///
     /// let mut msg = MessageBuilder::new();
     /// msg.push("Rust's website: ");
@@ -913,7 +913,7 @@ pub trait EmbedMessageBuilding {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::utils::{EmbedMessageBuilding, MessageBuilder};
+    /// use serenity_self::utils::{EmbedMessageBuilding, MessageBuilder};
     ///
     /// let mut msg = MessageBuilder::new();
     /// msg.push("A weird website name: ");
@@ -970,8 +970,8 @@ impl EmbedMessageBuilding for MessageBuilder {
 /// Create a new Content type which describes a bold-italic "text":
 ///
 /// ```rust,no_run
-/// use serenity::utils::Content;
-/// use serenity::utils::ContentModifier::{Bold, Italic};
+/// use serenity_self::utils::Content;
+/// use serenity_self::utils::ContentModifier::{Bold, Italic};
 /// let content: Content = Bold + Italic + "text";
 /// ```
 #[non_exhaustive]

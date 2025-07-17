@@ -1,5 +1,5 @@
-use serenity::builder::CreateCommand;
-use serenity::model::application::ResolvedOption;
+use serenity_self::builder::CreateCommand;
+use serenity_self::model::application::ResolvedOption;
 
 pub fn run(_options: &[ResolvedOption]) -> String {
     "Hey, I'm alive!".to_string()

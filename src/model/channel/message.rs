@@ -371,10 +371,10 @@ impl Message {
     /// Edit a message with new content:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::EditMessage;
-    /// # use serenity::model::channel::Message;
-    /// # use serenity::model::id::ChannelId;
-    /// # use serenity::http::Http;
+    /// # use serenity_self::builder::EditMessage;
+    /// # use serenity_self::model::channel::Message;
+    /// # use serenity_self::model::id::ChannelId;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();

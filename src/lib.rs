@@ -33,7 +33,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! serenity = "0.12"
+//! serenity_self ="0.12"
 //! ```
 //!
 //! [`Cache`]: crate::cache::Cache

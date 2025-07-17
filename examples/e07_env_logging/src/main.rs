@@ -2,13 +2,13 @@
 
 use std::env;
 
-use serenity::async_trait;
-use serenity::framework::standard::macros::{command, group, hook};
-use serenity::framework::standard::{CommandResult, Configuration, StandardFramework};
-use serenity::model::channel::Message;
-use serenity::model::event::ResumedEvent;
-use serenity::model::gateway::Ready;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::framework::standard::macros::{command, group, hook};
+use serenity_self::framework::standard::{CommandResult, Configuration, StandardFramework};
+use serenity_self::model::channel::Message;
+use serenity_self::model::event::ResumedEvent;
+use serenity_self::model::gateway::Ready;
+use serenity_self::prelude::*;
 use tracing::{debug, error, info, instrument};
 
 struct Handler;

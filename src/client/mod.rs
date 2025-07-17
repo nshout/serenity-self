@@ -433,9 +433,9 @@ impl IntoFuture for ClientBuilder {
 /// "ping-pong" bot is simple:
 ///
 /// ```no_run
-/// use serenity::model::prelude::*;
-/// use serenity::prelude::*;
-/// use serenity::Client;
+/// use serenity_self::model::prelude::*;
+/// use serenity_self::prelude::*;
+/// use serenity_self::Client;
 ///
 /// struct Handler;
 ///
@@ -485,8 +485,8 @@ pub struct Client {
     /// use std::collections::HashMap;
     /// use std::env;
     ///
-    /// use serenity::model::prelude::*;
-    /// use serenity::prelude::*;
+    /// use serenity_self::model::prelude::*;
+    /// use serenity_self::prelude::*;
     ///
     /// struct MessageEventCounter;
     ///
@@ -568,7 +568,7 @@ pub struct Client {
     /// Printing the number of shards currently instantiated by the client every 5 seconds:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// # use std::time::Duration;
     /// #
     /// # fn run(client: Client) {
@@ -589,7 +589,7 @@ pub struct Client {
     /// Shutting down all connections after one minute of operation:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// # use std::time::Duration;
     /// #
     /// # fn run(client: Client) {
@@ -651,8 +651,8 @@ impl Client {
     ///
     /// ```rust,no_run
     /// # use std::error::Error;
-    /// # use serenity::prelude::*;
-    /// use serenity::Client;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn Error>> {
     /// let token = std::env::var("DISCORD_TOKEN")?;
@@ -692,8 +692,8 @@ impl Client {
     ///
     /// ```rust,no_run
     /// # use std::error::Error;
-    /// # use serenity::prelude::*;
-    /// use serenity::Client;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn Error>> {
     /// let token = std::env::var("DISCORD_TOKEN")?;
@@ -738,8 +738,8 @@ impl Client {
     ///
     /// ```rust,no_run
     /// # use std::error::Error;
-    /// # use serenity::prelude::*;
-    /// use serenity::Client;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn Error>> {
     /// let token = std::env::var("DISCORD_TOKEN")?;
@@ -757,8 +757,8 @@ impl Client {
     ///
     /// ```rust,no_run
     /// # use std::error::Error;
-    /// # use serenity::prelude::*;
-    /// use serenity::Client;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn Error>> {
     /// let token = std::env::var("DISCORD_TOKEN")?;
@@ -798,8 +798,8 @@ impl Client {
     ///
     /// ```rust,no_run
     /// # use std::error::Error;
-    /// # use serenity::prelude::*;
-    /// use serenity::Client;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn Error>> {
     /// let token = std::env::var("DISCORD_TOKEN")?;
@@ -839,8 +839,8 @@ impl Client {
     ///
     /// ```rust,no_run
     /// # use std::error::Error;
-    /// # use serenity::prelude::*;
-    /// use serenity::Client;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn Error>> {
     /// let token = std::env::var("DISCORD_TOKEN")?;

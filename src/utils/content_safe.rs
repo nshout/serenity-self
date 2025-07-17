@@ -117,10 +117,10 @@ impl Default for ContentSafeOptions {
 /// Sanitise an `@everyone` mention.
 ///
 /// ```rust
-/// # use serenity::client::Cache;
+/// # use serenity_self::client::Cache;
 /// #
 /// # let cache = Cache::default();
-/// use serenity::utils::{content_safe, ContentSafeOptions};
+/// use serenity_self::utils::{content_safe, ContentSafeOptions};
 ///
 /// let with_mention = "@everyone";
 /// let without_mention = content_safe(&cache, &with_mention, &ContentSafeOptions::default(), &[]);
@@ -131,9 +131,9 @@ impl Default for ContentSafeOptions {
 /// Filtering out mentions from a message.
 ///
 /// ```rust
-/// use serenity::client::Cache;
-/// use serenity::model::channel::Message;
-/// use serenity::utils::{content_safe, ContentSafeOptions};
+/// use serenity_self::client::Cache;
+/// use serenity_self::model::channel::Message;
+/// use serenity_self::utils::{content_safe, ContentSafeOptions};
 ///
 /// fn filter_message(cache: &Cache, message: &Message) -> String {
 ///     content_safe(cache, &message.content, &ContentSafeOptions::default(), &message.mentions)

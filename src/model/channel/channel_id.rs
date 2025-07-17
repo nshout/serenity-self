@@ -47,7 +47,7 @@ impl ChannelId {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// use serenity::model::id::ChannelId;
+    /// use serenity_self::model::id::ChannelId;
     ///
     /// # async fn run() {
     /// # let http: serenity::http::Http = unimplemented!();
@@ -304,9 +304,9 @@ impl ChannelId {
     /// Change a voice channel's name and bitrate:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::EditChannel;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::id::ChannelId;
+    /// # use serenity_self::builder::EditChannel;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::id::ChannelId;
     /// # async fn run() {
     /// # let http: Http = unimplemented!();
     /// # let channel_id = ChannelId::new(1234);
@@ -501,14 +501,14 @@ impl ChannelId {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::model::id::ChannelId;
-    /// # use serenity::http::Http;
+    /// # use serenity_self::model::id::ChannelId;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() {
     /// # let channel_id = ChannelId::new(1);
     /// # let ctx: Http = unimplemented!();
-    /// use serenity::futures::StreamExt;
-    /// use serenity::model::channel::MessagesIter;
+    /// use serenity_self::futures::StreamExt;
+    /// use serenity_self::model::channel::MessagesIter;
     ///
     /// let mut messages = channel_id.messages_iter(&ctx).boxed();
     /// while let Some(message_result) = messages.next().await {
@@ -663,13 +663,13 @@ impl ChannelId {
     /// Send files with the paths `/path/to/file.jpg` and `/path/to/file2.jpg`:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// # use std::sync::Arc;
     /// #
     /// # async fn run() -> Result<(), serenity::Error> {
     /// # let http: Arc<Http> = unimplemented!();
-    /// use serenity::builder::{CreateAttachment, CreateMessage};
-    /// use serenity::model::id::ChannelId;
+    /// use serenity_self::builder::{CreateAttachment, CreateMessage};
+    /// use serenity_self::model::id::ChannelId;
     ///
     /// let channel_id = ChannelId::new(7);
     ///
@@ -686,13 +686,13 @@ impl ChannelId {
     /// Send files using [`File`]:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// # use std::sync::Arc;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Arc<Http> = unimplemented!();
-    /// use serenity::builder::{CreateAttachment, CreateMessage};
-    /// use serenity::model::id::ChannelId;
+    /// use serenity_self::builder::{CreateAttachment, CreateMessage};
+    /// use serenity_self::model::id::ChannelId;
     /// use tokio::fs::File;
     ///
     /// let channel_id = ChannelId::new(7);
@@ -760,7 +760,7 @@ impl ChannelId {
     /// ## Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::{http::Http, Result, model::id::ChannelId};
+    /// # use serenity_self::{http::Http, Result, model::id::ChannelId};
     /// # use std::sync::Arc;
     /// #
     /// # fn long_process() {}
@@ -1251,14 +1251,14 @@ impl<H: AsRef<Http>> MessagesIter<H> {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::model::id::ChannelId;
-    /// # use serenity::http::Http;
+    /// # use serenity_self::model::id::ChannelId;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() {
     /// # let channel_id = ChannelId::new(1);
     /// # let ctx: Http = unimplemented!();
-    /// use serenity::futures::StreamExt;
-    /// use serenity::model::channel::MessagesIter;
+    /// use serenity_self::futures::StreamExt;
+    /// use serenity_self::model::channel::MessagesIter;
     ///
     /// let mut messages = MessagesIter::<Http>::stream(&ctx, channel_id).boxed();
     /// while let Some(message_result) = messages.next().await {

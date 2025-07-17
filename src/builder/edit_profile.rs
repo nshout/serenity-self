@@ -34,10 +34,10 @@ impl EditProfile {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::{EditProfile, CreateAttachment};
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// # use serenity::http::Http;
+    /// # use serenity_self::builder::{EditProfile, CreateAttachment};
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// # use serenity_self::http::Http;
     /// #
     /// # #[cfg(feature = "http")]
     /// # async fn foo_(http: &Http, current_user: &mut CurrentUser) -> Result<(), SerenityError> {

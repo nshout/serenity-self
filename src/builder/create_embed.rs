@@ -136,8 +136,8 @@ impl CreateEmbed {
     /// Passing a string timestamp:
     ///
     /// ```rust
-    /// # use serenity::builder::CreateEmbed;
-    /// # use serenity::model::Timestamp;
+    /// # use serenity_self::builder::CreateEmbed;
+    /// # use serenity_self::model::Timestamp;
     /// let timestamp: Timestamp = "2004-06-08T16:04:23Z".parse().expect("Invalid timestamp!");
     /// let embed = CreateEmbed::new().title("hello").timestamp(timestamp);
     /// ```

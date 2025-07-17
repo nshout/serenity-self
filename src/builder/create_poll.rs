@@ -66,7 +66,7 @@ impl CreatePoll<NeedsQuestion> {
     /// This must be transitioned through in order, to provide all required fields.
     ///
     /// ```rust
-    /// use serenity::builder::{CreateMessage, CreatePoll, CreatePollAnswer};
+    /// use serenity_self::builder::{CreateMessage, CreatePoll, CreatePollAnswer};
     ///
     /// let poll = CreatePoll::new()
     ///     .question("Cats or Dogs?")

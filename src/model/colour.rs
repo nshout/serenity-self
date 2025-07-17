@@ -14,11 +14,11 @@
 /// Passing in a role's colour, and then retrieving its green component via [`Self::g`]:
 ///
 /// ```rust
-/// # use serenity::json::{json, from_value};
-/// # use serenity::model::guild::Role;
-/// # use serenity::model::id::RoleId;
-/// # use serenity::model::id::GuildId;
-/// # use serenity::model::permissions;
+/// # use serenity_self::json::{json, from_value};
+/// # use serenity_self::model::guild::Role;
+/// # use serenity_self::model::id::RoleId;
+/// # use serenity_self::model::id::GuildId;
+/// # use serenity_self::model::permissions;
 /// #
 /// # fn main() {
 /// # let role = from_value::<Role>(json!({
@@ -33,7 +33,7 @@
 /// #     "position": 7,
 /// # })).unwrap();
 /// #
-/// use serenity::model::Colour;
+/// use serenity_self::model::Colour;
 ///
 /// // assuming a `role` has already been bound
 ///
@@ -46,7 +46,7 @@
 /// Creating an instance with the [`Self::DARK_TEAL`] preset:
 ///
 /// ```rust
-/// use serenity::model::Colour;
+/// use serenity_self::model::Colour;
 ///
 /// let colour = Colour::DARK_TEAL;
 ///
@@ -56,7 +56,7 @@
 /// Colours can also be directly compared for equivalence:
 ///
 /// ```rust
-/// use serenity::model::Colour;
+/// use serenity_self::model::Colour;
 ///
 /// let blitz_blue = Colour::BLITZ_BLUE;
 /// let fooyoo = Colour::FOOYOO;
@@ -82,7 +82,7 @@ impl Colour {
     /// value, retrieved via [`Self::tuple`]:
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// let colour = Colour::new(6573123);
     ///
@@ -101,7 +101,7 @@ impl Colour {
     /// Creating a [`Colour`] via its RGB values will set its inner u32 correctly:
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert!(Colour::from_rgb(255, 0, 0).0 == 0xFF0000);
     /// assert!(Colour::from_rgb(217, 23, 211).0 == 0xD917D3);
@@ -110,7 +110,7 @@ impl Colour {
     /// And you can then retrieve those same RGB values via its methods:
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// let colour = Colour::from_rgb(217, 45, 215);
     ///
@@ -132,7 +132,7 @@ impl Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::new(6573123).r(), 100);
     /// ```
@@ -146,7 +146,7 @@ impl Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::new(6573123).g(), 76);
     /// ```
@@ -160,7 +160,7 @@ impl Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::new(6573123).b(), 67);
     /// ```
@@ -177,7 +177,7 @@ impl Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::new(6573123).tuple(), (100, 76, 67));
     /// ```
@@ -194,7 +194,7 @@ impl Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::new(6573123).hex(), "644C43");
     /// ```
@@ -214,7 +214,7 @@ impl From<i32> for Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::from(0xDEA584).tuple(), (222, 165, 132));
     /// ```
@@ -231,7 +231,7 @@ impl From<u32> for Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::from(6573123u32).r(), 100);
     /// ```
@@ -248,7 +248,7 @@ impl From<u64> for Colour {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::model::Colour;
+    /// use serenity_self::model::Colour;
     ///
     /// assert_eq!(Colour::from(6573123u64).r(), 100);
     /// ```

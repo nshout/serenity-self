@@ -2,12 +2,12 @@ mod commands;
 
 use std::env;
 
-use serenity::async_trait;
-use serenity::builder::{CreateInteractionResponse, CreateInteractionResponseMessage};
-use serenity::model::application::{Command, Interaction};
-use serenity::model::gateway::Ready;
-use serenity::model::id::GuildId;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::builder::{CreateInteractionResponse, CreateInteractionResponseMessage};
+use serenity_self::model::application::{Command, Interaction};
+use serenity_self::model::gateway::Ready;
+use serenity_self::model::id::GuildId;
+use serenity_self::prelude::*;
 
 struct Handler;
 

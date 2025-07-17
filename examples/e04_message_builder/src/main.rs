@@ -1,10 +1,10 @@
 use std::env;
 
-use serenity::async_trait;
-use serenity::model::channel::Message;
-use serenity::model::gateway::Ready;
-use serenity::prelude::*;
-use serenity::utils::MessageBuilder;
+use serenity_self::async_trait;
+use serenity_self::model::channel::Message;
+use serenity_self::model::gateway::Ready;
+use serenity_self::prelude::*;
+use serenity_self::utils::MessageBuilder;
 
 struct Handler;
 

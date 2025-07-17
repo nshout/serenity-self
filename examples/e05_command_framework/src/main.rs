@@ -3,7 +3,7 @@
 //! This can be enabled by specifying the feature in the dependency section:
 //!
 //! ```toml
-//! [dependencies.serenity]
+//! [dependencies.serenity_self]
 //! git = "https://github.com/serenity-rs/serenity.git"
 //! features = ["framework", "standard_framework"]
 //! ```
@@ -13,11 +13,11 @@ use std::env;
 use std::fmt::Write;
 use std::sync::Arc;
 
-use serenity::async_trait;
-use serenity::builder::EditChannel;
-use serenity::framework::standard::buckets::{LimitedFor, RevertBucket};
-use serenity::framework::standard::macros::{check, command, group, help, hook};
-use serenity::framework::standard::{
+use serenity_self::async_trait;
+use serenity_self::builder::EditChannel;
+use serenity_self::framework::standard::buckets::{LimitedFor, RevertBucket};
+use serenity_self::framework::standard::macros::{check, command, group, help, hook};
+use serenity_self::framework::standard::{
     help_commands,
     Args,
     BucketBuilder,
@@ -30,14 +30,14 @@ use serenity::framework::standard::{
     Reason,
     StandardFramework,
 };
-use serenity::gateway::ShardManager;
-use serenity::http::Http;
-use serenity::model::channel::Message;
-use serenity::model::gateway::Ready;
-use serenity::model::id::UserId;
-use serenity::model::permissions::Permissions;
-use serenity::prelude::*;
-use serenity::utils::{content_safe, ContentSafeOptions};
+use serenity_self::gateway::ShardManager;
+use serenity_self::http::Http;
+use serenity_self::model::channel::Message;
+use serenity_self::model::gateway::Ready;
+use serenity_self::model::id::UserId;
+use serenity_self::model::permissions::Permissions;
+use serenity_self::prelude::*;
+use serenity_self::utils::{content_safe, ContentSafeOptions};
 
 // A container type is created for inserting into the Client's `data`, which allows for data to be
 // accessible across all events and framework commands, or anywhere else that has a copy of the
@@ -190,8 +190,8 @@ async fn dispatch_error(ctx: &Context, msg: &Message, error: DispatchError, _com
 
 // You can construct a hook without the use of a macro, too.
 // This requires some boilerplate though and the following additional import.
-use serenity::futures::future::BoxFuture;
-use serenity::FutureExt;
+use serenity_self::futures::future::BoxFuture;
+use serenity_self::FutureExt;
 fn _dispatch_error_no_macro<'fut>(
     ctx: &'fut mut Context,
     msg: &'fut Message,

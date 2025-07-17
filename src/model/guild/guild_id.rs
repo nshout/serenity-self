@@ -82,12 +82,12 @@ impl GuildId {
     /// ```
     /// use std::time::Duration;
     ///
-    /// use serenity::builder::EditAutoModRule;
-    /// use serenity::model::guild::automod::{Action, Trigger};
-    /// use serenity::model::id::GuildId;
+    /// use serenity_self::builder::EditAutoModRule;
+    /// use serenity_self::model::guild::automod::{Action, Trigger};
+    /// use serenity_self::model::id::GuildId;
     ///
     /// # async fn run() {
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// # let http: Http = unimplemented!();
     /// let builder = EditAutoModRule::new()
     ///     .name("foobar filter")
@@ -188,10 +188,10 @@ impl GuildId {
     /// Ban a member and remove all messages they've sent in the last 4 days:
     ///
     /// ```rust,no_run
-    /// use serenity::model::id::{GuildId, UserId};
+    /// use serenity_self::model::id::{GuildId, UserId};
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// # let http: Http = unimplemented!();
     /// # let user = UserId::new(1);
     /// // assuming a `user` has already been bound
@@ -364,10 +364,10 @@ impl GuildId {
     /// Create a voice channel in a guild with the name `test`:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// use serenity::builder::CreateChannel;
-    /// use serenity::model::channel::ChannelType;
-    /// use serenity::model::id::GuildId;
+    /// # use serenity_self::http::Http;
+    /// use serenity_self::builder::CreateChannel;
+    /// use serenity_self::model::channel::ChannelType;
+    /// use serenity_self::model::id::GuildId;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -687,9 +687,9 @@ impl GuildId {
     /// Mute a member and set their roles to just one role with a predefined Id:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::EditMember;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::id::{GuildId, RoleId, UserId};
+    /// # use serenity_self::builder::EditMember;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::id::{GuildId, RoleId, UserId};
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -762,9 +762,9 @@ impl GuildId {
     /// Make a role hoisted, and change its name:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::EditRole;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::id::{GuildId, RoleId};
+    /// # use serenity_self::builder::EditRole;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::id::{GuildId, RoleId};
     /// # use std::sync::Arc;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
@@ -827,9 +827,9 @@ impl GuildId {
     /// Rename a sticker:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// use serenity::builder::EditSticker;
-    /// use serenity::model::id::{GuildId, StickerId};
+    /// # use serenity_self::http::Http;
+    /// use serenity_self::builder::EditSticker;
+    /// use serenity_self::model::id::{GuildId, StickerId};
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -862,7 +862,7 @@ impl GuildId {
     /// # Examples
     ///
     /// ```rust,ignore
-    /// use serenity::model::{GuildId, RoleId};
+    /// use serenity_self::model::{GuildId, RoleId};
     /// GuildId::new(7).edit_role_position(&context, RoleId::new(8), 2);
     /// ```
     ///
@@ -1172,14 +1172,14 @@ impl GuildId {
     ///
     /// # Examples
     /// ```rust,no_run
-    /// # use serenity::model::id::GuildId;
-    /// # use serenity::http::Http;
+    /// # use serenity_self::model::id::GuildId;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() {
     /// # let guild_id = GuildId::new(1);
     /// # let ctx: Http = unimplemented!();
-    /// use serenity::futures::StreamExt;
-    /// use serenity::model::guild::MembersIter;
+    /// use serenity_self::futures::StreamExt;
+    /// use serenity_self::model::guild::MembersIter;
     ///
     /// let mut members = guild_id.members_iter(&ctx).boxed();
     /// while let Some(member_result) = members.next().await {
@@ -1419,8 +1419,8 @@ impl GuildId {
     /// Retrieve the Id of the shard for a guild with Id `81384788765712384`, using 17 shards:
     ///
     /// ```rust
-    /// use serenity::model::id::GuildId;
-    /// use serenity::utils;
+    /// use serenity_self::model::id::GuildId;
+    /// use serenity_self::utils;
     ///
     /// let guild_id = GuildId::new(81384788765712384);
     ///
@@ -1904,14 +1904,14 @@ impl<H: AsRef<Http>> MembersIter<H> {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::model::id::GuildId;
-    /// # use serenity::http::Http;
+    /// # use serenity_self::model::id::GuildId;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() {
     /// # let guild_id = GuildId::new(1);
     /// # let ctx: Http = unimplemented!();
-    /// use serenity::futures::StreamExt;
-    /// use serenity::model::guild::MembersIter;
+    /// use serenity_self::futures::StreamExt;
+    /// use serenity_self::model::guild::MembersIter;
     ///
     /// let mut members = MembersIter::<Http>::stream(&ctx, guild_id).boxed();
     /// while let Some(member_result) = members.next().await {

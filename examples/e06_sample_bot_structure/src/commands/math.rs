@@ -1,7 +1,7 @@
-use serenity::framework::standard::macros::command;
-use serenity::framework::standard::{Args, CommandResult};
-use serenity::model::prelude::*;
-use serenity::prelude::*;
+use serenity_self::framework::standard::macros::command;
+use serenity_self::framework::standard::{Args, CommandResult};
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
 
 #[command]
 pub async fn multiply(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {

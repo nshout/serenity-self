@@ -1,6 +1,6 @@
-use serenity::builder::ExecuteWebhook;
-use serenity::http::Http;
-use serenity::model::webhook::Webhook;
+use serenity_self::builder::ExecuteWebhook;
+use serenity_self::http::Http;
+use serenity_self::model::webhook::Webhook;
 
 #[tokio::main]
 async fn main() {

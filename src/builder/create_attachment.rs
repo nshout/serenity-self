@@ -141,7 +141,7 @@ enum NewOrExisting {
 /// ## Removing all attachments
 ///
 /// ```rust,no_run
-/// # use serenity::all::*;
+/// # use serenity_self::all::*;
 /// # async fn foo_(ctx: Http, mut msg: Message) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(EditAttachments::new())).await?;
 /// # Ok(()) }
@@ -150,7 +150,7 @@ enum NewOrExisting {
 /// ## Adding a new attachment without deleting existing attachments
 ///
 /// ```rust,no_run
-/// # use serenity::all::*;
+/// # use serenity_self::all::*;
 /// # async fn foo_(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(
 ///     EditAttachments::keep_all(&msg).add(my_attachment)
@@ -161,7 +161,7 @@ enum NewOrExisting {
 /// ## Delete all but the first attachment
 ///
 /// ```rust,no_run
-/// # use serenity::all::*;
+/// # use serenity_self::all::*;
 /// # async fn foo_(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(
 ///     EditAttachments::new().keep(msg.attachments[0].id)
@@ -172,7 +172,7 @@ enum NewOrExisting {
 /// ## Delete only the first attachment
 ///
 /// ```rust,no_run
-/// # use serenity::all::*;
+/// # use serenity_self::all::*;
 /// # async fn foo_(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(
 ///     EditAttachments::keep_all(&msg).remove(msg.attachments[0].id)

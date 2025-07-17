@@ -1,6 +1,6 @@
-use serenity::builder::*;
-use serenity::model::prelude::*;
-use serenity::prelude::*;
+use serenity_self::builder::*;
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
 
 mod model_type_sizes;
 
@@ -166,7 +166,7 @@ async fn message(ctx: &Context, msg: Message) -> Result<(), serenity::Error> {
             )
             .await?;
     } else if msg.content == "embedrace" {
-        use serenity::futures::StreamExt;
+        use serenity_self::futures::StreamExt;
         use tokio::time::Duration;
 
         let mut msg = channel_id

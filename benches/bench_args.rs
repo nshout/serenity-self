@@ -4,7 +4,7 @@
 mod benches {
     extern crate test;
 
-    use serenity::framework::standard::{Args, Delimiter};
+    use serenity_self::framework::standard::{Args, Delimiter};
 
     use self::test::Bencher;
 

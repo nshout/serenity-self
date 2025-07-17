@@ -60,9 +60,9 @@ A basic ping-pong bot looks like:
 ```rust,ignore
 use std::env;
 
-use serenity::async_trait;
-use serenity::model::channel::Message;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::model::channel::Message;
+use serenity_self::prelude::*;
 
 struct Handler;
 
@@ -108,7 +108,7 @@ Add the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-serenity = { git = "https://github.com/nshout/serenity-self", branch = "current" }
+serenity_self = "0.13"
 tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }
 ```
 
@@ -134,7 +134,7 @@ Features can be enabled or disabled by configuring the library through
 Cargo.toml:
 
 ```toml
-[dependencies.serenity]
+[dependencies.serenity_self]
 default-features = false
 features = ["pick", "your", "feature", "names", "here"]
 version = "0.12"
@@ -196,7 +196,7 @@ If you want all of the default features except for `cache` for example, you can
 list all but that:
 
 ```toml
-[dependencies.serenity]
+[dependencies.serenity_self]
 default-features = false
 features = [
     "builder",

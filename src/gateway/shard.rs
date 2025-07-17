@@ -90,12 +90,12 @@ impl Shard {
     /// ```rust,no_run
     /// use std::sync::Arc;
     ///
-    /// use serenity::gateway::Shard;
-    /// use serenity::model::gateway::{GatewayIntents, ShardInfo};
-    /// use serenity::model::id::ShardId;
+    /// use serenity_self::gateway::Shard;
+    /// use serenity_self::model::gateway::{GatewayIntents, ShardInfo};
+    /// use serenity_self::model::id::ShardId;
     /// use tokio::sync::Mutex;
     /// #
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Arc<Http> = unimplemented!();
@@ -574,9 +574,9 @@ impl Shard {
     ///
     /// ```rust,no_run
     /// # use tokio::sync::Mutex;
-    /// # use serenity::gateway::{ChunkGuildFilter, Shard};
-    /// # use serenity::model::gateway::{GatewayIntents, ShardInfo};
-    /// # use serenity::model::id::ShardId;
+    /// # use serenity_self::gateway::{ChunkGuildFilter, Shard};
+    /// # use serenity_self::model::gateway::{GatewayIntents, ShardInfo};
+    /// # use serenity_self::model::id::ShardId;
     /// # use std::sync::Arc;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
@@ -588,7 +588,7 @@ impl Shard {
     /// #
     /// #     let mut shard = Shard::new(mutex.clone(), "", shard_info, GatewayIntents::all(), None).await?;
     /// #
-    /// use serenity::model::id::GuildId;
+    /// use serenity_self::model::id::GuildId;
     ///
     /// shard.chunk_guild(GuildId::new(81384788765712384), Some(2000), false, ChunkGuildFilter::None, None).await?;
     /// # Ok(())
@@ -600,9 +600,9 @@ impl Shard {
     ///
     /// ```rust,no_run
     /// # use tokio::sync::Mutex;
-    /// # use serenity::model::gateway::{GatewayIntents, ShardInfo};
-    /// # use serenity::gateway::{ChunkGuildFilter, Shard};
-    /// # use serenity::model::id::ShardId;
+    /// # use serenity_self::model::gateway::{GatewayIntents, ShardInfo};
+    /// # use serenity_self::gateway::{ChunkGuildFilter, Shard};
+    /// # use serenity_self::model::id::ShardId;
     /// # use std::error::Error;
     /// # use std::sync::Arc;
     /// #
@@ -615,7 +615,7 @@ impl Shard {
     /// #     };
     /// #     let mut shard = Shard::new(mutex.clone(), "", shard_info, GatewayIntents::all(), None).await?;
     /// #
-    /// use serenity::model::id::GuildId;
+    /// use serenity_self::model::id::GuildId;
     ///
     /// shard
     ///     .chunk_guild(

@@ -149,9 +149,9 @@ impl Ratelimiter {
     /// View the `reset` time of the route for `ChannelsId(7)`:
     ///
     /// ```rust,no_run
-    /// use serenity::http::Route;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// use serenity_self::http::Route;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();

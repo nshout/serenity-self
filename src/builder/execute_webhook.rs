@@ -25,10 +25,10 @@ use crate::model::prelude::*;
 /// Creating two embeds, and then sending them as part of the payload using [`Webhook::execute`]:
 ///
 /// ```rust,no_run
-/// use serenity::builder::{CreateEmbed, ExecuteWebhook};
-/// use serenity::http::Http;
-/// use serenity::model::webhook::Webhook;
-/// use serenity::model::Colour;
+/// use serenity_self::builder::{CreateEmbed, ExecuteWebhook};
+/// use serenity_self::http::Http;
+/// use serenity_self::model::webhook::Webhook;
+/// use serenity_self::model::Colour;
 ///
 /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
 /// # let http: Http = unimplemented!();
@@ -112,9 +112,9 @@ impl ExecuteWebhook {
     /// Overriding the default avatar:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::ExecuteWebhook;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::webhook::Webhook;
+    /// # use serenity_self::builder::ExecuteWebhook;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::webhook::Webhook;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -141,9 +141,9 @@ impl ExecuteWebhook {
     /// Sending a webhook with a content of `"foo"`:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::ExecuteWebhook;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::webhook::Webhook;
+    /// # use serenity_self::builder::ExecuteWebhook;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::webhook::Webhook;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -172,9 +172,9 @@ impl ExecuteWebhook {
     /// Execute a webhook with message content of `test`, in a thread with Id `12345678`:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::ExecuteWebhook;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::webhook::Webhook;
+    /// # use serenity_self::builder::ExecuteWebhook;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::webhook::Webhook;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -257,9 +257,9 @@ impl ExecuteWebhook {
     /// Sending a webhook with text-to-speech enabled:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::ExecuteWebhook;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::webhook::Webhook;
+    /// # use serenity_self::builder::ExecuteWebhook;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::webhook::Webhook;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -285,9 +285,9 @@ impl ExecuteWebhook {
     /// Overriding the username to `"hakase"`:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::ExecuteWebhook;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::webhook::Webhook;
+    /// # use serenity_self::builder::ExecuteWebhook;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::webhook::Webhook;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -313,10 +313,10 @@ impl ExecuteWebhook {
     /// Suppressing an embed on the message.
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::ExecuteWebhook;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::channel::MessageFlags;
-    /// # use serenity::model::webhook::Webhook;
+    /// # use serenity_self::builder::ExecuteWebhook;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::channel::MessageFlags;
+    /// # use serenity_self::model::webhook::Webhook;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();

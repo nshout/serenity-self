@@ -2,9 +2,9 @@
 // This example will help us to use a sqlite database with our bot.
 use std::fmt::Write as _;
 
-use serenity::async_trait;
-use serenity::model::prelude::*;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
 
 struct Bot {
     database: sqlx::SqlitePool,

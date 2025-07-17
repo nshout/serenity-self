@@ -26,7 +26,7 @@ use crate::model::id::ChannelId;
 /// ## Examples
 ///
 /// ```rust,no_run
-/// # use serenity::{http::{Http, Typing}, Result, model::prelude::*};
+/// # use serenity_self::{http::{Http, Typing}, Result, model::prelude::*};
 /// # use std::sync::Arc;
 /// #
 /// # fn long_process() {}

@@ -1,7 +1,7 @@
-use serenity::framework::standard::macros::command;
-use serenity::framework::standard::CommandResult;
-use serenity::model::prelude::*;
-use serenity::prelude::*;
+use serenity_self::framework::standard::macros::command;
+use serenity_self::framework::standard::CommandResult;
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
 
 use crate::ShardManagerContainer;
 

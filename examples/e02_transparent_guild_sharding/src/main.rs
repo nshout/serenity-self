@@ -1,9 +1,9 @@
 use std::env;
 
-use serenity::async_trait;
-use serenity::model::channel::Message;
-use serenity::model::gateway::Ready;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::model::channel::Message;
+use serenity_self::model::gateway::Ready;
+use serenity_self::prelude::*;
 
 // Serenity implements transparent sharding in a way that you do not need to handle separate
 // processes or connections manually.

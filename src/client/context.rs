@@ -88,8 +88,8 @@ impl Context {
     /// Set the current user to being online on the shard:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # struct Handler;
     ///
@@ -117,8 +117,8 @@ impl Context {
     /// Set the current user to being idle on the shard:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # struct Handler;
     ///
@@ -146,8 +146,8 @@ impl Context {
     /// Set the current user to being Do Not Disturb on the shard:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # struct Handler;
     ///
@@ -175,8 +175,8 @@ impl Context {
     /// Set the current user to being invisible on the shard:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # struct Handler;
     ///
@@ -207,8 +207,8 @@ impl Context {
     /// Reset the current user's presence on the shard:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # struct Handler;
     ///
@@ -237,11 +237,11 @@ impl Context {
     /// Create a command named `~setgame` that accepts a name of a game to be playing:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::channel::Message;
     /// # struct Handler;
     ///
-    /// use serenity::gateway::ActivityData;
+    /// use serenity_self::gateway::ActivityData;
     ///
     /// #[serenity::async_trait]
     /// impl EventHandler for Handler {
@@ -267,14 +267,14 @@ impl Context {
     /// Setting the current user as having no activity and being [`Idle`]:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::gateway::Ready;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::gateway::Ready;
     /// # struct Handler;
     ///
     /// #[serenity::async_trait]
     /// impl EventHandler for Handler {
     ///     async fn ready(&self, ctx: Context, _: Ready) {
-    ///         use serenity::model::user::OnlineStatus;
+    ///         use serenity_self::model::user::OnlineStatus;
     ///
     ///         ctx.set_presence(None, OnlineStatus::Idle);
     ///     }
@@ -284,15 +284,15 @@ impl Context {
     /// Setting the current user as playing `"Heroes of the Storm"`, while being [`DoNotDisturb`]:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::gateway::Ready;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::gateway::Ready;
     /// # struct Handler;
     ///
     /// #[serenity::async_trait]
     /// impl EventHandler for Handler {
     ///     async fn ready(&self, context: Context, _: Ready) {
-    ///         use serenity::gateway::ActivityData;
-    ///         use serenity::model::user::OnlineStatus;
+    ///         use serenity_self::gateway::ActivityData;
+    ///         use serenity_self::model::user::OnlineStatus;
     ///
     ///         let activity = ActivityData::playing("Heroes of the Storm");
     ///         let status = OnlineStatus::DoNotDisturb;

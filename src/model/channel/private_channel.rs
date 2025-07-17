@@ -326,7 +326,7 @@ impl PrivateChannel {
     /// ```rust,no_run
     /// # #[cfg(feature = "cache")]
     /// # async fn run() {
-    /// # use serenity::{cache::Cache, http::Http, model::channel::PrivateChannel, Result};
+    /// # use serenity_self::{cache::Cache, http::Http, model::channel::PrivateChannel, Result};
     /// # use std::sync::Arc;
     /// #
     /// # fn long_process() {}

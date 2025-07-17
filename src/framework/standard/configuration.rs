@@ -75,14 +75,14 @@ impl From<(bool, bool, bool)> for WithWhiteSpace {
 /// Responding to mentions and setting a command prefix of `"~"`:
 ///
 /// ```rust,no_run
-/// # use serenity::prelude::*;
+/// # use serenity_self::prelude::*;
 /// struct Handler;
 ///
 /// impl EventHandler for Handler {}
 ///
-/// use serenity::framework::standard::{Configuration, StandardFramework};
-/// use serenity::model::id::UserId;
-/// use serenity::Client;
+/// use serenity_self::framework::standard::{Configuration, StandardFramework};
+/// use serenity_self::model::id::UserId;
+/// use serenity_self::Client;
 ///
 /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
 /// let token = std::env::var("DISCORD_BOT_TOKEN")?;
@@ -185,9 +185,9 @@ impl Configuration {
     /// Create a HashSet in-place:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
-    /// use serenity::model::id::ChannelId;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::model::id::ChannelId;
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(
@@ -210,9 +210,9 @@ impl Configuration {
     /// Create a HashSet in-place:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
-    /// use serenity::model::id::GuildId;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::model::id::GuildId;
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(
@@ -237,9 +237,9 @@ impl Configuration {
     /// Create a HashSet in-place:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
-    /// use serenity::model::id::UserId;
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::model::id::UserId;
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(
@@ -262,11 +262,11 @@ impl Configuration {
     /// Ignore a set of commands, assuming they exist:
     ///
     /// ```rust,no_run
-    /// use serenity::client::Context;
-    /// use serenity::framework::standard::macros::{command, group};
-    /// use serenity::framework::standard::{CommandResult, Configuration};
-    /// use serenity::framework::StandardFramework;
-    /// use serenity::model::channel::Message;
+    /// use serenity_self::client::Context;
+    /// use serenity_self::framework::standard::macros::{command, group};
+    /// use serenity_self::framework::standard::{CommandResult, Configuration};
+    /// use serenity_self::framework::StandardFramework;
+    /// use serenity_self::model::channel::Message;
     ///
     /// #[command]
     /// async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
@@ -313,8 +313,8 @@ impl Configuration {
     /// dynamic_prefix.
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
     ///
     /// let framework =
     ///     StandardFramework::new().configure(Configuration::new().dynamic_prefix(|_, msg| {
@@ -328,8 +328,8 @@ impl Configuration {
     /// with the default prefix `"~"` disabled.
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
+    /// # use serenity_self::prelude::*;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(
@@ -405,8 +405,8 @@ impl Configuration {
     /// Create a HashSet in-place:
     ///
     /// ```rust,no_run
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
-    /// use serenity::model::id::UserId;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::model::id::UserId;
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(
@@ -419,8 +419,8 @@ impl Configuration {
     /// ```rust,no_run
     /// use std::collections::HashSet;
     ///
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
-    /// use serenity::model::id::UserId;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::model::id::UserId;
     ///
     /// let mut set = HashSet::new();
     /// set.insert(UserId::new(7));
@@ -449,7 +449,7 @@ impl Configuration {
     /// Assign a basic prefix:
     ///
     /// ```rust,no_run
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(Configuration::new().prefix("!"));
@@ -473,7 +473,7 @@ impl Configuration {
     /// Assign a set of prefixes the bot can respond to:
     ///
     /// ```rust,no_run
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(Configuration::new().prefixes(vec!["!", ">", "+"]));
@@ -508,7 +508,7 @@ impl Configuration {
     /// Have the args be separated by a comma and a space:
     ///
     /// ```rust,no_run
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
     ///
     /// let framework = StandardFramework::new().configure(Configuration::new().delimiter(", "));
     /// ```
@@ -530,7 +530,7 @@ impl Configuration {
     /// Have the args be separated by a comma and a space; and a regular space:
     ///
     /// ```rust,no_run
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
     ///
     /// let framework = StandardFramework::new();
     /// framework.configure(Configuration::new().delimiters(vec![", ", " "]));

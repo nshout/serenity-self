@@ -60,8 +60,8 @@ impl CreateCommandOption {
     /// Specifies a localized name of the option.
     ///
     /// ```rust
-    /// # use serenity::builder::CreateCommandOption;
-    /// # use serenity::model::application::CommandOptionType;
+    /// # use serenity_self::builder::CreateCommandOption;
+    /// # use serenity_self::model::application::CommandOptionType;
     /// # CreateCommandOption::new(CommandOptionType::Integer, "", "")
     /// .name("age")
     /// .name_localized("zh-CN", "岁数")
@@ -83,8 +83,8 @@ impl CreateCommandOption {
     /// Specifies a localized description of the option.
     ///
     /// ```rust
-    /// # use serenity::builder::CreateCommandOption;
-    /// # use serenity::model::application::CommandOptionType;
+    /// # use serenity_self::builder::CreateCommandOption;
+    /// # use serenity_self::model::application::CommandOptionType;
     /// # CreateCommandOption::new(CommandOptionType::String, "", "")
     /// .description("Wish a friend a happy birthday")
     /// .description_localized("zh-CN", "祝你朋友生日快乐")

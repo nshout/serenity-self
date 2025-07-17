@@ -32,11 +32,11 @@ impl ParseAction {
 /// # Examples
 ///
 /// ```rust,no_run
-/// # use serenity::builder::CreateMessage;
-/// # use serenity::model::channel::Message;
+/// # use serenity_self::builder::CreateMessage;
+/// # use serenity_self::model::channel::Message;
 /// #
 /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
-/// use serenity::builder::CreateAllowedMentions as Am;
+/// use serenity_self::builder::CreateAllowedMentions as Am;
 ///
 /// // Mention only the user 110372470472613888
 /// # let m = CreateMessage::new();

@@ -43,7 +43,7 @@ use crate::model::prelude::*;
 /// Create an instance of [`Http`] with a proxy and rate limiter disabled
 ///
 /// ```rust
-/// # use serenity::http::HttpBuilder;
+/// # use serenity_self::http::HttpBuilder;
 /// # fn run() {
 /// let http =
 ///     HttpBuilder::new("token").proxy("http://127.0.0.1:3000").ratelimiter_disabled(true).build();
@@ -642,8 +642,8 @@ impl Http {
     /// Create a guild called `"test"` in the [US West region]:
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -993,9 +993,9 @@ impl Http {
     /// Creating a webhook named `test`:
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -1263,9 +1263,9 @@ impl Http {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// #
-    /// use serenity::model::id::{ChannelId, MessageId};
+    /// use serenity_self::model::id::{ChannelId, MessageId};
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -1498,8 +1498,8 @@ impl Http {
     /// Deletes a webhook given its Id:
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -1535,8 +1535,8 @@ impl Http {
     /// Deletes a webhook given its Id and unique token:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -2305,9 +2305,9 @@ impl Http {
     /// Suppress a user
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -2358,9 +2358,9 @@ impl Http {
     /// Unsuppress the current bot user
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -2431,10 +2431,10 @@ impl Http {
     /// Edit the image of a webhook given its Id and unique token:
     ///
     /// ```rust,no_run
-    /// use serenity::builder::CreateAttachment;
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::builder::CreateAttachment;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -2478,9 +2478,9 @@ impl Http {
     /// Edit the name of a webhook given its Id and unique token:
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -2548,9 +2548,9 @@ impl Http {
     /// Sending a webhook with message content of `test`:
     ///
     /// ```rust,no_run
-    /// use serenity::http::Http;
-    /// use serenity::json::json;
-    /// use serenity::model::prelude::*;
+    /// use serenity_self::http::Http;
+    /// use serenity_self::json::json;
+    /// use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -3216,8 +3216,8 @@ impl Http {
     /// Retrieve all of the webhooks owned by a channel:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -4066,8 +4066,8 @@ impl Http {
     /// Retrieve all of the webhooks owned by a guild:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -4102,12 +4102,12 @@ impl Http {
     /// Get the first 10 guilds after a certain guild's Id:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
-    /// use serenity::http::GuildPagination;
-    /// use serenity::model::id::GuildId;
+    /// use serenity_self::http::GuildPagination;
+    /// use serenity_self::model::id::GuildId;
     ///
     /// let guild_id = GuildId::new(81384788765712384);
     ///
@@ -4157,11 +4157,11 @@ impl Http {
     /// Get the member object for the current user within the specified guild.
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
-    /// use serenity::model::id::GuildId;
+    /// use serenity_self::model::id::GuildId;
     ///
     /// let guild_id = GuildId::new(81384788765712384);
     ///
@@ -4534,8 +4534,8 @@ impl Http {
     /// Retrieve a webhook by Id:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -4567,8 +4567,8 @@ impl Http {
     /// Retrieve a webhook by Id and its unique token:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -4607,7 +4607,7 @@ impl Http {
     /// Retrieve a webhook by url:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -4868,9 +4868,9 @@ impl Http {
     ///
     /// ```rust,no_run
     /// # use std::sync::Arc;
-    /// # use serenity::http::{Http, Typing};
-    /// # use serenity::Result;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::{Http, Typing};
+    /// # use serenity_self::Result;
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # fn long_process() {}
     /// # fn main() {
@@ -5060,10 +5060,10 @@ impl Http {
     ///
     /// ```rust,no_run
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    /// # use serenity::http::Http;
+    /// # use serenity_self::http::Http;
     /// #
     /// # let http: Http = unimplemented!();
-    /// use serenity::{
+    /// use serenity_self::{
     ///     http::{LightMethod, Request, Route},
     ///     model::prelude::*,
     /// };
@@ -5101,12 +5101,12 @@ impl Http {
     /// Send a body of bytes over the create message endpoint:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::prelude::*;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
-    /// use serenity::http::{LightMethod, Request, Route};
+    /// use serenity_self::http::{LightMethod, Request, Route};
     ///
     /// let bytes = vec![
     ///     // payload bytes here

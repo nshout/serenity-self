@@ -412,9 +412,9 @@ impl From<char> for ReactionType {
     ///
     /// ```rust,no_run
     /// # #[cfg(feature = "http")]
-    /// # use serenity::http::CacheHttp;
-    /// # use serenity::model::channel::Message;
-    /// # use serenity::model::id::ChannelId;
+    /// # use serenity_self::http::CacheHttp;
+    /// # use serenity_self::model::channel::Message;
+    /// # use serenity_self::model::id::ChannelId;
     /// #
     /// # #[cfg(feature = "http")]
     /// # async fn example(ctx: impl CacheHttp, message: Message) -> Result<(), Box<dyn std::error::Error>> {
@@ -496,7 +496,7 @@ impl TryFrom<&str> for ReactionType {
     /// use std::convert::TryInto;
     /// use std::fmt::Debug;
     ///
-    /// use serenity::model::channel::ReactionType;
+    /// use serenity_self::model::channel::ReactionType;
     ///
     /// fn foo<R: TryInto<ReactionType>>(bar: R)
     /// where
@@ -511,8 +511,8 @@ impl TryFrom<&str> for ReactionType {
     /// Creating a [`ReactionType`] from a custom emoji argument in the following format:
     ///
     /// ```rust
-    /// use serenity::model::channel::ReactionType;
-    /// use serenity::model::id::EmojiId;
+    /// use serenity_self::model::channel::ReactionType;
+    /// use serenity_self::model::id::EmojiId;
     ///
     /// let emoji_string = "<:customemoji:600404340292059257>";
     /// let reaction = ReactionType::try_from(emoji_string).unwrap();

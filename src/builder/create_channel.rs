@@ -167,16 +167,16 @@ impl<'a> CreateChannel<'a> {
     /// Inheriting permissions from an existing channel:
     ///
     /// ```rust,no_run
-    /// # use serenity::{http::Http, model::guild::Guild};
+    /// # use serenity_self::{http::Http, model::guild::Guild};
     /// # use std::sync::Arc;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
     /// # let mut guild: Guild = unimplemented!();
-    /// use serenity::builder::CreateChannel;
-    /// use serenity::model::channel::{PermissionOverwrite, PermissionOverwriteType};
-    /// use serenity::model::id::UserId;
-    /// use serenity::model::permissions::Permissions;
+    /// use serenity_self::builder::CreateChannel;
+    /// use serenity_self::model::channel::{PermissionOverwrite, PermissionOverwriteType};
+    /// use serenity_self::model::id::UserId;
+    /// use serenity_self::model::permissions::Permissions;
     ///
     /// // Assuming a guild has already been bound.
     /// let permissions = vec![PermissionOverwrite {

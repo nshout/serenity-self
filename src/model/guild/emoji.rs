@@ -65,8 +65,8 @@ impl Emoji {
     /// Delete a given emoji:
     ///
     /// ```rust,no_run
-    /// # use serenity::client::Context;
-    /// # use serenity::model::prelude::Emoji;
+    /// # use serenity_self::client::Context;
+    /// # use serenity_self::model::prelude::Emoji;
     /// #
     /// # async fn example(ctx: &Context, emoji: Emoji) -> Result<(), Box<dyn std::error::Error>> {
     /// // assuming emoji has been set already
@@ -126,8 +126,8 @@ impl Emoji {
     /// Print the guild id that owns this emoji:
     ///
     /// ```rust,no_run
-    /// # use serenity::cache::Cache;
-    /// # use serenity::model::guild::Emoji;
+    /// # use serenity_self::cache::Cache;
+    /// # use serenity_self::model::guild::Emoji;
     /// #
     /// # fn run(cache: Cache, emoji: Emoji) {
     /// // assuming emoji has been set already
@@ -170,7 +170,7 @@ impl Emoji {
     /// Print the direct link to the given emoji:
     ///
     /// ```rust,no_run
-    /// # use serenity::model::guild::Emoji;
+    /// # use serenity_self::model::guild::Emoji;
     /// #
     /// # fn run(emoji: Emoji) {
     /// // assuming emoji has been set already

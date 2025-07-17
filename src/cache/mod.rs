@@ -247,7 +247,7 @@ impl Cache {
     /// # Examples
     ///
     /// ```rust
-    /// use serenity::cache::{Cache, Settings};
+    /// use serenity_self::cache::{Cache, Settings};
     ///
     /// let mut settings = Settings::default();
     /// settings.max_messages = 10;
@@ -305,8 +305,8 @@ impl Cache {
     /// how many members have not yet been received.
     ///
     /// ```rust,no_run
-    /// # use serenity::model::prelude::*;
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// struct Handler;
     ///
     /// #[serenity::async_trait]
@@ -346,8 +346,8 @@ impl Cache {
     /// Print all of the Ids of guilds in the Cache:
     ///
     /// ```rust,no_run
-    /// # use serenity::model::prelude::*;
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// #
     /// struct Handler;
     ///
@@ -423,7 +423,7 @@ impl Cache {
     /// Retrieve a guild from the cache and print its name:
     ///
     /// ```rust,no_run
-    /// # use serenity::cache::Cache;
+    /// # use serenity_self::cache::Cache;
     /// #
     /// # let cache = Cache::default();
     /// // assuming the cache is in scope, e.g. via `Context`
@@ -453,9 +453,9 @@ impl Cache {
     /// [`EventHandler::message`] context:
     ///
     /// ```rust,no_run
-    /// # use serenity::cache::Cache;
-    /// # use serenity::http::Http;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::cache::Cache;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # async fn run(http: Http, cache: Cache, message: Message) {
     /// #
@@ -553,8 +553,8 @@ impl Cache {
     /// Retrieving the message object from a channel, in a [`EventHandler::message`] context:
     ///
     /// ```rust,no_run
-    /// # use serenity::cache::Cache;
-    /// # use serenity::model::channel::Message;
+    /// # use serenity_self::cache::Cache;
+    /// # use serenity_self::model::channel::Message;
     /// #
     /// # fn run(cache: Cache, message: Message) {
     /// #
@@ -596,7 +596,7 @@ impl Cache {
     /// Retrieve a role from the cache and print its name:
     ///
     /// ```rust,no_run
-    /// # use serenity::cache::Cache;
+    /// # use serenity_self::cache::Cache;
     /// #
     /// # let cache = Cache::default();
     /// // assuming the cache is in scope, e.g. via `Context`
@@ -629,7 +629,7 @@ impl Cache {
     /// Printing the maximum number of messages in a channel to be cached:
     ///
     /// ```rust
-    /// use serenity::cache::Cache;
+    /// use serenity_self::cache::Cache;
     ///
     /// # fn test() {
     /// let mut cache = Cache::new();
@@ -657,7 +657,7 @@ impl Cache {
     /// Retrieve a user from the cache and print their name:
     ///
     /// ```rust,no_run
-    /// # use serenity::client::Context;
+    /// # use serenity_self::client::Context;
     /// #
     /// # async fn test(context: &Context) -> Result<(), Box<dyn std::error::Error>> {
     /// if let Some(user) = context.cache.user(7) {

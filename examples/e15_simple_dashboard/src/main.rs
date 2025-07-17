@@ -20,12 +20,12 @@ use std::time::Instant;
 
 use rillrate::prime::table::{Col, Row};
 use rillrate::prime::*;
-use serenity::async_trait;
-use serenity::framework::standard::macros::{command, group, hook};
-use serenity::framework::standard::{CommandResult, Configuration, StandardFramework};
-use serenity::gateway::ShardManager;
-use serenity::model::prelude::*;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::framework::standard::macros::{command, group, hook};
+use serenity_self::framework::standard::{CommandResult, Configuration, StandardFramework};
+use serenity_self::gateway::ShardManager;
+use serenity_self::model::prelude::*;
+use serenity_self::prelude::*;
 use tokio::time::{sleep, Duration};
 
 // Name used to group dashboards.

@@ -22,10 +22,10 @@ use crate::model::prelude::*;
 /// Editing the content of a [`Message`] to `"hello"`:
 ///
 /// ```rust,no_run
-/// # use serenity::builder::EditMessage;
-/// # use serenity::model::channel::Message;
-/// # use serenity::model::id::ChannelId;
-/// # use serenity::http::CacheHttp;
+/// # use serenity_self::builder::EditMessage;
+/// # use serenity_self::model::channel::Message;
+/// # use serenity_self::model::id::ChannelId;
+/// # use serenity_self::http::CacheHttp;
 ///
 /// # async fn example(ctx: impl CacheHttp, mut message: Message) -> Result<(), Box<dyn std::error::Error>> {
 /// let builder = EditMessage::new().content("hello");
@@ -129,7 +129,7 @@ impl EditMessage {
     /// embeds have loaded:
     ///
     /// ```rust,no_run
-    /// # use serenity::all::*;
+    /// # use serenity_self::all::*;
     /// # #[cfg(feature = "collector")]
     /// # async fn test(ctx: &Context, channel_id: ChannelId) -> Result<(), Error> {
     /// use std::time::Duration;

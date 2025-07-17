@@ -3063,7 +3063,7 @@ Thanks to the following for their contributions:
 You can remove `typemap` from your `#[dependencies]` table in your `Cargo.toml` and simply import its types from the prelude:
 
 ```rust
-use serenity::prelude::{ShareMap, TypeMapKey};
+use serenity_self::prelude::{ShareMap, TypeMapKey};
 ```
 
 ### Added
@@ -3730,8 +3730,8 @@ Per [c:b328b3e], the `client::EventHandler` no longer prefixes all trait methods
 with `on_`. An implementation that looks like this:
 
 ```rust
-use serenity::client::{Context, EventHandler};
-use serenity::model::Message;
+use serenity_self::client::{Context, EventHandler};
+use serenity_self::model::Message;
 
 struct Handler;
 
@@ -3745,8 +3745,8 @@ impl EventHandler for Handler {
 Now looks like this:
 
 ```rust
-use serenity::client::{Context, EventHandler};
-use serenity::model::channel::Message;
+use serenity_self::client::{Context, EventHandler};
+use serenity_self::model::channel::Message;
 
 struct Handler;
 
@@ -3803,10 +3803,10 @@ after being there in deprecation for a long time. Please import it like so:
 
 ```rust
 // old
-use serenity::utils::builder;
+use serenity_self::utils::builder;
 
 // new
-use serenity::builder;
+use serenity_self::builder;
 ```
 
 ### Added
@@ -4251,8 +4251,8 @@ can simply have their usage renamed:
 
 ```rust
 use serde_json::Map;
-use serenity::http;
-use serenity::model::ChannelId;
+use serenity_self::http;
+use serenity_self::model::ChannelId;
 use std::fs::File;
 
 let channel_id = ChannelId(253635665344987136);
@@ -4267,8 +4267,8 @@ Instead send an attachment of files, such as:
 
 ```rust
 use serde_json::Map;
-use serenity::http;
-use serenity::model::ChannelId;
+use serenity_self::http;
+use serenity_self::model::ChannelId;
 use std::fs::File;
 
 let channel_id = ChannelId(253635665344987136);
@@ -4293,7 +4293,7 @@ Instead of using the now-removed `Channel::delete_messages` and
 `Channel::delete_permission`, use the inner channel's method:
 
 ```rust
-use serenity::model::{Channel, ChannelId};
+use serenity_self::model::{Channel, ChannelId};
 
 let channel = ChannelId(253635665344987136).get()?;
 let message_ids = vec![
@@ -4322,7 +4322,7 @@ Per commit [c:ea432af], event handling is now done via implementing a trait.
 Instead of passing functions to the client directly like:
 
 ```rust
-use serenity::Client;
+use serenity_self::Client;
 use std::env;
 
 let mut client = Client::new(env::var("DISCORD_TOKEN")?);
@@ -4335,8 +4335,8 @@ client.on_message(|ctx, msg| {
 Instead implement the new EventHandler trait:
 
 ```rust
-use serenity::client::{Client, Context, EventHandler};
-use serenity::model::Message;
+use serenity_self::client::{Client, Context, EventHandler};
+use serenity_self::model::Message;
 
 struct Handler;
 
@@ -4363,7 +4363,7 @@ If you require this _same exact functionality_ (the `GuildId` as a `ChannelId`),
 rewrite your code from:
 
 ```rust
-use serenity::model::GuildId;
+use serenity_self::model::GuildId;
 
 let channel_id = GuildId(81384788765712384).as_channel_id();
 ```
@@ -4371,7 +4371,7 @@ let channel_id = GuildId(81384788765712384).as_channel_id();
 to:
 
 ```rust
-use serenity::model::{ChannelId, GuildId};
+use serenity_self::model::{ChannelId, GuildId};
 
 let guild_id = GuildId(81384788765712384);
 let channel_id = ChannelId(guild_id.0);
@@ -4383,7 +4383,7 @@ passed instead of a base framework being provided and mutated. To use the old
 framework, modify code from:
 
 ```rust
-use serenity::Client;
+use serenity_self::Client;
 use std::env;
 
 let mut client = Client::new(&env::var("DISCORD_TOKEN")?);
@@ -4396,8 +4396,8 @@ client.with_framework(|f| f
 to the new style:
 
 ```rust
-use serenity::client::{Client, EventHandler};
-use serenity::framework::standard::StandardFramework;
+use serenity_self::client::{Client, EventHandler};
+use serenity_self::framework::standard::StandardFramework;
 use std::env;
 
 struct Handler;
@@ -4416,7 +4416,7 @@ Per commit [c:fc9eba3d], if you were pattern matching on the
 ignore the matched data by rewriting code from:
 
 ```rust
-use serenity::framework::DispatchError;
+use serenity_self::framework::DispatchError;
 
 // Code to begin dispatch error handling here.
 
@@ -4433,7 +4433,7 @@ to:
 ```rust
 // The standard implementation is now in a "standard" framework module, but
 // that's unrelated.
-use serenity::framework::standard::DispatchError;
+use serenity_self::framework::standard::DispatchError;
 
 match dispatch_error {
     DispatchError::CheckFailed(_) => {
@@ -4461,9 +4461,9 @@ command!(sum(_ctx, msg, _args, x: i64, y: i64) {
 Now looks like:
 
 ```rust
-use serenity::client::Context;
-use serenity::framework::standard::Args;
-use serenity::model::Message;
+use serenity_self::client::Context;
+use serenity_self::framework::standard::Args;
+use serenity_self::model::Message;
 
 fn sum(_: &mut Context, msg: &Message, args: Args) -> Result<(), String> {
     let x = match args.single::<i64>() {
@@ -4503,7 +4503,7 @@ change in how to use permissions.
 Update code from:
 
 ```rust
-use serenity::model::permissions::{ADD_REACTIONS, MANAGE_MESSAGES};
+use serenity_self::model::permissions::{ADD_REACTIONS, MANAGE_MESSAGES};
 
 foo(vec![ADD_REACTIONS, MANAGE_MESSAGES]);
 ```
@@ -4511,7 +4511,7 @@ foo(vec![ADD_REACTIONS, MANAGE_MESSAGES]);
 to:
 
 ```rust
-use serenity::model::Permissions;
+use serenity_self::model::Permissions;
 
 foo(vec![Permissions::ADD_REACTIONS, Permissions::MANAGE_MESSAGES]);
 ```
@@ -4713,7 +4713,7 @@ user.dm(|m| m.content("hello"))?;
 `Client::login` has been deprecated. Instead use `Client::new`:
 
 ```rust
-use serenity::Client;
+use serenity_self::Client;
 use std::env;
 
 // old
@@ -5110,7 +5110,7 @@ When formatting using `Display` for `ChannelId`s, `RoleId`s, and `UserId`,
 instead of formatting use their `Mentionable` equivilants:
 
 ```rust
-use serenity::model::{ChannelId, RoleId, UserId};
+use serenity_self::model::{ChannelId, RoleId, UserId};
 
 // old
 assert_eq!(format!("{}", ChannelId(1)), "<#1>");
@@ -5127,7 +5127,7 @@ When using `EmbedBuilder::{image, thumbnail}`, instead of calling another
 builder, provide `url`s directly:
 
 ```rust
-use serenity::model::Embed;
+use serenity_self::model::Embed;
 
 // old
 Embed::fake(|e| e
@@ -5144,7 +5144,7 @@ When specifying a sharding method, instead of passing a `u8` for sharding info,
 pass a `u64`:
 
 ```rust
-use serenity::Client;
+use serenity_self::Client;
 
 let client = Client::login_bot(&env::var("DISCORD_TOKEN").unwrap());
 
@@ -5165,7 +5165,7 @@ When creating a `Colour` struct yourself, instead of specifying a single `value`
 field, pass a single tuple value:
 
 ```rust
-use serenity::utils::Colour;
+use serenity_self::utils::Colour;
 
 // old
 Colour {
@@ -5210,7 +5210,7 @@ let _ = message.webhook_id.is_some();
 Instead of `PartialGuild::find_role(role_id)`:
 
 ```rust
-use serenity::model::RoleId;
+use serenity_self::model::RoleId;
 
 // assuming a `guild` has already been bound
 
@@ -5224,7 +5224,7 @@ let _ = guild.roles.get(RoleId(1));
 Instead of `Guild::{get_channel, get_member}`, call:
 
 ```rust
-use serenity::model::{ChannelId, UserId};
+use serenity_self::model::{ChannelId, UserId};
 
 // assuming a `guild` has already been bound
 
@@ -5388,7 +5388,7 @@ When using `EmbedBuilder::{image, thumbnail}`, instead of calling another
 builder, provide `url`s directly:
 
 ```rust
-use serenity::model::Embed;
+use serenity_self::model::Embed;
 
 // old
 Embed::fake(|e| e
@@ -5453,8 +5453,8 @@ When calling `rest::get_guilds`, instead of passing no parameters, pass a
 `GuildPagination` variant and a `limit`:
 
 ```rust
-use serenity::client::rest::{self, GuildPagination};
-use serenity::model::GuildId;
+use serenity_self::client::rest::{self, GuildPagination};
+use serenity_self::model::GuildId;
 
 // before
 rest::get_guilds();

@@ -45,7 +45,7 @@ macro_rules! event_handler {
             /// Returns the name of this event as a snake case string
             ///
             /// ```rust,no_run
-            /// # use serenity::client::{Context, FullEvent};
+            /// # use serenity_self::client::{Context, FullEvent};
             /// # fn foo_(ctx: Context, event: FullEvent) {
             /// if let FullEvent::Message { .. } = &event {
             ///     assert_eq!(event.snake_case_name(), "message");

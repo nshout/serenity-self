@@ -15,10 +15,10 @@ use super::Permissions;
 /// [`GuildId::ban`] method, which in this example is used to re-ban all members.
 ///
 /// ```rust,no_run
-/// use serenity::model::prelude::*;
-/// use serenity::model::ModelError;
-/// use serenity::prelude::*;
-/// use serenity::Error;
+/// use serenity_self::model::prelude::*;
+/// use serenity_self::model::ModelError;
+/// use serenity_self::prelude::*;
+/// use serenity_self::Error;
 ///
 /// # struct Handler;
 ///

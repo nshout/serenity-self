@@ -142,11 +142,11 @@ impl StandardFramework {
     /// setting the [`prefix`] to `"~"`:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// # struct Handler;
     /// # impl EventHandler for Handler {}
-    /// use serenity::framework::standard::{Configuration, StandardFramework};
-    /// use serenity::Client;
+    /// use serenity_self::framework::standard::{Configuration, StandardFramework};
+    /// use serenity_self::Client;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// let framework = StandardFramework::new();
@@ -177,8 +177,8 @@ impl StandardFramework {
     /// delay in between invocations:
     ///
     /// ```rust,no_run
-    /// use serenity::framework::standard::macros::command;
-    /// use serenity::framework::standard::{BucketBuilder, CommandResult, StandardFramework};
+    /// use serenity_self::framework::standard::macros::command;
+    /// use serenity_self::framework::standard::{BucketBuilder, CommandResult, StandardFramework};
     ///
     /// #[command]
     /// // Registers the bucket `basic` to this command.
@@ -315,15 +315,15 @@ impl StandardFramework {
     /// Add a group with ping and pong commands:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// # use std::error::Error as StdError;
     /// # struct Handler;
     /// #
     /// # impl EventHandler for Handler {}
     /// #
-    /// use serenity::client::{Client, Context};
-    /// use serenity::model::channel::Message;
-    /// use serenity::framework::standard::{
+    /// use serenity_self::client::{Client, Context};
+    /// use serenity_self::model::channel::Message;
+    /// use serenity_self::framework::standard::{
     ///     StandardFramework,
     ///     CommandResult,
     ///     macros::{command, group},
@@ -402,11 +402,11 @@ impl StandardFramework {
     /// Making a simple argument error responder:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// use serenity::framework::standard::macros::hook;
-    /// use serenity::framework::standard::DispatchError;
-    /// use serenity::framework::StandardFramework;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// use serenity_self::framework::standard::macros::hook;
+    /// use serenity_self::framework::standard::DispatchError;
+    /// use serenity_self::framework::StandardFramework;
     ///
     /// #[hook]
     /// async fn dispatch_error_hook(
@@ -461,10 +461,10 @@ impl StandardFramework {
     /// Using [`Self::before`] to log command usage:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// use serenity::framework::standard::macros::hook;
-    /// use serenity::framework::StandardFramework;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// use serenity_self::framework::standard::macros::hook;
+    /// use serenity_self::framework::StandardFramework;
     ///
     /// #[hook]
     /// async fn before_hook(_: &Context, _: &Message, cmd_name: &str) -> bool {
@@ -477,10 +477,10 @@ impl StandardFramework {
     /// Using before to prevent command usage:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// use serenity::framework::standard::macros::hook;
-    /// use serenity::framework::StandardFramework;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// use serenity_self::framework::standard::macros::hook;
+    /// use serenity_self::framework::StandardFramework;
     ///
     /// #[hook]
     /// async fn before_hook(ctx: &Context, msg: &Message, cmd_name: &str) -> bool {
@@ -513,11 +513,11 @@ impl StandardFramework {
     /// Using [`Self::after`] to log command usage:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// use serenity::framework::standard::macros::hook;
-    /// use serenity::framework::standard::CommandError;
-    /// use serenity::framework::StandardFramework;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// use serenity_self::framework::standard::macros::hook;
+    /// use serenity_self::framework::standard::CommandError;
+    /// use serenity_self::framework::StandardFramework;
     ///
     /// #[hook]
     /// async fn after_hook(_: &Context, _: &Message, cmd_name: &str, error: Result<(), CommandError>) {
@@ -543,10 +543,10 @@ impl StandardFramework {
     /// Using [`Self::unrecognised_command`]:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// use serenity::framework::standard::macros::hook;
-    /// use serenity::framework::StandardFramework;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// use serenity_self::framework::standard::macros::hook;
+    /// use serenity_self::framework::StandardFramework;
     ///
     /// #[hook]
     /// async fn unrecognised_command_hook(
@@ -576,10 +576,10 @@ impl StandardFramework {
     /// Using [`Self::normal_message`]:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
-    /// use serenity::framework::standard::macros::hook;
-    /// use serenity::framework::StandardFramework;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// use serenity_self::framework::standard::macros::hook;
+    /// use serenity_self::framework::StandardFramework;
     ///
     /// #[hook]
     /// async fn normal_message_hook(_: &Context, msg: &Message) {

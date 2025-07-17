@@ -8,7 +8,7 @@
 //! Import all of the exports:
 //!
 //! ```rust
-//! use serenity::prelude::*;
+//! use serenity_self::prelude::*;
 //! ```
 //!
 //! [`serenity::Error`]: crate::Error

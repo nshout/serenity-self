@@ -30,10 +30,10 @@
 //! command:
 //!
 //! ```rust,no_run
-//! use serenity::framework::standard::macros::{command, group};
-//! use serenity::framework::standard::{CommandResult, Configuration, StandardFramework};
-//! use serenity::model::channel::Message;
-//! use serenity::prelude::*;
+//! use serenity_self::framework::standard::macros::{command, group};
+//! use serenity_self::framework::standard::{CommandResult, Configuration, StandardFramework};
+//! use serenity_self::model::channel::Message;
+//! use serenity_self::prelude::*;
 //!
 //! #[command]
 //! async fn about(ctx: &Context, msg: &Message) -> CommandResult {

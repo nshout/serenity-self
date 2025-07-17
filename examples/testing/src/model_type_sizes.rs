@@ -1,4 +1,4 @@
-use serenity::model::prelude::*;
+use serenity_self::model::prelude::*;
 
 pub fn print_ranking() {
     let sizes = [

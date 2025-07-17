@@ -162,9 +162,9 @@ impl CurrentUser {
     /// Change the avatar:
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::{EditProfile, CreateAttachment};
-    /// # use serenity::http::Http;
-    /// # use serenity::model::user::CurrentUser;
+    /// # use serenity_self::builder::{EditProfile, CreateAttachment};
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::user::CurrentUser;
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -544,8 +544,8 @@ impl User {
     /// Make a command to tell the user what their tag is:
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
     /// # struct Handler;
     ///
     /// #[serenity::async_trait]
@@ -678,10 +678,10 @@ impl UserId {
     /// When a user sends a message with a content of `"~help"`, DM the author a help message
     ///
     /// ```rust,no_run
-    /// # use serenity::prelude::*;
-    /// # use serenity::model::prelude::*;
+    /// # use serenity_self::prelude::*;
+    /// # use serenity_self::model::prelude::*;
     /// # struct Handler;
-    /// use serenity::builder::CreateMessage;
+    /// use serenity_self::builder::CreateMessage;
     ///
     /// #[serenity::async_trait]
     /// # #[cfg(feature = "client")]

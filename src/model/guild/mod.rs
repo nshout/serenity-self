@@ -682,7 +682,7 @@ impl Guild {
     /// Create a guild called `"test"` in the [US West region] with no icon:
     ///
     /// ```rust,ignore
-    /// use serenity::model::Guild;
+    /// use serenity_self::model::Guild;
     ///
     /// let _guild = Guild::create_guild(&http, "test", None).await;
     /// ```
@@ -715,11 +715,11 @@ impl Guild {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::guild::Guild;
-    /// # use serenity::model::id::GuildId;
-    /// use serenity::builder::CreateChannel;
-    /// use serenity::model::channel::ChannelType;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::guild::Guild;
+    /// # use serenity_self::model::id::GuildId;
+    /// use serenity_self::builder::CreateChannel;
+    /// use serenity_self::model::channel::ChannelType;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -1128,8 +1128,8 @@ impl Guild {
     /// Change a guild's icon using a file named "icon.png":
     ///
     /// ```rust,no_run
-    /// # use serenity::builder::{EditGuild, CreateAttachment};
-    /// # use serenity::{http::Http, model::guild::Guild};
+    /// # use serenity_self::builder::{EditGuild, CreateAttachment};
+    /// # use serenity_self::{http::Http, model::guild::Guild};
     /// #
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -1291,7 +1291,7 @@ impl Guild {
     /// Change the order of a role:
     ///
     /// ```rust,ignore
-    /// use serenity::model::id::RoleId;
+    /// use serenity_self::model::id::RoleId;
     /// guild.edit_role_position(&context, RoleId::new(8), 2);
     /// ```
     ///
@@ -1342,11 +1342,11 @@ impl Guild {
     /// Rename a sticker:
     ///
     /// ```rust,no_run
-    /// # use serenity::http::Http;
-    /// # use serenity::model::guild::Guild;
-    /// # use serenity::model::id::GuildId;
-    /// use serenity::builder::EditSticker;
-    /// use serenity::model::id::StickerId;
+    /// # use serenity_self::http::Http;
+    /// # use serenity_self::model::guild::Guild;
+    /// # use serenity_self::model::id::GuildId;
+    /// use serenity_self::builder::EditSticker;
+    /// use serenity_self::model::id::StickerId;
     ///
     /// # async fn run() -> Result<(), Box<dyn std::error::Error>> {
     /// # let http: Http = unimplemented!();
@@ -2380,7 +2380,7 @@ impl Guild {
     /// Retrieve the Id of the shard for a guild with Id `81384788765712384`, using 17 shards:
     ///
     /// ```rust,ignore
-    /// use serenity::utils;
+    /// use serenity_self::utils;
     ///
     /// // assumes a `guild` has already been bound
     ///
@@ -2514,8 +2514,8 @@ impl Guild {
     /// Obtain a reference to a [`Role`] by its name.
     ///
     /// ```rust,no_run
-    /// # use serenity::model::prelude::*;
-    /// # use serenity::prelude::*;
+    /// # use serenity_self::model::prelude::*;
+    /// # use serenity_self::prelude::*;
     /// # struct Handler;
     ///
     /// #[serenity::async_trait]

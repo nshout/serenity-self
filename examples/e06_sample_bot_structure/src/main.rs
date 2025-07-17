@@ -3,7 +3,7 @@
 //! This can be enabled by specifying the feature in the dependency section:
 //!
 //! ```toml
-//! [dependencies.serenity]
+//! [dependencies.serenity_self]
 //! git = "https://github.com/serenity-rs/serenity.git"
 //! features = ["framework", "standard_framework"]
 //! ```
@@ -14,15 +14,15 @@ use std::collections::HashSet;
 use std::env;
 use std::sync::Arc;
 
-use serenity::async_trait;
-use serenity::framework::standard::macros::group;
-use serenity::framework::standard::Configuration;
-use serenity::framework::StandardFramework;
-use serenity::gateway::ShardManager;
-use serenity::http::Http;
-use serenity::model::event::ResumedEvent;
-use serenity::model::gateway::Ready;
-use serenity::prelude::*;
+use serenity_self::async_trait;
+use serenity_self::framework::standard::macros::group;
+use serenity_self::framework::standard::Configuration;
+use serenity_self::framework::StandardFramework;
+use serenity_self::gateway::ShardManager;
+use serenity_self::http::Http;
+use serenity_self::model::event::ResumedEvent;
+use serenity_self::model::gateway::Ready;
+use serenity_self::prelude::*;
 use tracing::{error, info};
 
 use crate::commands::math::*;

@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["my name <my@email.address>"]
 edition = "2018"
 
-[dependencies.serenity]
+[dependencies.serenity_self]
 features = ["framework", "standard_framework", "rustls_backend", "collector"]
 path = "../../"
 
