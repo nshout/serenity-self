@@ -31,9 +31,11 @@ use crate::http::{CacheHttp, Http, Typing};
 use crate::internal::prelude::*;
 use crate::model::prelude::*;
 
-/// Represents a guild's text, news, or voice channel. Some methods are available only for voice
-/// channels and some are only available for text channels. News channels are a subset of text
-/// channels and lack slow mode hence [`Self::rate_limit_per_user`] will be [`None`].
+/// Represents a guild's text, news, or voice channel.
+///
+/// Some methods are available only for voice channels and some are only available for text
+/// channels. News channels are a subset of text channels and lack slow mode hence
+/// [`Self::rate_limit_per_user`] will be [`None`].
 ///
 /// [Discord docs](https://discord.com/developers/docs/resources/channel#channel-object).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
@@ -200,7 +202,13 @@ impl GuildChannel {
     pub fn is_text_based(&self) -> bool {
         matches!(
             self.kind,
-            ChannelType::Text | ChannelType::News | ChannelType::Voice | ChannelType::Stage
+            ChannelType::Text
+                | ChannelType::News
+                | ChannelType::Voice
+                | ChannelType::Stage
+                | ChannelType::PublicThread
+                | ChannelType::PrivateThread
+                | ChannelType::NewsThread
         )
     }
 
@@ -753,6 +761,7 @@ impl GuildChannel {
     /// [Attach Files]: Permissions::ATTACH_FILES
     /// [Send Messages]: Permissions::SEND_MESSAGES
     #[cfg(feature = "cache")]
+    #[deprecated = "Use `Guild::user_permissions_in`"]
     #[inline]
     pub fn permissions_for_user(
         &self,
@@ -1014,13 +1023,11 @@ impl GuildChannel {
                 .collect()),
             ChannelType::News | ChannelType::Text => Ok(guild
                 .members
-                .iter()
-                .filter(|e| {
-                    self.permissions_for_user(cache, e.0)
-                        .map(|p| p.contains(Permissions::VIEW_CHANNEL))
-                        .unwrap_or(false)
+                .values()
+                .filter(|member| {
+                    guild.user_permissions_in(self, member).contains(Permissions::VIEW_CHANNEL)
                 })
-                .map(|e| e.1.clone())
+                .cloned()
                 .collect::<Vec<Member>>()),
             _ => Err(Error::from(ModelError::InvalidChannelType)),
         }

@@ -1,3 +1,5 @@
+//! A module for [`Client`] and supporting types.
+//!
 //! The Client contains information about a single bot's token, as well as event handlers.
 //! Dispatching events to configured handlers and starting the shards' connections are handled
 //! directly via the client. In addition, the `http` module and `Cache` are also automatically
@@ -78,7 +80,7 @@ pub struct ClientBuilder {
 
 #[cfg(feature = "gateway")]
 impl ClientBuilder {
-    fn _new(http: Http, intents: GatewayIntents) -> Self {
+    fn new_(http: Http, intents: GatewayIntents) -> Self {
         Self {
             data: TypeMap::new(),
             http,
@@ -102,7 +104,7 @@ impl ClientBuilder {
     /// framework via the [`Self::framework`] method, otherwise awaiting the builder will cause a
     /// panic.
     pub fn new(token: impl AsRef<str>, intents: GatewayIntents) -> Self {
-        Self::_new(Http::new(token.as_ref()), intents)
+        Self::new_(Http::new(token.as_ref()), intents)
     }
 
     /// Construct a new builder with a [`Http`] instance to calls methods on for the client
@@ -112,7 +114,7 @@ impl ClientBuilder {
     /// framework via the [`Self::framework`] method, otherwise awaiting the builder will cause a
     /// panic.
     pub fn new_with_http(http: Http, intents: GatewayIntents) -> Self {
-        Self::_new(http, intents)
+        Self::new_(http, intents)
     }
 
     /// Sets a token for the bot. If the token is not prefixed "Bot ", this method will
@@ -411,6 +413,8 @@ impl IntoFuture for ClientBuilder {
     }
 }
 
+/// A wrapper for HTTP and gateway connections.
+///
 /// The Client is the way to be able to start sending authenticated requests over the REST API, as
 /// well as initializing a WebSocket connection through [`Shard`]s. Refer to the [documentation on
 /// using sharding][sharding docs] for more information.
@@ -661,6 +665,10 @@ impl Client {
     /// # }
     /// ```
     ///
+    /// # Errors
+    ///
+    /// Returns a [`ClientError::Shutdown`] when all shards have shutdown due to an error.
+    ///
     /// [gateway docs]: crate::gateway#sharding
     #[instrument(skip(self))]
     pub async fn start(&mut self) -> Result<()> {
@@ -892,6 +900,10 @@ impl Client {
             self.shard_manager.shutdown_all().await;
 
             return Err(Error::Client(ClientError::ShardBootFailure));
+        }
+
+        if let Some(Err(err)) = self.shard_manager_return_value.next().await {
+            return Err(Error::Gateway(err));
         }
 
         Ok(())

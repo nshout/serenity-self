@@ -101,7 +101,7 @@ fn is_cooked(attr: &Attribute) -> bool {
 }
 
 pub fn is_rustfmt_or_clippy_attr(path: &Path) -> bool {
-    path.segments.first().map_or(false, |s| s.ident == "rustfmt" || s.ident == "clippy")
+    path.segments.first().is_some_and(|s| s.ident == "rustfmt" || s.ident == "clippy")
 }
 
 /// Removes cooked attributes from a vector of attributes. Uncooked attributes are left in the

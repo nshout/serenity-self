@@ -63,6 +63,7 @@ impl<'a> Request<'a> {
         self
     }
 
+    #[allow(clippy::missing_errors_doc)]
     #[instrument(skip(token))]
     pub fn build(
         self,
@@ -80,7 +81,7 @@ impl<'a> Request<'a> {
         if let Some(params) = self.params {
             path += "?";
             for (param, value) in params {
-                write!(path, "&{param}={value}").unwrap();
+                write!(path, "&{param}={value}").expect("writing to a string should never fail");
             }
         }
 

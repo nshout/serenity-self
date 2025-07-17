@@ -194,6 +194,10 @@ routes! ('a, {
     api!("/channels/{}/polls/{}/expire", channel_id, message_id),
     Some(RatelimitingKind::PathAndId(channel_id.into()));
 
+    ChannelVoiceStatus { channel_id: ChannelId },
+    api!("/channels/{}/voice-status", channel_id),
+    Some(RatelimitingKind::PathAndId(channel_id.into()));
+
     Gateway,
     api!("/gateway"),
     Some(RatelimitingKind::Path);
@@ -362,6 +366,22 @@ routes! ('a, {
     api!("/oauth2/applications/@me"),
     None;
 
+    SoundboardSend { channel_id: ChannelId },
+    api!("/channels/{}/send-soundboard-sound", channel_id),
+    Some(RatelimitingKind::PathAndId(channel_id.into()));
+
+    SoundboardDefaultSounds,
+    api!("/soundboard-default-sounds"),
+    Some(RatelimitingKind::Path);
+
+    GuildSoundboards { guild_id: GuildId },
+    api!("/guilds/{}/soundboard-sounds", guild_id),
+    Some(RatelimitingKind::PathAndId(guild_id.into()));
+
+    GuildSoundboard { guild_id: GuildId, sound_id: SoundId },
+    api!("/guilds/{}/soundboard-sounds/{}", guild_id, sound_id),
+    Some(RatelimitingKind::PathAndId(guild_id.into()));
+
     StatusIncidentsUnresolved,
     status!("/incidents/unresolved.json"),
     None;
@@ -380,6 +400,10 @@ routes! ('a, {
 
     StickerPacks,
     api!("/sticker-packs"),
+    Some(RatelimitingKind::Path);
+
+    StickerPack { sticker_pack_id: StickerPackId },
+    api!("/sticker-packs/{}", sticker_pack_id),
     Some(RatelimitingKind::Path);
 
     User { user_id: UserId },
@@ -468,6 +492,14 @@ routes! ('a, {
 
     Skus { application_id: ApplicationId },
     api!("/applications/{}/skus", application_id),
+    Some(RatelimitingKind::PathAndId(application_id.into()));
+
+    Emoji { application_id: ApplicationId, emoji_id: EmojiId },
+    api!("/applications/{}/emojis/{}", application_id, emoji_id),
+    Some(RatelimitingKind::PathAndId(application_id.into()));
+
+    Emojis { application_id: ApplicationId },
+    api!("/applications/{}/emojis", application_id),
     Some(RatelimitingKind::PathAndId(application_id.into()));
 
     Entitlement { application_id: ApplicationId, entitlement_id: EntitlementId },

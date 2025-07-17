@@ -1,10 +1,11 @@
-use std::cell::Cell;
 use std::fmt;
 use std::hash::Hash;
 use std::marker::PhantomData;
 use std::num::NonZeroU64;
 
+use serde::de::Error as DeError;
 use serde::ser::{Serialize, SerializeSeq, Serializer};
+use serde_cow::CowStr;
 
 use super::prelude::*;
 
@@ -80,28 +81,6 @@ where
         Ok(NonZeroU64::new(val).map(Id::from))
     } else {
         Ok(None)
-    }
-}
-
-pub(super) struct SerializeIter<I>(Cell<Option<I>>);
-
-impl<I> SerializeIter<I> {
-    pub fn new(iter: I) -> Self {
-        Self(Cell::new(Some(iter)))
-    }
-}
-
-impl<Iter, Item> serde::Serialize for SerializeIter<Iter>
-where
-    Iter: Iterator<Item = Item>,
-    Item: serde::Serialize,
-{
-    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        let Some(iter) = self.0.take() else {
-            return serializer.serialize_seq(Some(0))?.end();
-        };
-
-        serializer.collect_seq(iter)
     }
 }
 
@@ -360,6 +339,7 @@ pub mod secret {
         Option::<S>::deserialize(deserializer).map(|s| s.map(Secret::new))
     }
 
+    #[allow(clippy::ref_option)]
     pub fn serialize<S: Serialize + Zeroize, Sr: Serializer>(
         secret: &Option<Secret<S>>,
         serializer: Sr,
@@ -425,4 +405,107 @@ where
 
         Ok(map)
     }
+}
+
+pub fn discord_colours_opt<'de, D>(deserializer: D) -> Result<Option<Vec<Colour>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let vec_str: Option<Vec<CowStr<'_>>> = Deserialize::deserialize(deserializer)?;
+
+    let Some(vec_str) = vec_str else { return Ok(None) };
+
+    if vec_str.is_empty() {
+        return Ok(None);
+    }
+
+    deserialize_colours::<D>(vec_str).map(Some)
+}
+
+pub fn discord_colours<'de, D>(deserializer: D) -> Result<Vec<Colour>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let vec_str: Vec<CowStr<'_>> = Deserialize::deserialize(deserializer)?;
+
+    deserialize_colours::<D>(vec_str)
+}
+
+fn deserialize_colours<'de, D>(vec_str: Vec<CowStr<'_>>) -> Result<Vec<Colour>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    vec_str
+        .into_iter()
+        .map(|s| {
+            let s = s.0.strip_prefix('#').ok_or_else(|| DeError::custom("Invalid colour data"))?;
+
+            if s.len() != 6 {
+                return Err(DeError::custom("Invalid colour data length"));
+            }
+
+            u32::from_str_radix(s, 16)
+                .map(Colour::new)
+                .map_err(|_| DeError::custom("Invalid colour data"))
+        })
+        .collect()
+}
+
+// A function used for deserializing components within a MessageUpdateEvent.
+// Due to discord now sending the whole message payload, we don't need to distinguish between None
+// and empty, as such we always return Some.
+pub fn optional_deserialize_components<'de, D>(
+    deserializer: D,
+) -> Result<Option<Vec<ActionRow>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    deserialize_components(deserializer).map(Some)
+}
+
+// Custom deserialize function to deserialize components safely without knocking the whole message
+// out when new components are found but not supported.
+pub fn deserialize_components<'de, D>(deserializer: D) -> Result<Vec<ActionRow>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct ComponentsVisitor;
+
+    impl<'de> Visitor<'de> for ComponentsVisitor {
+        type Value = Vec<ActionRow>;
+
+        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            formatter.write_str("a sequence of ActionRow elements")
+        }
+
+        fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
+        where
+            A: serde::de::SeqAccess<'de>,
+        {
+            let mut components = Vec::with_capacity(seq.size_hint().unwrap_or_default());
+
+            while let Some(map) = seq.next_element::<JsonMap>()? {
+                // We deserialize only the `kind` field to determine the component type.
+                // We later use this to check if its a supported component before deserializing the
+                // entire payload.
+                let raw_kind =
+                    map.get("type").ok_or_else(|| DeError::missing_field("type"))?.clone();
+                let kind: i64 = deserialize_val(raw_kind)?;
+
+                // Action rows are the only top level component supported in serenity at this time.
+                if kind == 1 {
+                    let value = Value::from(map);
+                    components.push(ActionRow::deserialize(value).map_err(DeError::custom)?);
+                } else {
+                    // Top level component is not an action row and cannot be supported on
+                    // serenity@current without breaking changes, so we skip them.
+                    tracing::debug!("Skipping component with unsupported kind: {kind}");
+                }
+            }
+
+            Ok(components)
+        }
+    }
+
+    deserializer.deserialize_seq(ComponentsVisitor)
 }

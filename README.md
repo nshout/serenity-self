@@ -2,15 +2,25 @@
 
 # serenity-self
 
-![serenity-self logo](logo.png)
+![serenity-self logo][logo]
 
-Serenity-self is a Rust library for the Discord API with user account support.
+Serenity-self is a fork of the Serenity Rust library for the Discord API with the enhancement of user account support.
 
-### Disclaimer:
+## Disclaimer:
 
 Automating user accounts is a violation of Discord's Terms of Service.
 This library serves as a proof of concept, and I cannot endorse its usage.
 Proceed at your own risk.
+
+## Fork Changes
+
+Changed the token check to allow user tokens for the development of selfbots.
+
+Credits
+- [Serenity](https://github.com/serenity-rs/serenity) for the original Discord API wrapper
+- [@Suffix](https://github.com/suffixsec) for testing and helping with bug hunting
+
+## Examples
 
 View the [examples] on how to use serenity's API. To make a bot with slash commands or text
 commands, see the [poise](https://github.com/serenity-rs/poise) framework built on top of serenity.
@@ -28,10 +38,9 @@ This will cause your handler to be called when a [`Event::MessageCreate`] is
 received. Each handler is given a [`Context`], giving information about the
 event. See the [client's module-level documentation].
 
-~~The [`Shard`] is transparently handled by the library, removing
+The [`Shard`] is transparently handled by the library, removing
 unnecessary complexity. Sharded connections are automatically handled for
-you. See the [gateway's documentation][gateway docs] for more information.~~~
-Removed.
+you. See the [gateway's documentation][gateway docs] for more information.
 
 A [`Cache`] is also provided for you. This will be updated automatically for
 you as data is received from the Discord API via events. When calling a
@@ -44,14 +53,6 @@ accurate as possible - Discord hosts [official documentation][discord docs]. If
 you need to be sure that some information piece is accurate, refer to their
 docs.
 
-# Fork Changes
-
-Changed the token check to allow user tokens for the development of selfbots.
-
-Credits
-- [Serenity](https://github.com/serenity-rs/serenity) for the original Discord API wrapper
-- [@Suffix](https://github.com/suffixsec) for testing and helping with bug hunting
-
 # Example Bot
 
 A basic ping-pong bot looks like:
@@ -60,44 +61,39 @@ A basic ping-pong bot looks like:
 use std::env;
 
 use serenity::async_trait;
-use serenity::prelude::*;
 use serenity::model::channel::Message;
-use serenity::framework::standard::macros::{command, group};
-use serenity::framework::standard::{StandardFramework, Configuration, CommandResult};
-
-#[group]
-#[commands(ping)]
-struct General;
+use serenity::prelude::*;
 
 struct Handler;
 
 #[async_trait]
-impl EventHandler for Handler {}
-
-#[tokio::main]
-async fn main() {
-    let framework = StandardFramework::new().group(&GENERAL_GROUP);
-    framework.configure(Configuration::new().prefix("~")); // set the bot's prefix to "~"
-
-    // Login with a bot token from the environment
-    let token = env::var("DISCORD_TOKEN").expect("token");
-    let mut client = Client::builder(token)
-        .event_handler(Handler)
-        .framework(framework)
-        .await
-        .expect("Error creating client");
-
-    // start listening for events by starting a single shard
-    if let Err(why) = client.start().await {
-        println!("An error occurred while running the client: {:?}", why);
+impl EventHandler for Handler {
+    async fn message(&self, ctx: Context, msg: Message) {
+        if msg.content == "!ping" {
+            if let Err(why) = msg.channel_id.say(&ctx.http, "Pong!").await {
+                println!("Error sending message: {why:?}");
+            }
+        }
     }
 }
 
-#[command]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Pong!").await?;
+#[tokio::main]
+async fn main() {
+    // Login with a bot token from the environment
+    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    // Set gateway intents, which decides what events the bot will be notified about
+    let intents = GatewayIntents::GUILD_MESSAGES
+        | GatewayIntents::DIRECT_MESSAGES
+        | GatewayIntents::MESSAGE_CONTENT;
 
-    Ok(())
+    // Create a new instance of the Client, logging in as a bot.
+    let mut client =
+        Client::builder(&token, intents).event_handler(Handler).await.expect("Err creating client");
+
+    // Start listening for events by starting a single shard
+    if let Err(why) = client.start().await {
+        println!("Client error: {why:?}");
+    }
 }
 ```
 
@@ -141,7 +137,7 @@ Cargo.toml:
 [dependencies.serenity]
 default-features = false
 features = ["pick", "your", "feature", "names", "here"]
-version = "0.13"
+version = "0.12"
 ```
 
 The default features are: `builder`, `cache`, `chrono`, `client`, `framework`, `gateway`,
@@ -171,7 +167,7 @@ the Discord gateway over a WebSocket client.
 enough level that optional parameters can be provided at will via a JsonMap.
 - **model**: Method implementations for models, acting as helper methods over
 the HTTP functions.
-- **standard_framework**: A standard, default implementation of the Framework
+- **standard_framework**: A standard, default implementation of the Framework. **NOTE**: Deprecated as of v0.12.1. Using the [poise](https://github.com/serenity-rs/poise) framework is recommended instead.
 - **utils**: Utility functions for common use cases by users.
 - **voice**: Enables registering a voice plugin to the client, which will handle actual voice connections from Discord.
 [lavalink-rs][project:lavalink-rs] or [Songbird][project:songbird] are recommended voice plugins.
@@ -214,7 +210,7 @@ features = [
     "utils",
     "rustls_backend",
 ]
-version = "0.13"
+version = "0.12"
 ```
 
 # Dependencies

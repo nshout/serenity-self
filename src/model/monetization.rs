@@ -1,3 +1,7 @@
+#[cfg(feature = "model")]
+use crate::builder::{Builder as _, GetEntitlements};
+#[cfg(feature = "model")]
+use crate::http::CacheHttp;
 use crate::model::prelude::*;
 
 /// A premium offering that can be made available to an application's users and guilds.
@@ -18,6 +22,20 @@ pub struct Sku {
     pub slug: String,
     /// Flags indicating the type of subscription the SKU represents.
     pub flags: SkuFlags,
+}
+
+impl Sku {
+    /// Returns the store url for this SKU. If included in a message, will render as a rich embed.
+    /// See the [Discord docs] for details.
+    ///
+    /// [Discord docs]: https://discord.com/developers/docs/monetization/skus#linking-to-your-skus
+    #[must_use]
+    pub fn url(&self) -> String {
+        format!(
+            "https://discord.com/application-directory/{}/store/{}",
+            self.application_id, self.id
+        )
+    }
 }
 
 enum_number! {
@@ -80,6 +98,30 @@ pub struct Entitlement {
     pub ends_at: Option<Timestamp>,
     /// The ID of the guild that is granted access to the SKU.
     pub guild_id: Option<GuildId>,
+}
+
+impl Entitlement {
+    /// Returns a link to the SKU corresponding to this entitlement. See [`Sku::url`] for details.
+    #[must_use]
+    pub fn sku_url(&self) -> String {
+        format!(
+            "https://discord.com/application-directory/{}/store/{}",
+            self.application_id, self.sku_id
+        )
+    }
+
+    /// Returns all entitlements for the current application, active and expired.
+    ///
+    /// # Errors
+    ///
+    /// May error due to an invalid response from discord, or network error.
+    #[cfg(feature = "model")]
+    pub async fn list(
+        cache_http: impl CacheHttp,
+        builder: GetEntitlements,
+    ) -> Result<Vec<Entitlement>> {
+        builder.execute(cache_http, ()).await
+    }
 }
 
 enum_number! {

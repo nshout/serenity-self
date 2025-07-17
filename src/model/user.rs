@@ -58,7 +58,7 @@ pub(crate) mod discriminator {
 
     struct DiscriminatorVisitor;
 
-    impl<'de> Visitor<'de> for DiscriminatorVisitor {
+    impl Visitor<'_> for DiscriminatorVisitor {
         type Value = u16;
 
         fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -84,7 +84,7 @@ pub(crate) mod discriminator {
         deserializer.deserialize_option(OptionalDiscriminatorVisitor)
     }
 
-    #[allow(clippy::trivially_copy_pass_by_ref)]
+    #[allow(clippy::trivially_copy_pass_by_ref, clippy::ref_option)]
     pub fn serialize<S: Serializer>(
         value: &Option<NonZeroU16>,
         serializer: S,
@@ -445,6 +445,17 @@ impl User {
         self.id.direct_message(cache_http, builder).await
     }
 
+    /// Calculates the user's display name.
+    ///
+    /// The global name takes priority over the user's username if it exists.
+    ///
+    /// Note: Guild specific information is not included as this is only available on the [Member].
+    #[inline]
+    #[must_use]
+    pub fn display_name(&self) -> &str {
+        self.global_name.as_deref().unwrap_or(&self.name)
+    }
+
     /// This is an alias of [`Self::direct_message`].
     #[allow(clippy::missing_errors_doc)]
     #[inline]
@@ -765,7 +776,7 @@ impl From<Member> for UserId {
     }
 }
 
-impl<'a> From<&'a Member> for UserId {
+impl From<&Member> for UserId {
     /// Gets the Id of a [`Member`].
     fn from(member: &Member) -> UserId {
         member.user.id
@@ -779,7 +790,7 @@ impl From<User> for UserId {
     }
 }
 
-impl<'a> From<&'a User> for UserId {
+impl From<&User> for UserId {
     /// Gets the Id of a [`User`].
     fn from(user: &User) -> UserId {
         user.id
@@ -819,7 +830,7 @@ fn tag(name: &str, discriminator: Option<NonZeroU16>) -> String {
     tag.push_str(name);
     if let Some(discriminator) = discriminator {
         tag.push('#');
-        write!(tag, "{discriminator:04}").unwrap();
+        write!(tag, "{discriminator:04}").expect("writing to a string should never fail");
     }
     tag
 }

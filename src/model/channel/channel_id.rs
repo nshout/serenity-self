@@ -163,9 +163,10 @@ impl ChannelId {
         http.as_ref().delete_message(self, message_id.into(), None).await
     }
 
-    /// Deletes all messages by Ids from the given vector in the given channel.
+    /// Deletes messages by Ids from the given vector in the given channel.
     ///
-    /// The minimum amount of messages is 2 and the maximum amount is 100.
+    /// The Discord API supports deleting between 2 and 100 messages at once. This function
+    /// also handles the case of a single message by calling `delete_message` internally.
     ///
     /// Requires the [Manage Messages] permission.
     ///
@@ -173,7 +174,7 @@ impl ChannelId {
     ///
     /// # Errors
     ///
-    /// Returns [`ModelError::BulkDeleteAmount`] if an attempt was made to delete either 0 or more
+    /// Returns [`ModelError::BulkDeleteAmount`] if an attempt was made to delete 0 or more
     /// than 100 messages.
     ///
     /// Also will return [`Error::Http`] if the current user lacks permission to delete messages.
@@ -1089,6 +1090,37 @@ impl ChannelId {
     pub async fn end_poll(self, http: impl AsRef<Http>, message_id: MessageId) -> Result<Message> {
         http.as_ref().expire_poll(self, message_id).await
     }
+
+    /// Sends a soundboard sound to this voice channel.
+    ///
+    /// # Errors
+    ///
+    /// Errors if this channel ID does not point to a voice channel, or you do not
+    /// have the required [`SPEAK`], [`USE_SOUNDBOARD`], and/or
+    /// [`USE_EXTERNAL_SOUNDS`] permissions.
+    ///
+    /// [`SPEAK`]: Permissions::SPEAK
+    /// [`USE_SOUNDBOARD`]: Permissions::USE_SOUNDBOARD
+    /// [`USE_EXTERNAL_SOUNDS`]: Permissions::USE_EXTERNAL_SOUNDS
+    pub async fn send_soundboard(
+        self,
+        http: impl AsRef<Http>,
+        sound_id: SoundId,
+        guild_id: Option<GuildId>,
+    ) -> Result<()> {
+        #[derive(serde::Serialize)]
+        struct SendSoundboard {
+            sound_id: SoundId,
+            source_guild_id: Option<GuildId>,
+        }
+
+        let map = SendSoundboard {
+            sound_id,
+            source_guild_id: guild_id,
+        };
+
+        http.as_ref().send_soundboard_sound(self, &map).await
+    }
 }
 
 #[cfg(feature = "model")]
@@ -1100,7 +1132,7 @@ impl From<Channel> for ChannelId {
 }
 
 #[cfg(feature = "model")]
-impl<'a> From<&'a Channel> for ChannelId {
+impl From<&Channel> for ChannelId {
     /// Gets the Id of a [`Channel`].
     fn from(channel: &Channel) -> ChannelId {
         channel.id()
@@ -1114,7 +1146,7 @@ impl From<PrivateChannel> for ChannelId {
     }
 }
 
-impl<'a> From<&'a PrivateChannel> for ChannelId {
+impl From<&PrivateChannel> for ChannelId {
     /// Gets the Id of a private channel.
     fn from(private_channel: &PrivateChannel) -> ChannelId {
         private_channel.id
@@ -1128,7 +1160,7 @@ impl From<GuildChannel> for ChannelId {
     }
 }
 
-impl<'a> From<&'a GuildChannel> for ChannelId {
+impl From<&GuildChannel> for ChannelId {
     /// Gets the Id of a guild channel.
     fn from(public_channel: &GuildChannel) -> ChannelId {
         public_channel.id
@@ -1142,7 +1174,7 @@ impl From<WebhookChannel> for ChannelId {
     }
 }
 
-impl<'a> From<&'a WebhookChannel> for ChannelId {
+impl From<&WebhookChannel> for ChannelId {
     /// Gets the Id of a webhook channel.
     fn from(webhook_channel: &WebhookChannel) -> ChannelId {
         webhook_channel.id

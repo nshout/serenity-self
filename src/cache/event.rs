@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 use super::{Cache, CacheUpdate};
 use crate::model::channel::{GuildChannel, Message};
 use crate::model::event::{
@@ -311,21 +309,32 @@ impl CacheUpdate for GuildUpdateEvent {
         if let Some(mut guild) = cache.guilds.get_mut(&self.guild.id) {
             guild.afk_metadata.clone_from(&self.guild.afk_metadata);
             guild.banner.clone_from(&self.guild.banner);
+            guild.description.clone_from(&self.guild.description);
             guild.discovery_splash.clone_from(&self.guild.discovery_splash);
+            guild.emojis.clone_from(&self.guild.emojis);
             guild.features.clone_from(&self.guild.features);
             guild.icon.clone_from(&self.guild.icon);
+            guild.icon_hash.clone_from(&self.guild.icon_hash);
             guild.name.clone_from(&self.guild.name);
             guild.owner_id.clone_from(&self.guild.owner_id);
+            guild.preferred_locale.clone_from(&self.guild.preferred_locale);
             guild.roles.clone_from(&self.guild.roles);
             guild.splash.clone_from(&self.guild.splash);
+            guild.stickers.clone_from(&self.guild.stickers);
             guild.vanity_url_code.clone_from(&self.guild.vanity_url_code);
             guild.welcome_screen.clone_from(&self.guild.welcome_screen);
+            guild.application_id = self.guild.application_id;
+            guild.approximate_member_count = self.guild.approximate_member_count;
+            guild.approximate_presence_count = self.guild.approximate_presence_count;
             guild.default_message_notifications = self.guild.default_message_notifications;
+            guild.explicit_content_filter = self.guild.explicit_content_filter;
             guild.max_members = self.guild.max_members;
             guild.max_presences = self.guild.max_presences;
             guild.max_video_channel_users = self.guild.max_video_channel_users;
+            guild.max_stage_video_channel_users = self.guild.max_stage_video_channel_users;
             guild.mfa_level = self.guild.mfa_level;
             guild.nsfw_level = self.guild.nsfw_level;
+            guild.premium_progress_bar_enabled = self.guild.premium_progress_bar_enabled;
             guild.premium_subscription_count = self.guild.premium_subscription_count;
             guild.premium_tier = self.guild.premium_tier;
             guild.public_updates_channel_id = self.guild.public_updates_channel_id;
@@ -474,26 +483,7 @@ impl CacheUpdate for ReadyEvent {
             cache.unavailable_guilds.insert(unavailable.id, ());
         }
 
-        // We may be removed from some guilds between disconnect and ready, so handle that.
-        let mut guilds_to_remove = vec![];
-        let ready_guilds_hashset =
-            self.ready.guilds.iter().map(|status| status.id).collect::<HashSet<_>>();
         let shard_data = self.ready.shard.unwrap_or_else(|| ShardInfo::new(ShardId(1), 1));
-
-        for guild_entry in cache.guilds.iter() {
-            let guild = guild_entry.key();
-            // Only handle data for our shard.
-            if crate::utils::shard_id(*guild, shard_data.total) == shard_data.id.0
-                && !ready_guilds_hashset.contains(guild)
-            {
-                guilds_to_remove.push(*guild);
-            }
-        }
-        if !guilds_to_remove.is_empty() {
-            for guild in guilds_to_remove {
-                cache.guilds.remove(&guild);
-            }
-        }
 
         {
             let mut cached_shard_data = cache.shard_data.write();

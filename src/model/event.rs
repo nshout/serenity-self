@@ -15,6 +15,7 @@ use crate::model::utils::{
     deserialize_val,
     emojis,
     members,
+    optional_deserialize_components,
     remove_from_map,
     remove_from_map_opt,
     stickers,
@@ -525,16 +526,13 @@ pub struct MessageUpdateEvent {
     pub flags: Option<Option<MessageFlags>>,
     #[serde(default, deserialize_with = "deserialize_some")]
     pub referenced_message: Option<Option<Box<Message>>>,
-    #[cfg_attr(
-        all(not(ignore_serenity_deprecated), feature = "unstable_discord_api"),
-        deprecated = "Use interaction_metadata"
-    )]
+    #[cfg_attr(not(ignore_serenity_deprecated), deprecated = "Use interaction_metadata")]
     #[serde(default, deserialize_with = "deserialize_some")]
     pub interaction: Option<Option<Box<MessageInteraction>>>,
-    #[cfg(feature = "unstable_discord_api")]
     pub interaction_metadata: Option<Option<Box<MessageInteractionMetadata>>>,
     #[serde(default, deserialize_with = "deserialize_some")]
     pub thread: Option<Option<GuildChannel>>,
+    #[serde(default, deserialize_with = "optional_deserialize_components")]
     pub components: Option<Vec<ActionRow>>,
     pub sticker_items: Option<Vec<StickerItem>>,
     pub position: Option<Option<u64>>,
@@ -576,7 +574,6 @@ impl MessageUpdateEvent {
             flags,
             referenced_message,
             interaction,
-            #[cfg(feature = "unstable_discord_api")]
             interaction_metadata,
             thread,
             components,
@@ -615,7 +612,6 @@ impl MessageUpdateEvent {
         if let Some(x) = flags { message.flags.clone_from(x) }
         if let Some(x) = referenced_message { message.referenced_message.clone_from(x) }
         if let Some(x) = interaction { message.interaction.clone_from(x) }
-        #[cfg(feature = "unstable_discord_api")]
         if let Some(x) = interaction_metadata { message.interaction_metadata.clone_from(x) }
         if let Some(x) = thread { message.thread.clone_from(x) }
         if let Some(x) = components { message.components.clone_from(x) }
@@ -1104,7 +1100,7 @@ pub struct MessagePollVoteRemoveEvent {
 #[serde(untagged)]
 pub enum GatewayEvent {
     Dispatch(u64, Event),
-    Heartbeat(u64),
+    Heartbeat(#[deprecated = "always 0 because it is never provided by the gateway"] u64),
     Reconnect,
     /// Whether the session can be resumed.
     InvalidateSession(bool),
@@ -1124,7 +1120,9 @@ impl<'de> Deserialize<'de> for GatewayEvent {
                 deserialize_val(Value::from(map))?,
             ),
             Opcode::Heartbeat => {
-                GatewayEvent::Heartbeat(seq.ok_or_else(|| DeError::missing_field("s"))?)
+                // Placeholder value. Discord expects the last Dispatch
+                // sequence number and doesn't send it with the heartbeat.
+                GatewayEvent::Heartbeat(0)
             },
             Opcode::InvalidSession => {
                 GatewayEvent::InvalidateSession(remove_from_map(&mut map, "d")?)

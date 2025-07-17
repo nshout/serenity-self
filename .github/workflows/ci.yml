@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 env:
   rust_min: 1.74.0
-  rust_nightly: nightly-2023-11-16
+  rust_nightly: nightly-2025-05-18
 
 jobs:
   test:
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@master
@@ -93,7 +93,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain (${{ env.rust_nightly }})
         uses: dtolnay/rust-toolchain@master
@@ -119,7 +119,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -149,7 +149,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain (${{ env.rust_min }})
         uses: dtolnay/rust-toolchain@master
@@ -162,6 +162,12 @@ jobs:
       - name: Cache
         uses: Swatinem/rust-cache@v2
 
+      - name: Pin problematic dependencies to working versions
+        run: |
+          cargo update idna_adapter --precise 1.1.0
+          cargo update triomphe --precise 0.1.11
+          cargo update base64ct --precise 1.7.3
+
       - name: Check
         run: cargo check --features full
 
@@ -171,7 +177,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain (${{ env.rust_nightly }})
         uses: dtolnay/rust-toolchain@master
@@ -195,7 +201,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain (${{ env.rust_nightly }})
         uses: dtolnay/rust-toolchain@master
@@ -221,7 +227,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable

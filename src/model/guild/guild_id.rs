@@ -10,6 +10,7 @@ use crate::builder::{
     CreateChannel,
     CreateCommand,
     CreateScheduledEvent,
+    CreateSoundboard,
     CreateSticker,
     EditAutoModRule,
     EditCommandPermissions,
@@ -19,6 +20,7 @@ use crate::builder::{
     EditMember,
     EditRole,
     EditScheduledEvent,
+    EditSoundboard,
     EditSticker,
 };
 #[cfg(all(feature = "cache", feature = "model"))]
@@ -33,7 +35,6 @@ use crate::http::{CacheHttp, Http, UserPagination};
 use crate::internal::prelude::*;
 #[cfg(feature = "model")]
 use crate::json::json;
-use crate::model::guild::SerializeIter;
 use crate::model::prelude::*;
 
 #[cfg(feature = "model")]
@@ -209,7 +210,7 @@ impl GuildId {
     /// [Ban Members]: Permissions::BAN_MEMBERS
     #[inline]
     pub async fn ban(self, http: impl AsRef<Http>, user: impl Into<UserId>, dmd: u8) -> Result<()> {
-        self._ban(http, user.into(), dmd, None).await
+        self.ban_(http, user.into(), dmd, None).await
     }
 
     /// Ban a [`User`] from the guild with a reason. Refer to [`Self::ban`] to further
@@ -227,10 +228,10 @@ impl GuildId {
         dmd: u8,
         reason: impl AsRef<str>,
     ) -> Result<()> {
-        self._ban(http, user.into(), dmd, Some(reason.as_ref())).await
+        self.ban_(http, user.into(), dmd, Some(reason.as_ref())).await
     }
 
-    async fn _ban(
+    async fn ban_(
         self,
         http: impl AsRef<Http>,
         user: UserId,
@@ -263,18 +264,18 @@ impl GuildId {
     pub async fn bulk_ban(
         self,
         http: &Http,
-        users: impl IntoIterator<Item = UserId>,
+        user_ids: &[UserId],
         delete_message_seconds: u32,
         reason: Option<&str>,
     ) -> Result<BulkBanResponse> {
         #[derive(serde::Serialize)]
-        struct BulkBan<I> {
-            user_ids: I,
+        struct BulkBan<'a> {
+            user_ids: &'a [UserId],
             delete_message_seconds: u32,
         }
 
         let map = BulkBan {
-            user_ids: SerializeIter::new(users.into_iter()),
+            user_ids,
             delete_message_seconds,
         };
 
@@ -299,6 +300,21 @@ impl GuildId {
         limit: Option<u8>,
     ) -> Result<Vec<Ban>> {
         http.as_ref().get_bans(self, target, limit).await
+    }
+
+    /// Gets a user's ban from the guild.
+    /// See [`Http::get_ban`] for details.
+    ///
+    /// **Note**: Requires the [Ban Members] permission.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if the current user lacks permission.
+    ///
+    /// [Ban Members]: Permissions::BAN_MEMBERS
+    #[inline]
+    pub async fn get_ban(self, http: impl AsRef<Http>, user_id: UserId) -> Result<Option<Ban>> {
+        http.as_ref().get_ban(self, user_id).await
     }
 
     /// Gets a list of the guild's audit log entries
@@ -897,6 +913,16 @@ impl GuildId {
         builder: EditGuildWidget<'_>,
     ) -> Result<GuildWidget> {
         builder.execute(cache_http, self).await
+    }
+
+    /// Gets a specific role in the guild, by Id.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if the current user is not in the guild, or if the role does not
+    /// exist.
+    pub async fn role(self, http: impl AsRef<Http>, role_id: RoleId) -> Result<Role> {
+        http.as_ref().get_guild_role(self, role_id).await
     }
 
     /// Gets all of the guild's roles over the REST API.
@@ -1686,6 +1712,72 @@ impl GuildId {
     pub async fn get_active_threads(self, http: impl AsRef<Http>) -> Result<ThreadsData> {
         http.as_ref().get_guild_active_threads(self).await
     }
+
+    /// Gets a soundboard sound from the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if there is an error in the deserialization, or if the bot issuing
+    /// the request is not in the guild.
+    pub async fn get_soundboard(
+        self,
+        http: impl AsRef<Http>,
+        sound_id: SoundId,
+    ) -> Result<Soundboard> {
+        http.as_ref().get_guild_soundboard(self, sound_id).await
+    }
+
+    /// Gets all soundboard sounds from the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if there is an error in the deserialization, or if the bot issuing
+    /// the request is not in the guild.
+    pub async fn get_soundboards(self, http: impl AsRef<Http>) -> Result<Vec<Soundboard>> {
+        http.as_ref().get_guild_soundboards(self).await
+    }
+
+    /// Creates a soundboard sound for the guild.
+    ///
+    /// # Errors
+    ///
+    /// See [`CreateSoundboard::execute`] for a list of possible errors.
+    pub async fn create_soundboard(
+        self,
+        cache_http: impl CacheHttp,
+        builder: CreateSoundboard<'_>,
+    ) -> Result<Soundboard> {
+        builder.execute(cache_http, self).await
+    }
+
+    /// Edits a soundboard sound for the guild.
+    ///
+    /// # Errors
+    ///
+    /// See [`EditSoundboard::execute`] for a list of possible errors.
+    pub async fn edit_soundboard(
+        self,
+        cache_http: impl CacheHttp,
+        sound_id: SoundId,
+        builder: EditSoundboard<'_>,
+    ) -> Result<Soundboard> {
+        builder.execute(cache_http, (self, sound_id)).await
+    }
+
+    /// Deletes a soundboard sound for the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if the current user lacks permission, or if a
+    /// soundboard sound with that Id does not exist.
+    pub async fn delete_soundboard(
+        self,
+        http: impl AsRef<Http>,
+        sound_id: SoundId,
+        audit_log_reason: Option<&str>,
+    ) -> Result<()> {
+        http.as_ref().delete_guild_soundboard(self, sound_id, audit_log_reason).await
+    }
 }
 
 impl From<PartialGuild> for GuildId {
@@ -1695,7 +1787,7 @@ impl From<PartialGuild> for GuildId {
     }
 }
 
-impl<'a> From<&'a PartialGuild> for GuildId {
+impl From<&PartialGuild> for GuildId {
     /// Gets the Id of a partial guild.
     fn from(guild: &PartialGuild) -> GuildId {
         guild.id
@@ -1709,7 +1801,7 @@ impl From<GuildInfo> for GuildId {
     }
 }
 
-impl<'a> From<&'a GuildInfo> for GuildId {
+impl From<&GuildInfo> for GuildId {
     /// Gets the Id of Guild information struct.
     fn from(guild_info: &GuildInfo) -> GuildId {
         guild_info.id
@@ -1723,7 +1815,7 @@ impl From<InviteGuild> for GuildId {
     }
 }
 
-impl<'a> From<&'a InviteGuild> for GuildId {
+impl From<&InviteGuild> for GuildId {
     /// Gets the Id of Invite Guild struct.
     fn from(invite_guild: &InviteGuild) -> GuildId {
         invite_guild.id
@@ -1737,7 +1829,7 @@ impl From<Guild> for GuildId {
     }
 }
 
-impl<'a> From<&'a Guild> for GuildId {
+impl From<&Guild> for GuildId {
     /// Gets the Id of Guild.
     fn from(live_guild: &Guild) -> GuildId {
         live_guild.id
@@ -1751,7 +1843,7 @@ impl From<WebhookGuild> for GuildId {
     }
 }
 
-impl<'a> From<&'a WebhookGuild> for GuildId {
+impl From<&WebhookGuild> for GuildId {
     /// Gets the Id of Webhook Guild struct.
     fn from(webhook_guild: &WebhookGuild) -> GuildId {
         webhook_guild.id

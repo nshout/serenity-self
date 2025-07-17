@@ -313,13 +313,13 @@ pub struct CreateCommand {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(rename = "type")]
     kind: Option<CommandType>,
-    #[cfg(feature = "unstable_discord_api")]
     #[serde(skip_serializing_if = "Option::is_none")]
     integration_types: Option<Vec<InstallationContext>>,
-    #[cfg(feature = "unstable_discord_api")]
     #[serde(skip_serializing_if = "Option::is_none")]
     contexts: Option<Vec<InteractionContext>>,
     nsfw: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    handler: Option<EntryPointHandlerType>,
 }
 
 impl CreateCommand {
@@ -335,13 +335,12 @@ impl CreateCommand {
             default_member_permissions: None,
             dm_permission: None,
 
-            #[cfg(feature = "unstable_discord_api")]
             integration_types: None,
-            #[cfg(feature = "unstable_discord_api")]
             contexts: None,
 
             options: Vec::new(),
             nsfw: false,
+            handler: None,
         }
     }
 
@@ -430,28 +429,24 @@ impl CreateCommand {
         self
     }
 
-    #[cfg(feature = "unstable_discord_api")]
     /// Adds an installation context that this application command can be used in.
     pub fn add_integration_type(mut self, integration_type: InstallationContext) -> Self {
         self.integration_types.get_or_insert_with(Vec::default).push(integration_type);
         self
     }
 
-    #[cfg(feature = "unstable_discord_api")]
     /// Sets the installation contexts that this application command can be used in.
     pub fn integration_types(mut self, integration_types: Vec<InstallationContext>) -> Self {
         self.integration_types = Some(integration_types);
         self
     }
 
-    #[cfg(feature = "unstable_discord_api")]
     /// Adds an interaction context that this application command can be used in.
     pub fn add_context(mut self, context: InteractionContext) -> Self {
         self.contexts.get_or_insert_with(Vec::default).push(context);
         self
     }
 
-    #[cfg(feature = "unstable_discord_api")]
     /// Sets the interaction contexts that this application command can be used in.
     pub fn contexts(mut self, contexts: Vec<InteractionContext>) -> Self {
         self.contexts = Some(contexts);
@@ -461,6 +456,15 @@ impl CreateCommand {
     /// Whether this command is marked NSFW (age-restricted)
     pub fn nsfw(mut self, nsfw: bool) -> Self {
         self.nsfw = nsfw;
+        self
+    }
+
+    /// Sets the command's entry point handler type. Only valid for commands of type
+    /// [`PrimaryEntryPoint`].
+    ///
+    /// [`PrimaryEntryPoint`]: CommandType::PrimaryEntryPoint
+    pub fn handler(mut self, handler: EntryPointHandlerType) -> Self {
+        self.handler = Some(handler);
         self
     }
 }

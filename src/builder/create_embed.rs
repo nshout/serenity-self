@@ -100,7 +100,10 @@ impl CreateEmbed {
         self
     }
 
-    /// Set the image associated with the embed. This only supports HTTP(S).
+    /// Set the image associated with the embed.
+    ///
+    /// Refer [Discord Documentation](https://discord.com/developers/docs/reference#uploading-files)
+    /// for rules on naming local attachments.
     #[inline]
     pub fn image(mut self, url: impl Into<String>) -> Self {
         self.0.image = Some(EmbedImage {
@@ -112,7 +115,7 @@ impl CreateEmbed {
         self
     }
 
-    /// Set the thumbnail of the embed. This only supports HTTP(S).
+    /// Set the thumbnail of the embed.
     #[inline]
     pub fn thumbnail(mut self, url: impl Into<String>) -> Self {
         self.0.thumbnail = Some(EmbedThumbnail {
@@ -162,6 +165,8 @@ impl CreateEmbed {
     ///
     /// Note however, you have to be sure you set an attachment (with [`ChannelId::send_files`])
     /// with the provided filename. Or else this won't work.
+    ///
+    /// Refer [`Self::image`] for rules on naming local attachments.
     ///
     /// [`ChannelId::send_files`]: crate::model::id::ChannelId::send_files
     #[inline]
@@ -227,7 +232,7 @@ impl From<Embed> for CreateEmbed {
     }
 }
 
-/// A builder to create the author data of an emebd. See [`CreateEmbed::author`]
+/// A builder to create the author data of an embed. See [`CreateEmbed::author`]
 #[derive(Clone, Debug, Serialize)]
 #[must_use]
 pub struct CreateEmbedAuthor(EmbedAuthor);
@@ -277,6 +282,14 @@ impl From<User> for CreateEmbedAuthor {
     }
 }
 
+#[cfg(feature = "model")]
+impl From<&User> for CreateEmbedAuthor {
+    fn from(user: &User) -> Self {
+        let avatar_icon = user.face();
+        Self::new(user.name.clone()).icon_url(avatar_icon)
+    }
+}
+
 /// A builder to create the footer data for an embed. See [`CreateEmbed::footer`]
 #[derive(Clone, Debug, Serialize)]
 #[must_use]
@@ -299,7 +312,9 @@ impl CreateEmbedFooter {
         self
     }
 
-    /// Set the icon URL's value. This only supports HTTP(S).
+    /// Set the icon URL's value.
+    ///
+    /// Refer [`CreateEmbed::image`] for rules on naming local attachments.
     pub fn icon_url(mut self, icon_url: impl Into<String>) -> Self {
         self.0.icon_url = Some(icon_url.into());
         self

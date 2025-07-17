@@ -93,6 +93,10 @@ impl ShardRunner {
     ///
     /// 6. Go back to 1.
     ///
+    /// # Errors
+    ///
+    /// Returns an error if authentication fails or the intents contained disallowed values.
+    ///
     /// [`ShardManager`]: super::ShardManager
     #[instrument(skip(self))]
     pub async fn run(&mut self) -> Result<()> {
@@ -100,7 +104,7 @@ impl ShardRunner {
 
         loop {
             trace!("[ShardRunner {:?}] loop iteration started.", self.shard.shard_info());
-            if !self.recv().await? {
+            if !self.recv().await {
                 return Ok(());
             }
 
@@ -108,7 +112,8 @@ impl ShardRunner {
             if !self.shard.do_heartbeat().await {
                 warn!("[ShardRunner {:?}] Error heartbeating", self.shard.shard_info(),);
 
-                return self.request_restart().await;
+                self.request_restart().await;
+                return Ok(());
             }
 
             let pre = self.shard.stage();
@@ -133,7 +138,8 @@ impl ShardRunner {
 
             match action {
                 Some(ShardAction::Reconnect(ReconnectType::Reidentify)) => {
-                    return self.request_restart().await;
+                    self.request_restart().await;
+                    return Ok(());
                 },
                 Some(other) => {
                     if let Err(e) = self.action(&other).await {
@@ -144,7 +150,10 @@ impl ShardRunner {
                             e
                         );
                         match self.shard.reconnection_type() {
-                            ReconnectType::Reidentify => return self.request_restart().await,
+                            ReconnectType::Reidentify => {
+                                self.request_restart().await;
+                                return Ok(());
+                            },
                             ReconnectType::Resume => {
                                 if let Err(why) = self.shard.resume().await {
                                     warn!(
@@ -153,10 +162,11 @@ impl ShardRunner {
                                         why
                                     );
 
-                                    return self.request_restart().await;
+                                    self.request_restart().await;
+                                    return Ok(());
                                 }
                             },
-                        };
+                        }
                     }
                 },
                 None => {},
@@ -177,7 +187,8 @@ impl ShardRunner {
             }
 
             if !successful && !self.shard.stage().is_connecting() {
-                return self.request_restart().await;
+                self.request_restart().await;
+                return Ok(());
             }
             trace!("[ShardRunner {:?}] loop iteration reached the end.", self.shard.shard_info());
         }
@@ -199,7 +210,10 @@ impl ShardRunner {
     #[instrument(skip(self, action))]
     async fn action(&mut self, action: &ShardAction) -> Result<()> {
         match *action {
-            ShardAction::Reconnect(ReconnectType::Reidentify) => self.request_restart().await,
+            ShardAction::Reconnect(ReconnectType::Reidentify) => {
+                self.request_restart().await;
+                Ok(())
+            },
             ShardAction::Reconnect(ReconnectType::Resume) => self.shard.resume().await,
             ShardAction::Heartbeat => self.shard.heartbeat().await,
             ShardAction::Identify => self.shard.identify().await,
@@ -243,7 +257,7 @@ impl ShardRunner {
                     );
                     break;
                 },
-                _ => continue,
+                _ => {},
             }
         }
 
@@ -342,12 +356,12 @@ impl ShardRunner {
     // happen, as the sending half is kept on the runner.
     // Returns whether the shard runner is in a state that can continue.
     #[instrument(skip(self))]
-    async fn recv(&mut self) -> Result<bool> {
+    async fn recv(&mut self) -> bool {
         loop {
             match self.runner_rx.try_next() {
                 Ok(Some(value)) => {
                     if !self.handle_rx_value(value).await {
-                        return Ok(false);
+                        return false;
                     }
                 },
                 Ok(None) => {
@@ -356,8 +370,8 @@ impl ShardRunner {
                         self.shard.shard_info(),
                     );
 
-                    drop(self.request_restart().await);
-                    return Ok(false);
+                    self.request_restart().await;
+                    return false;
                 },
                 Err(_) => break,
             }
@@ -365,7 +379,7 @@ impl ShardRunner {
 
         // There are no longer any values available.
 
-        Ok(true)
+        true
     }
 
     /// Returns a received event, as well as whether reading the potentially present event was
@@ -443,7 +457,7 @@ impl ShardRunner {
     }
 
     #[instrument(skip(self))]
-    async fn request_restart(&mut self) -> Result<()> {
+    async fn request_restart(&mut self) {
         debug!("[ShardRunner {:?}] Requesting restart", self.shard.shard_info());
 
         self.update_manager().await;
@@ -455,8 +469,6 @@ impl ShardRunner {
         if let Some(voice_manager) = &self.voice_manager {
             voice_manager.deregister_shard(shard_id.0).await;
         }
-
-        Ok(())
     }
 
     #[instrument(skip(self))]

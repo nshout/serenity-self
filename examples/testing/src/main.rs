@@ -196,12 +196,7 @@ async fn message(ctx: &Context, msg: Message) -> Result<(), serenity::Error> {
         channel.edit(ctx, EditChannel::new().category(None)).await?;
         channel.edit(ctx, EditChannel::new().category(Some(parent_id))).await?;
     } else if msg.content == "channelperms" {
-        let guild = guild_id.to_guild_cached(ctx).unwrap().clone();
-        let perms = guild.user_permissions_in(
-            &channel_id.to_channel(ctx).await?.guild().unwrap(),
-            &*guild.member(ctx, msg.author.id).await?,
-        );
-        channel_id.say(ctx, format!("{:?}", perms)).await?;
+        channel_id.say(ctx, format!("{:?}", msg.author_permissions(ctx))).await?;
     } else if let Some(forum_channel_id) = msg.content.strip_prefix("createforumpostin ") {
         forum_channel_id
             .parse::<ChannelId>()
@@ -224,7 +219,7 @@ async fn message(ctx: &Context, msg: Message) -> Result<(), serenity::Error> {
     } else if let Some(forum_post_url) = msg.content.strip_prefix("deleteforumpost ") {
         let (_guild_id, channel_id, _message_id) =
             serenity::utils::parse_message_url(forum_post_url).unwrap();
-        msg.channel_id.say(ctx, format!("Deleting <#{}> in 10 seconds...", channel_id)).await?;
+        msg.channel_id.say(ctx, format!("Deleting <#{channel_id}> in 10 seconds...")).await?;
         tokio::time::sleep(std::time::Duration::from_secs(10)).await;
         channel_id.delete(ctx).await?;
     } else {
@@ -404,16 +399,18 @@ impl EventHandler for Handler {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), serenity::Error> {
+async fn main() {
     if let Some(arg) = std::env::args().nth(1) {
         if arg == "--print-sizes" {
             model_type_sizes::print_ranking();
-            return Ok(());
+            return;
         }
     }
 
     env_logger::init();
     let token = std::env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
     let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
-    Client::builder(token, intents).event_handler(Handler).await?.start().await
+
+    let mut client = Client::builder(token, intents).event_handler(Handler).await.unwrap();
+    client.start().await.unwrap();
 }

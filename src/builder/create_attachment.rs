@@ -13,11 +13,9 @@ use crate::error::Result;
 use crate::http::Http;
 use crate::model::id::AttachmentId;
 
-/// Enum that allows a user to pass a [`Path`] or a [`File`] type to [`send_files`]
+/// A builder for creating a new attachment from a file path, file data, or URL.
 ///
 /// [Discord docs](https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure).
-///
-/// [`send_files`]: crate::model::id::ChannelId::send_files
 #[derive(Clone, Debug, Serialize, PartialEq)]
 #[non_exhaustive]
 #[must_use]
@@ -51,12 +49,10 @@ impl CreateAttachment {
         let mut data = Vec::new();
         file.read_to_end(&mut data).await?;
 
-        let filename = path.as_ref().file_name().ok_or_else(|| {
-            std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "attachment path must not be a directory",
-            )
-        })?;
+        let filename = path
+            .as_ref()
+            .file_name()
+            .ok_or_else(|| std::io::Error::other("attachment path must not be a directory"))?;
 
         Ok(CreateAttachment::bytes(data, filename.to_string_lossy().to_string()))
     }
@@ -99,11 +95,18 @@ impl CreateAttachment {
     /// places.
     #[must_use]
     pub fn to_base64(&self) -> String {
-        let mut encoded = {
-            use base64::Engine;
-            base64::prelude::BASE64_STANDARD.encode(&self.data)
-        };
-        encoded.insert_str(0, "data:image/png;base64,");
+        use base64::engine::{Config, Engine};
+
+        const PREFIX: &str = "data:image/png;base64,";
+
+        let engine = base64::prelude::BASE64_STANDARD;
+        let encoded_size = base64::encoded_len(self.data.len(), engine.config().encode_padding())
+            .and_then(|len| len.checked_add(PREFIX.len()))
+            .expect("buffer capacity overflow");
+
+        let mut encoded = String::with_capacity(encoded_size);
+        encoded.push_str(PREFIX);
+        engine.encode_string(&self.data, &mut encoded);
         encoded
     }
 
@@ -139,7 +142,7 @@ enum NewOrExisting {
 ///
 /// ```rust,no_run
 /// # use serenity::all::*;
-/// # async fn _foo(ctx: Http, mut msg: Message) -> Result<(), Error> {
+/// # async fn foo_(ctx: Http, mut msg: Message) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(EditAttachments::new())).await?;
 /// # Ok(()) }
 /// ```
@@ -148,7 +151,7 @@ enum NewOrExisting {
 ///
 /// ```rust,no_run
 /// # use serenity::all::*;
-/// # async fn _foo(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
+/// # async fn foo_(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(
 ///     EditAttachments::keep_all(&msg).add(my_attachment)
 /// )).await?;
@@ -159,7 +162,7 @@ enum NewOrExisting {
 ///
 /// ```rust,no_run
 /// # use serenity::all::*;
-/// # async fn _foo(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
+/// # async fn foo_(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(
 ///     EditAttachments::new().keep(msg.attachments[0].id)
 /// )).await?;
@@ -170,7 +173,7 @@ enum NewOrExisting {
 ///
 /// ```rust,no_run
 /// # use serenity::all::*;
-/// # async fn _foo(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
+/// # async fn foo_(ctx: Http, mut msg: Message, my_attachment: CreateAttachment) -> Result<(), Error> {
 /// msg.edit(ctx, EditMessage::new().attachments(
 ///     EditAttachments::keep_all(&msg).remove(msg.attachments[0].id)
 /// )).await?;

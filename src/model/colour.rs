@@ -1,9 +1,10 @@
 // Disable this lint to avoid it wanting to change `0xABCDEF` to `0xAB_CDEF`.
 #![allow(clippy::unreadable_literal)]
 
-/// A utility struct to help with working with the basic representation of a colour. This is
-/// particularly useful when working with a [`Role`]'s colour, as the API works with an integer
-/// value instead of an RGB value.
+/// A utility struct to help with working with the basic representation of a colour.
+///
+/// This is particularly useful when working with a [`Role`]'s colour, as the API works with an
+/// integer value instead of an RGB value.
 ///
 /// Instances can be created by using the struct's associated functions. These produce presets
 /// equivalent to those found in the official client's colour picker.
@@ -123,7 +124,7 @@ impl Colour {
     #[allow(clippy::cast_lossless)]
     #[must_use]
     pub const fn from_rgb(red: u8, green: u8, blue: u8) -> Colour {
-        Colour((red as u32) << 16 | (green as u32) << 8 | blue as u32)
+        Colour(((red as u32) << 16) | ((green as u32) << 8) | blue as u32)
     }
 
     /// Returns the red RGB component of this Colour.

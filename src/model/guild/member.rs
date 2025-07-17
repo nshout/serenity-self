@@ -81,6 +81,17 @@ bitflags! {
         const BYPASSES_VERIFICATION = 1 << 2;
         /// Member has started onboarding. Not editable
         const STARTED_ONBOARDING = 1 << 3;
+        /// Member is a guest and can only access the voice channel they were invited to. Not
+        /// editable
+        const IS_GUEST = 1 << 4;
+        /// Member has started Server Guide new member actions. Not editable
+        const STARTED_HOME_ACTIONS = 1 << 5;
+        /// Member has completed Server Guide new member actions. Not editable
+        const COMPLETED_HOME_ACTIONS = 1 << 6;
+        /// Member's username, display name, or nickname is blocked by AutoMod. Not editable
+        const AUTOMOD_QUARANTINED_USERNAME = 1 << 7;
+        /// Member has dismissed the DM settings upsell. Not editable
+        const DM_SETTINGS_UPSELL_ACKNOWLEDGED = 1 << 9;
     }
 }
 
@@ -229,6 +240,7 @@ impl Member {
     /// Returns the DiscordTag of a Member, taking possible nickname into account.
     #[inline]
     #[must_use]
+    #[deprecated = "Use User::tag to get the correct Discord username format or Self::display_name for the name that users will see."]
     pub fn distinct(&self) -> String {
         if let Some(discriminator) = self.user.discriminator {
             format!("{}#{:04}", self.display_name(), discriminator.get())
@@ -416,6 +428,11 @@ impl Member {
     /// member.permissions(&cache).expect("permissions").bits());
     /// ```
     ///
+    /// # Note
+    ///
+    /// You likely want to use Guild::user_permissions_in instead as this function does not consider
+    /// permission overwrites.
+    ///
     /// # Errors
     ///
     /// Returns a [`ModelError::GuildNotFound`] if the guild the member's in could not be
@@ -424,8 +441,11 @@ impl Member {
     /// And/or returns [`ModelError::ItemMissing`] if the "default channel" of the guild is not
     /// found.
     #[cfg(feature = "cache")]
+    #[deprecated = "Use Guild::user_permissions_in, as this doesn't consider permission overwrites"]
     pub fn permissions(&self, cache: impl AsRef<Cache>) -> Result<Permissions> {
         let guild = cache.as_ref().guild(self.guild_id).ok_or(ModelError::GuildNotFound)?;
+
+        #[allow(deprecated)]
         Ok(guild.member_permissions(self))
     }
 
@@ -587,6 +607,8 @@ pub struct PartialMember {
     ///
     /// Will be None or a time in the past if the user is not flagged.
     pub unusual_dm_activity_until: Option<Timestamp>,
+    /// The guild avatar hash
+    pub avatar: Option<ImageHash>,
 }
 
 impl From<PartialMember> for Member {
@@ -594,7 +616,7 @@ impl From<PartialMember> for Member {
         Member {
             user: partial.user.unwrap_or_default(),
             nick: partial.nick,
-            avatar: None,
+            avatar: partial.avatar,
             roles: partial.roles,
             joined_at: partial.joined_at,
             premium_since: partial.premium_since,
@@ -624,6 +646,7 @@ impl From<Member> for PartialMember {
             user: Some(member.user),
             permissions: member.permissions,
             unusual_dm_activity_until: member.unusual_dm_activity_until,
+            avatar: member.avatar,
         }
     }
 }
@@ -638,6 +661,8 @@ pub struct PartialThreadMember {
     pub flags: ThreadMemberFlags,
 }
 
+/// A model representing a user in a Guild Thread.
+///
 /// [Discord docs](https://discord.com/developers/docs/resources/channel#thread-member-object),
 /// [extra fields](https://discord.com/developers/docs/topics/gateway-events#thread-member-update-thread-member-update-event-extra-fields).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]

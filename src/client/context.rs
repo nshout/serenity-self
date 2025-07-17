@@ -12,10 +12,11 @@ use crate::gateway::{ShardMessenger, ShardRunner};
 use crate::http::Http;
 use crate::model::prelude::*;
 
-/// The context is a general utility struct provided on event dispatches, which helps with dealing
-/// with the current "context" of the event dispatch. The context also acts as a general high-level
-/// interface over the associated [`Shard`] which received the event, or the low-level [`http`]
-/// module.
+/// The context is a general utility struct provided on event dispatches.
+///
+/// The Context helps with dealing with the current "context" of the event dispatch. The context
+/// also acts as a general high-level interface over the associated [`Shard`] which received
+/// the event, or the low-level [`http`] module.
 ///
 /// The context contains "shortcuts", like for interacting with the shard. Methods like
 /// [`Self::set_activity`] will unlock the shard and perform an update for you to save a bit of
@@ -307,6 +308,72 @@ impl Context {
     #[inline]
     pub fn set_presence(&self, activity: Option<ActivityData>, status: OnlineStatus) {
         self.shard.set_presence(activity, status);
+    }
+
+    /// Gets all emojis for the current application.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the Application ID is not known.
+    pub async fn get_application_emojis(&self) -> Result<Vec<Emoji>> {
+        self.http.get_application_emojis().await
+    }
+
+    /// Gets information about an application emoji.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the emoji does not exist.
+    pub async fn get_application_emoji(&self, emoji_id: EmojiId) -> Result<Emoji> {
+        self.http.get_application_emoji(emoji_id).await
+    }
+
+    /// Creates an application emoji with a name and base64-encoded image.
+    ///
+    /// # Errors
+    ///
+    /// See [`Guild::create_emoji`] for information about name and filesize requirements. This
+    /// method will error if said requirements are not met.
+    pub async fn create_application_emoji(&self, name: &str, image: &str) -> Result<Emoji> {
+        #[derive(serde::Serialize)]
+        struct CreateEmoji<'a> {
+            name: &'a str,
+            image: &'a str,
+        }
+
+        let body = CreateEmoji {
+            name,
+            image,
+        };
+
+        self.http.create_application_emoji(&body).await
+    }
+
+    /// Changes the name of an application emoji.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the emoji does not exist.
+    pub async fn edit_application_emoji(&self, emoji_id: EmojiId, name: &str) -> Result<Emoji> {
+        #[derive(serde::Serialize)]
+        struct EditEmoji<'a> {
+            name: &'a str,
+        }
+
+        let body = EditEmoji {
+            name,
+        };
+
+        self.http.edit_application_emoji(emoji_id, &body).await
+    }
+
+    /// Deletes an application emoji.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the emoji does not exist.
+    pub async fn delete_application_emoji(&self, emoji_id: EmojiId) -> Result<()> {
+        self.http.delete_application_emoji(emoji_id).await
     }
 }
 

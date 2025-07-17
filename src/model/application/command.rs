@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 use serde::Serialize;
 
-#[cfg(feature = "unstable_discord_api")]
 use super::{InstallationContext, InteractionContext};
 #[cfg(feature = "model")]
 use crate::builder::{Builder, CreateCommand};
@@ -86,17 +85,19 @@ pub struct Command {
     pub nsfw: bool,
     /// Installation context(s) where the command is available, only for globally-scoped commands.
     ///
-    /// Defaults to [`InstallationContext::Guild`]
-    #[cfg(feature = "unstable_discord_api")]
+    /// Defaults to [`InstallationContext::Guild`] and [`InstallationContext::User`].
     #[serde(default)]
     pub integration_types: Vec<InstallationContext>,
     /// Interaction context(s) where the command can be used, only for globally-scoped commands.
     ///
     /// By default, all interaction context types are included.
-    #[cfg(feature = "unstable_discord_api")]
     pub contexts: Option<Vec<InteractionContext>>,
     /// An autoincremented version identifier updated during substantial record changes.
     pub version: CommandVersionId,
+    /// Only present for commands of type [`PrimaryEntryPoint`].
+    ///
+    /// [`PrimaryEntryPoint`]: CommandType::PrimaryEntryPoint
+    pub handler: Option<EntryPointHandlerType>,
 }
 
 #[cfg(feature = "model")]
@@ -245,6 +246,23 @@ enum_number! {
         ChatInput = 1,
         User = 2,
         Message = 3,
+        PrimaryEntryPoint = 4,
+        _ => Unknown(u8),
+    }
+}
+
+enum_number! {
+    /// Signifies how the invocation of a command of type [`PrimaryEntryPoint`] should be handled.
+    ///
+    /// [`PrimaryEntryPoint`]: CommandType::PrimaryEntryPoint
+    /// [Discord docs](https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types)
+    #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
+    #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
+    #[serde(from = "u8", into = "u8")]
+    #[non_exhaustive]
+    pub enum EntryPointHandlerType {
+        AppHandler = 1,
+        DiscordLaunchActivity = 2,
         _ => Unknown(u8),
     }
 }

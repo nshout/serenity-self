@@ -12,11 +12,16 @@ use crate::internal::prelude::*;
 use crate::model::prelude::*;
 use crate::model::utils::is_false;
 
-/// Information about a role within a guild. A role represents a set of permissions, and can be
-/// attached to one or multiple users. A role has various miscellaneous configurations, such as
-/// being assigned a colour. Roles are unique per guild and do not cross over to other guilds in
-/// any way, and can have channel-specific permission overrides in addition to guild-level
-/// permissions.
+fn minus1_as_0<'de, D: serde::Deserializer<'de>>(deserializer: D) -> Result<u16, D::Error> {
+    i16::deserialize(deserializer).map(|val| if val == -1 { 0 } else { val as u16 })
+}
+
+/// Information about a role within a guild.
+///
+/// A role represents a set of permissions, and can be attached to one or multiple users. A role has
+/// various miscellaneous configurations, such as being assigned a colour. Roles are unique per
+/// guild and do not cross over to other guilds in any way, and can have channel-specific permission
+/// overrides in addition to guild-level permissions.
 ///
 /// [Discord docs](https://discord.com/developers/docs/topics/permissions#role-object).
 #[cfg_attr(feature = "typesize", derive(typesize::derive::TypeSize))]
@@ -56,6 +61,7 @@ pub struct Role {
     /// position is higher.
     ///
     /// The `@everyone` role is usually either `-1` or `0`.
+    #[serde(deserialize_with = "minus1_as_0")]
     pub position: u16,
     /// The tags this role has. It can be used to determine if this role is a special role in this
     /// guild such as guild subscriber role, or if the role is linked to an [`Integration`] or a
@@ -126,6 +132,17 @@ impl Role {
             self.permissions.contains(permissions)
         }
     }
+
+    #[inline]
+    #[must_use]
+    /// Generates a URL to the Role icon's image.
+    pub fn icon_url(&self) -> Option<String> {
+        self.icon.map(|icon| {
+            let ext = if icon.is_animated() { "gif" } else { "webp" };
+
+            cdn!("/role-icons/{}/{}.{}", self.id, icon, ext)
+        })
+    }
 }
 
 impl fmt::Display for Role {
@@ -140,8 +157,9 @@ impl Eq for Role {}
 
 impl Ord for Role {
     fn cmp(&self, other: &Role) -> Ordering {
+        // Discord does position DESC, id ASC so:
         if self.position == other.position {
-            self.id.cmp(&other.id)
+            other.id.cmp(&self.id)
         } else {
             self.position.cmp(&other.position)
         }
@@ -189,7 +207,7 @@ impl From<Role> for RoleId {
     }
 }
 
-impl<'a> From<&'a Role> for RoleId {
+impl From<&Role> for RoleId {
     /// Gets the Id of a role.
     fn from(role: &Role) -> RoleId {
         role.id
@@ -238,7 +256,7 @@ mod bool_as_option_unit {
 
     struct NullValueVisitor;
 
-    impl<'de> Visitor<'de> for NullValueVisitor {
+    impl Visitor<'_> for NullValueVisitor {
         type Value = bool;
 
         fn expecting(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

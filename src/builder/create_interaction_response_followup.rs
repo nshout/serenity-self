@@ -1,3 +1,4 @@
+use super::create_poll::Ready;
 #[cfg(feature = "http")]
 use super::{check_overflow, Builder};
 use super::{
@@ -5,6 +6,7 @@ use super::{
     CreateAllowedMentions,
     CreateAttachment,
     CreateEmbed,
+    CreatePoll,
     EditAttachments,
 };
 #[cfg(feature = "http")]
@@ -32,6 +34,8 @@ pub struct CreateInteractionResponseFollowup {
     components: Option<Vec<CreateActionRow>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     flags: Option<MessageFlags>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    poll: Option<CreatePoll<Ready>>,
     attachments: EditAttachments,
 }
 
@@ -148,9 +152,17 @@ impl CreateInteractionResponseFollowup {
             flags |= MessageFlags::EPHEMERAL;
         } else {
             flags &= !MessageFlags::EPHEMERAL;
-        };
+        }
 
         self.flags = Some(flags);
+        self
+    }
+
+    /// Adds a poll to the message. Only one poll can be added per message.
+    ///
+    /// See [`CreatePoll`] for more information on creating and configuring a poll.
+    pub fn poll(mut self, poll: CreatePoll<Ready>) -> Self {
+        self.poll = Some(poll);
         self
     }
 

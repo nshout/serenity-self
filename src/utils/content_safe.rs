@@ -58,6 +58,7 @@ impl ContentSafeOptions {
     /// This option is ignored if the username is a next-gen username, and
     /// therefore does not have a discriminator.
     #[must_use]
+    #[deprecated = "Discriminators are deprecated on the discord side, and this doesn't reflect message rendering behaviour"]
     pub fn show_discriminator(mut self, b: bool) -> Self {
         self.show_discriminator = b;
 
@@ -165,7 +166,7 @@ fn clean_mentions(
 ) -> String {
     let s = s.as_ref();
     let mut content = String::with_capacity(s.len());
-    let mut brackets = s.match_indices(|c| c == '<' || c == '>').peekable();
+    let mut brackets = s.match_indices(['<', '>']).peekable();
     let mut progress = 0;
     while let Some((idx1, b1)) = brackets.next() {
         // Find inner-most pairs of angle brackets
@@ -239,7 +240,9 @@ fn clean_mention(
                 if let Some(guild) = cache.guild(guild_id) {
                     if let Some(member) = guild.members.get(&id) {
                         return if options.show_discriminator {
-                            format!("@{}", member.distinct())
+                            #[allow(deprecated)]
+                            let name = member.distinct();
+                            format!("@{name}")
                         } else {
                             format!("@{}", member.display_name())
                         }
@@ -358,12 +361,14 @@ mod tests {
             content_safe(&cache, "<@100000000000000001>", &options, &[outside_cache_user])
         );
 
+        #[allow(deprecated)]
         let options = options.show_discriminator(false);
         assert_eq!(
             format!("@{}", user.name),
             content_safe(&cache, "<@!100000000000000000>", &options, &[])
         );
 
+        #[allow(deprecated)]
         let options = options.show_discriminator(false);
         assert_eq!(
             format!("@{}", user.name),

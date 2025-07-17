@@ -3,7 +3,101 @@
 All notable changes to this project will be documented in this file.
 This project mostly adheres to [Semantic Versioning][semver].
 
-## [0.13.0] - 2024-06-03
+## [0.12.4] - 2024-11-15
+
+This is a hotfix release to fix broken behaviour of `Message::author_permissions` before it is relied on.
+
+Thanks to the following for their contributions:
+- [@GnomedDev]
+- [@jamesbt365]
+
+### Deprecations
+
+- [#3037](https://github.com/serenity-rs/serenity/pull/3037) Permission methods which do not respect channel permission overrides are now deprecated, use the `_in` variants.
+
+### Additions
+
+- [#3008](https://github.com/serenity-rs/serenity/pull/3008) `From<&User>` has been added to `CreateEmbedAuthor`, to avoid consuming the user.
+
+### Fixes
+
+- [#3037](https://github.com/serenity-rs/serenity/pull/3037) `Message::author_permissions` now respects permission overrides, as it is documented to.
+- [#3039](https://github.com/serenity-rs/serenity/pull/3039) `Message::author_permissions` now respects `SEND_MESSAGES_IN_THREADS` when used in threads.
+
+### Documentation improvements
+
+- [#3038](https://github.com/serenity-rs/serenity/pull/3038) Documentation for `Guild::threads` has been expanded.
+
+## [0.12.3] - 2024-11-13
+
+Thanks to the following for their contributions:
+
+- [@FabseGP]
+- [@GnomedDev]
+- [@HiccupEnthusiast]
+- [@MarkusTheOrt]
+- [@NiiightmareXD]
+- [@ValgulNecron]
+- [@gBasil]
+- [@ivinjabraham]
+- [@jamesbt365]
+- [@limonfort]
+- [@m1sk9]
+- [@mkrasnitski]
+- [@onzecki]
+- [@rhgndf]
+- [@stormofice]
+- [@thmasq]
+- [@thou-vow]
+
+### Deprecations
+
+- [#2894](https://github.com/serenity-rs/serenity/pull/2894) `Message(Id)::link_ensured` can be replaced by `Message(Id)::link` if recieved via event, or `MessageId::link` if the message was recieved via a HTTP request.
+- [#2905](https://github.com/serenity-rs/serenity/pull/2905) `CreateInteractionResponse::PremiumRequired` has been deprecated and replaced with Premium Buttons.
+- [#3030](https://github.com/serenity-rs/serenity/pull/3030) `GuildChannel::permissions_for_user` has been deprecated, use the new `Message::author_permissions` helper or `Guild::user_permissions_in`.
+
+### Additions
+
+- [#2891](https://github.com/serenity-rs/serenity/pull/2891) Guild Incident message types have been added to MessageType.
+- [#2913](https://github.com/serenity-rs/serenity/pull/2913) `CreateButton` now implements `From<Button>`.
+- [#2914](https://github.com/serenity-rs/serenity/pull/2914) `User::display_name` has been added, as users may have two different names now.
+- [#2920](https://github.com/serenity-rs/serenity/pull/2920) Support for Application Emojis has been added, getting rid of those "emoji servers" many bots required.
+- [#2905](https://github.com/serenity-rs/serenity/pull/2905) Support for Premium Buttons has been added, which link to the store page of a chosen SKU.
+- [#2926](https://github.com/serenity-rs/serenity/pull/2926) A method to get the role icon URL has been added.
+- [#2939](https://github.com/serenity-rs/serenity/pull/2939) Some missing fields have been added to to `CurrentApplicationInfo`.
+- [#2946](https://github.com/serenity-rs/serenity/pull/2946) Support for the Get Guild Role endpoint has been added.
+- [#2960](https://github.com/serenity-rs/serenity/pull/2960) Support for the Get Sticker Pack by Id endpoint has been added.
+- [#2962](https://github.com/serenity-rs/serenity/pull/2962) Some missing entries in `GuildMemberFlags` have been added.
+- [#2950](https://github.com/serenity-rs/serenity/pull/2950) The missing `USE_EXTERNAL_APPS` permission has been added.
+- [#2987](https://github.com/serenity-rs/serenity/pull/2987) A builder for the Get Entitlements endpoint has been added.
+- [#2996](https://github.com/serenity-rs/serenity/pull/2996) `MessageReferenceKind` has been added to start supporting forwarding.
+- [#3001](https://github.com/serenity-rs/serenity/pull/3001) `{PartialGuild, Guild}::partial_member_permissions` has been added for more efficent permissions checking
+- [#3013](https://github.com/serenity-rs/serenity/pull/3013) Interaction responses can now send polls.
+- [#3018](https://github.com/serenity-rs/serenity/pull/3018) User App support has been stablised, usable without `unstable_discord_api`.
+- [#3021](https://github.com/serenity-rs/serenity/pull/3021) Support for Entry Point Commands has been added.
+- [#3030](https://github.com/serenity-rs/serenity/pull/3030) A `Message::author_permissions` helper has been added, alongside `Permissions::dm_permissions`.
+
+### Deserialisation Fixes
+
+- [#2887](https://github.com/serenity-rs/serenity/pull/2887), [#2893](https://github.com/serenity-rs/serenity/pull/2893)
+Messages with reactions no longer fail to deserialize due to super reaction changes.
+- [#2917](https://github.com/serenity-rs/serenity/pull/2917) Application no longer fails to deserialize with `unstable_discord_api`
+- [#3032](https://github.com/serenity-rs/serenity/pull/3032) Guilds with an @everyone role at position `-1` no longer fail to deserialise.
+
+### General fixes
+
+- [#2886](https://github.com/serenity-rs/serenity/pull/2886) A typo has been fixed in `GuildId::members_iter` documentation.
+- [#2906](https://github.com/serenity-rs/serenity/pull/2906) `CreateAttachment` documentation has been updated to be more consistent with other builders.
+- [#2911](https://github.com/serenity-rs/serenity/pull/2911) `CreateEmbedAuthor` documentation can now spell `embed` correctly.
+- [Pushed to Current](https://github.com/serenity-rs/serenity/commit/7b8dbadbc7cf9cd33a65e587f0b5cc237bdb9b88) `AuthorizingIntegrationOwners` is now usable, as the field was previously private.
+- [#2945](https://github.com/serenity-rs/serenity/pull/2945) (`Partial`)`Guild::member_permissions` is now usable without cache.
+- [#2973](https://github.com/serenity-rs/serenity/pull/2973) `ChannelId::delete_messages` documentation has been expanded to document the single item case.
+- [#2959](https://github.com/serenity-rs/serenity/pull/2959) The rules for attachment names for local attachments in embeds have now been documented.
+- [#3005](https://github.com/serenity-rs/serenity/pull/3005) The fields of `BulkBanResponse` have been made public.
+- [#3006](https://github.com/serenity-rs/serenity/pull/3006) The `bulk_ban` endpoint is now usable, previously unusable due to `Send` issues.
+
+
+## [0.12.2] - 2024-06-01
 
 Thanks to the following for their contributions:
 
@@ -31,7 +125,7 @@ These deprecation messages include a migration path, it is recommended to go one
 - ([#2861](https://github.com/serenity-rs/serenity/pull/2861)) `TeamMember::permissions` is always `["*"]`, so is useless.
 
 ### Other notable changes
-- ([#5](https://github.com/nshout/serenity-self/pull/5])) Remove-shard-manager-err-handling.
+
 - ([#2790](https://github.com/serenity-rs/serenity/pull/2790])) Added `CreateMessage::enforce_nonce`, to prevent sending duplicate messages.
 - ([#2801](https://github.com/serenity-rs/serenity/pull/2801)) Added `EditProfile::banner`, allowing banners to be set for bots.
 - ([#2810](https://github.com/serenity-rs/serenity/pull/2810)) Added `ChannelId::get_thread_member`.
@@ -45,15 +139,61 @@ These deprecation messages include a migration path, it is recommended to go one
 - ([#2882](https://github.com/serenity-rs/serenity/pull/2882)) Added support for super reactions.
 - Many documentation fixes and other optimisations to improve memory and CPU usage.
 
-## [0.13.0-alpha2] - 2023-12-04
+## [0.12.1] - 2024-02-28
 
-In a noteworthy advancement, Serenity-self now establishes a pioneering standard for simplicity and efficacy within Rust crates, particularly in the domain of user token support.
-This release builds upon the 0.13.0-alpha series, eliminating excessive flags associated with connection setup.
+Thanks to the following for their contributions:
 
-This milestone positions Serenity-self as the leading Rust crate for Discord user support, specifically tailored for the development of selfbots.
-The focus on minimal flags underscores a commitment to streamlining processes, making it an unparalleled choice for developers seeking a straightforward and effective solution in the Rust ecosystem.
+- [@arqunis]
+- [@GnomedDev]
+- [@jamesbt365]
+- [@kangalio]
+- [@logand22]
+- [@mkrasnitski]
+- [@SenseiHiraku]
+- [@vaporoxx]
+- [@vidhanio]
+- [@Xaeroxe]
+- [@yanorei32]
 
-Thanks to the following for their contributions on Serenity before Serenity-self was made:
+### Notable changes
+
+In this release, **the standard framework has been deprecated**
+([#2733](https://github.com/serenity-rs/serenity/pull/2733)).
+
+As Discord continues to endorse and evolve application commands (`/...`
+commands, user commands, message commands, etc.), the standard framework
+becomes increasingly outdated. Bots are also steadily losing (and already have
+lost) access to contents of messages, making it difficult to build a
+prefix-only bot. Unless you plan on restricting your bot to only accept
+commands in DMs, allowing its presence in only fewer than 100 guilds, or
+presenting a reasonable justification to Discord for permission to continue
+using message contents, you should migrate to application commands. We
+recommend [poise](https://github.com/serenity-rs/poise), which supports writing
+both prefix and application commands with a `#[command]` macro like the
+standard framework.
+
+#### Why not just update the framework?
+
+Poise already exists and is better than the standard framework. Efforts should
+be directed at improving poise instead. To support application commands would
+require an overhaul of the standard framework, as they are special (for
+instance, Discord parses arguments on behalf of the bot and passes them as
+structured data, whereas for prefix commands, the bot must parse by itself).
+
+### Smaller, but still notable changes
+
+* ([#2621](https://github.com/serenity-rs/serenity/pull/2621)) Add a temporary cache for messages.
+* ([#2649](https://github.com/serenity-rs/serenity/pull/2649)) Deprecate `RoleId::to_role_cached` - Use `Guild::roles` instead.
+* ([#2726](https://github.com/serenity-rs/serenity/pull/2726)) Pack bitflags - Reduces alignments of `bitflags!` types, resulting in a smaller memory footprint.
+* ([#2696](https://github.com/serenity-rs/serenity/pull/2696)) Support attachments in forum posts.
+* ([#2560](https://github.com/serenity-rs/serenity/pull/2560)) Add support for monetization APIs.
+* ([#2648](https://github.com/serenity-rs/serenity/pull/2648)) Deprecate inefficient Emoji helpers - Use the emoji methods on `GuildId`/`Guild` instead.
+
+## [0.12.0] - 2023-11-27
+
+This release turned out to be one of serenity's largest ever, with well over 300 PRs in total! It contains quite a few major breaking changes to the API. Therefore, the changelog for this release also serves as a migration guide for users upgrading from the 0.11 series.
+
+Thanks to the following for their contributions:
 
 - [@arqunis]
 - [@alakhpc]
@@ -69,8 +209,8 @@ Thanks to the following for their contributions on Serenity before Serenity-self
 - [@Joshument]
 - [@kangalio]
 - [@Kneemund]
-- [@marcantoinem]
 - [@LaytonGB]
+- [@marcantoinem]
 - [@Miezhiko]
 - [@Milo123459]
 - [@mkrasnitski]
@@ -85,37 +225,7 @@ Thanks to the following for their contributions on Serenity before Serenity-self
 - [@vaporoxx]
 - [@Xaeroxe]
 
-### Changes in 0.13.0-alpha2:
-These are the changes in Serenity-self since the 0.13.0-alpha release.
-
-- All provided examples have been meticulously updated.
-
-In this release, Serenity-self continues to adhere to the principles established in the original version.
-It's important to note, however, that there are distinctions between the user and bot APIs which Serenity-self now focuses more on.
-
-The adjustments primarily focus on aligning with the revised approach to user account support.
-Notably, this entails the removal of both shards and intents from the examples.
-
-While users can perform many of the actions bots can, there are differences in the scope of their capabilities. 
-Users have access to a broader range of functionalities compared to bots.
-
-Several features have been intentionally removed to align with Discord's guidelines and best practices:
-
-1. **Intents:**
-   - The gateway technically accepts intents for user accounts. However, the use of intents for users is discouraged due to potential issues and is considered a violation of Discord's policies.
-
-2. **Shards:**
-   - Although the gateway accepts shards for user accounts, employing them is not recommended. Similar to intents, the use of shards for users is discouraged and can be flagged as a violation by Discord.
-
-These adjustments aim to ensure a smoother and compliant user experience, prioritizing adherence to Discord's standards. 
-Users are encouraged to review these changes and adjust their implementations accordingly for a more seamless integration with the Serenity-self crate.
-
-By eliminating the usage of shards and intents in the examples, streamlined and compliant integration for user accounts is ensured.
-This modification reflects commitment to adhering to Discord's guidelines and best practices.
-Users are encouraged to leverage these updated examples to seamlessly incorporate the latest features and improvements offered by the Serenity-self crate.
-
-### Builders (Before 0.13.0-alpha):
-These are the changes before Serenity-self became its own crate without syncing with Serenity's changes
+### Builders
 
 The closure-based API for constructing requests using the builder pattern has been ripped out and replaced. In place of closures, users must now pass in builder types directly. For example, in serenity 0.11, code like the following was very common:
 
@@ -456,8 +566,6 @@ Serenity now uses Rust edition 2021, with an MSRV of Rust 1.74.
 * [#2622](https://github.com/serenity-rs/serenity/pull/2622) - Implement role addition/removal using dedicated endpoints.
 * [#2623](https://github.com/serenity-rs/serenity/pull/2623) - Use dedicated types for `GuildId::audit_logs`.
 * [#2625](https://github.com/serenity-rs/serenity/pull/2625) - Change `Guild::members_with_status` to return `impl Iterator<Item = &Member>` instead of `Vec<Member>`.
-
-
 #### Removed
 
 * [#1864](https://github.com/serenity-rs/serenity/pull/1864), [#1902](https://github.com/serenity-rs/serenity/pull/1902) - Remove all deprecated types, fields, and methods.
@@ -719,7 +827,6 @@ Thanks to the following for their contributions:
 
 Thanks to the following for their contributions:
 
-- [@nshout]
 - [@AldanTanneo]
 - [@AngelOnFira]
 - [@AnnikaCodes]
@@ -752,7 +859,7 @@ Thanks to the following for their contributions:
 - [@squili]
 - [@TheBlackfurGuy]
 - [@tylerd008]
-- [@vaporoxxx]
+- [@vaporoxx]
 - [@vicky5124]
 - [@xMAC94x]
 - [@xfix]
@@ -5410,7 +5517,11 @@ Initial commit.
 
 <!-- COMPARISONS -->
 
-[0.12.0]: https://github.com/serenity-rs/serenity/compare/v0.11.7...v0.12.0-rc
+[0.12.4]: https://github.com/serenity-rs/serenity/compare/v0.12.3...v0.12.4
+[0.12.3]: https://github.com/serenity-rs/serenity/compare/v0.12.2...v0.12.3
+[0.12.2]: https://github.com/serenity-rs/serenity/compare/v0.12.1...v0.12.2
+[0.12.1]: https://github.com/serenity-rs/serenity/compare/v0.12.0...v0.12.1
+[0.12.0]: https://github.com/serenity-rs/serenity/compare/v0.11.7...v0.12.0
 [0.11.7]: https://github.com/serenity-rs/serenity/compare/v0.11.6...v0.11.7
 [0.11.6]: https://github.com/serenity-rs/serenity/compare/v0.11.5...v0.11.6
 [0.11.5]: https://github.com/serenity-rs/serenity/compare/v0.11.4...v0.11.5
@@ -5505,265 +5616,284 @@ Initial commit.
 
 <!-- AUTHORS -->
 
-[@nshout]: https://github.com/nshout
 [@7596ff]: https://github.com/7596ff
+[@aawilson]: https://github.com/aawilson
+[@abalabahaha]: https://github.com/abalabahaha
+[@acdenisSK]: https://github.com/acdenisSK
+[@adumbidiot]: https://github.com/adumbidiot
 [@AgathaSorceress]: https://github.com/AgathaSorceress
 [@alakhpc]: https://github.com/alakhpc
 [@Alch-Emi]: https://github.com/Alch-Emi
 [@AldanTanneo]: https://github.com/AldanTanneo
 [@AlexisTM]: https://github.com/AlexisTM
+[@almeidx]: https://github.com/almeidx
+[@anden3]: https://github.com/anden3
+[@andreasots]: https://github.com/andreasots
 [@AngelOnFira]: https://github.com/AngelOnFira
 [@AnnikaCodes]: https://github.com/AnnikaCodes
 [@Arcterus]: https://github.com/Arcterus
 [@AregevDev]: https://github.com/AregevDev
-[@AriusX7]: https://github.com/AriusX7
-[@Atakku]: https://github.com/Atakku
-[@aawilson]: https://github.com/aawilson
-[@abalabahaha]: https://github.com/abalabahaha
-[@acdenisSK]: https://github.com/arqunis
-[@arqunis]: https://github.com/arqunis
-[@adumbidiot]: https://github.com/adumbidiot
-[@almeidx]: https://github.com/almeidx
-[@anden3]: https://github.com/anden3
-[@andreasots]: https://github.com/andreasots
 [@aria-7553]: https://github.com/aria-7553
+[@AriusX7]: https://github.com/AriusX7
+[@arqunis]: https://github.com/arqunis
 [@asherkin]: https://github.com/asherkin
+[@Atakku]: https://github.com/Atakku
 [@B-2U]: https://github.com/B-2U
-[@Baev1]: https://github.com/Baev1
-[@Bond-009]: https://github.com/Bond-009
-[@Bloectasy]: https://github.com/Bloectasy
 [@baeuric]: https://github.com/baeuric
+[@Baev1]: https://github.com/Baev1
 [@barzamin]: https://github.com/barzamin
 [@bdashore3]: https://github.com/bdashore3
-[@benjaminrsherman]: https://github.com/benjaminrsherman
 [@ben-brook]: https://github.com/ben-brook
+[@bend-n]: https://github.com/bend-n
+[@benjaminrsherman]: https://github.com/benjaminrsherman
 [@bikeshedder]: https://github.com/bikeshedder
 [@bippum]: https://github.com/bippum
 [@blaenk]: https://github.com/blaenk
+[@Bloectasy]: https://github.com/Bloectasy
+[@Bond-009]: https://github.com/Bond-009
 [@bumblepie]: https://github.com/bumblepie
+[@cab404]: https://github.com/cab404
 [@Caemor]: https://github.com/Caemor
+[@campbellcole]: https://github.com/campbellcole
+[@caoculus]: https://github.com/caoculus
 [@CarlGroth]: https://github.com/CarlGroth
+[@casey]: https://github.com/casey
 [@Celti]: https://github.com/Celti
+[@cheesycod]: https://github.com/cheesycod
+[@chocological00]: https://github.com/chocological00
 [@Chronophylos]: https://github.com/Chronophylos
 [@Collin-Swish]: https://github.com/Collin-Swish
 [@ConcurrentMarxistGC]: https://github.com/ConcurrentMarxistGC
-[@cab404]: https://github.com/cab404
-[@campbellcole]: https://github.com/campbellcole
-[@caoculus]: https://github.com/caoculus
-[@casey]: https://github.com/casey
-[@cheesycod]: https://github.com/cheesycod
-[@chocological00]: https://github.com/chocological00
 [@crivasr]: https://github.com/crivasr
 [@cyril-marpaud]: https://github.com/cyril-marpaud
 [@Daggy1234]: https://github.com/Daggy1234
+[@dapper-gh]: https://github.com/dapper-gh
 [@DarkKirb]: https://github.com/DarkKirb
 [@darkyeg]: https://github.com/darkyeg
-[@Dean-Coakley]: https://github.com/Dean-Coakley
 [@dclamage]: https://github.com/dclamage
+[@Dean-Coakley]: https://github.com/Dean-Coakley
 [@Deebster]: https://github.com/Deebster
 [@DeltaEvo]: https://github.com/DeltaEvo
+[@devtomio]: https://github.com/devtomio
 [@DimiDimit]: https://github.com/DimiDimit
 [@Dinnerbone]: https://github.com/Dinnerbone
+[@dmarcoux]: https://github.com/dmarcoux
 [@DoumanAsh]: https://github.com/DoumanAsh
 [@dpytaylo]: https://github.com/dpytaylo
-[@DRuppFv]: https://github.com/DRuppFv
-[@DrBluefall]: https://github.com/DrBluefall
-[@dapper-gh]: https://github.com/dapper-gh
-[@devtomio]: https://github.com/devtomio
-[@dmarcoux]: https://github.com/dmarcoux
 [@dpytaylo]: https://github.com/dpytaylo
+[@DrBluefall]: https://github.com/DrBluefall
 [@drklee3]: https://github.com/drklee3
 [@drp19]: https://github.com/drp19
-[@Elinvynia]: https://github.com/Elinvynia
-[@Erk-]: https://github.com/Erk-
-[@eLunate]: https://github.com/eLunate
+[@DRuppFv]: https://github.com/DRuppFv
 [@eatsfoobars]: https://github.com/eatsfoobars
 [@efyang]: https://github.com/efyang
+[@Elinvynia]: https://github.com/Elinvynia
 [@elkowar]: https://github.com/elkowar
+[@eLunate]: https://github.com/eLunate
 [@emoticon]: https://github.com/emoticon
+[@Erk-]: https://github.com/Erk-
+[@FabseGP]: https://github.com/FabseGP
 [@FallenWarrior2k]: https://github.com/FallenWarrior2k
 [@FelixMcFelix]: https://github.com/FelixMcFelix
+[@fenhl]: https://github.com/fenhl
 [@Flat]: https://github.com/Flat
 [@float3]: https://github.com/float3
-[@ForsakenHarmony]: https://github.com/ForsakenHarmony
-[@Friz64]: https://github.com/Friz64
-[@fenhl]: https://github.com/fenhl
 [@float3]: https://github.com/float3
+[@ForsakenHarmony]: https://github.com/ForsakenHarmony
 [@foxbot]: https://github.com/foxbot
+[@Friz64]: https://github.com/Friz64
 [@ftriquet]: https://github.com/ftriquet
 [@fwrs]: https://github.com/fwrs
 [@Gabriel-Paulucci]: https://github.com/Gabriel-Paulucci
-[@GetRektByMe]: https://github.com/GetRektByMe
+[@gBasil]: https://github.com/gBasil
 [@Gentoli]: https://github.com/Gentoli
+[@GetRektByMe]: https://github.com/GetRektByMe
 [@ghost]: https://github.com/ghost
 [@GnomedDev]: https://github.com/GnomedDev
 [@gradiuscypher]: https://github.com/gradiuscypher
 [@HarmoGlace]: https://github.com/HarmoGlace
 [@HexPandaa]: https://github.com/HexPandaa
+[@HiccupEnthusiast]: https://github.com/HiccupEnthusiast
 [@hsiW]: https://github.com/hsiW
 [@hyarsan]: https://github.com/hyarsan
 [@hybras]: https://github.com/hybras
 [@icewind1991]: https://github.com/icewind1991
 [@iCrawl]: https://github.com/iCrawl
+[@ijks]: https://github.com/ijks
 [@ikkerens]: https://github.com/ikkerens
 [@imnotbad]: https://github.com/imnotbad
 [@indiv0]: https://github.com/indiv0
-[@ijks]: https://github.com/ijks
 [@ivancernja]: https://github.com/ivancernja
+[@ivinjabraham]: https://github.com/ivinjabraham
+[@james7132]: https://github.com/james7132
 [@jamesbt365]: https://github.com/jamesbt365
 [@JellyWX]: https://github.com/JellyWX
 [@Jerald]: https://github.com/Jerald
-[@JohnTheCoolingFan]: https://github.com/JohnTheCoolingFan
-[@james7132]: https://github.com/james7132
 [@jhelwig]: https://github.com/jhelwig
 [@jkcclemens]: https://github.com/jkcclemens
 [@jmgao]: https://github.com/jmgao
 [@joek13]: https://github.com/joek13
 [@johnchildren]: https://github.com/johnchildren
+[@JohnTheCoolingFan]: https://github.com/JohnTheCoolingFan
 [@jontze]: https://github.com/jontze
 [@Joshument]: https://github.com/Joshument
 [@KaDiWa4]: https://github.com/KaDiWa4
-[@KamranMackey]: https://github.com/KamranMackey
-[@Kroisse]: https://github.com/Kroisse
 [@kafinsalim]: https://github.com/kafinsalim
+[@KamranMackey]: https://github.com/KamranMackey
 [@kangalio]: https://github.com/kangalio
 [@KangarooCoder]: https://github.com/KangarooCoder
 [@khazhyk]: https://github.com/khazhyk
 [@Kneemund]: https://github.com/Kneemund
-[@kristopherbullinger]: https://github.com/kristopherbullinger
 [@kotx]: https://github.com/kotx
+[@kristopherbullinger]: https://github.com/kristopherbullinger
+[@Kroisse]: https://github.com/Kroisse
 [@ks129]: https://github.com/ks129
 [@kyranet]: https://github.com/kyranet
-[@LaytonGB]: https://github.com/LaytonGB
 [@Lakelezz]: https://github.com/Lakelezz
-[@LavaToaster]: https://github.com/LavaToaster
-[@LeSeulArtichaut]: https://github.com/LeSeulArtichaut
-[@Licenser]: https://github.com/Licenser
-[@LikeLakers2]: https://github.com/LikeLakers2
-[@Lymia]: https://github.com/Lymia
 [@lapin-b]: https://github.com/lapin-b
+[@LavaToaster]: https://github.com/LavaToaster
+[@LaytonGB]: https://github.com/LaytonGB
 [@legendofmiracles]: https://github.com/legendofmiracles
 [@leo-lb]: https://github.com/leo-lb
+[@LeSeulArtichaut]: https://github.com/LeSeulArtichaut
 [@leumasme]: https://github.com/leumasme
 [@lhjt]: https://github.com/lhjt
+[@Licenser]: https://github.com/Licenser
+[@LikeLakers2]: https://github.com/LikeLakers2
+[@limonfort]: https://github.com/limonfort
 [@lo48576]: https://github.com/lo48576
+[@logand22]: https://github.com/logand22
 [@lolzballs]: https://github.com/lolzballs
+[@Lymia]: https://github.com/Lymia
+[@m1sk9]: https://github.com/m1sk9
 [@marcantoinem]: https://github.com/marcantoinem
 [@MarkusTheOrt]: https://github.com/MarkusTheOrt
 [@MathyouMB]: https://github.com/MathyouMB
-[@Max2408]: https://github.com/Max2408
-[@MaxOhn]: https://github.com/MaxOhn
-[@MelonShooter]: https://github.com/MelonShooter
-[@Mendess2526]: https://github.com/Mendess2526
-[@Milo123459]: https://github.com/Milo123459
-[@Mishio595]: https://github.com/Mishio595
-[@MonliH]: https://github.com/MonliH
-[@mTvare6]: https://github.com/mTvare6
 [@mattfbacon]: https://github.com/mattfbacon
 [@mattico]: https://github.com/mattico
+[@Max2408]: https://github.com/Max2408
+[@MaxOhn]: https://github.com/MaxOhn
 [@mbenoukaiss]: https://github.com/mbenoukaiss
 [@mdonoughe]: https://github.com/mdonoughe
 [@megumisonoda]: https://github.com/megumisonoda
+[@MelonShooter]: https://github.com/MelonShooter
 [@mendess]: https://github.com/mendess
+[@Mendess2526]: https://github.com/Mendess2526
 [@merlleu]: https://github.com/merlleu
+[@MidSpike]: https://github.com/MidSpike
 [@Miezhiko]: https://github.com/Miezhiko
+[@Milo123459]: https://github.com/Milo123459
 [@miqbalrr]: https://github.com/miqbalrr
+[@Mishio595]: https://github.com/Mishio595
 [@mjsir911]: https://github.com/mjsir911
 [@mkrasnitski]: https://github.com/mkrasnitski
 [@molenzwiebel]: https://github.com/molenzwiebel
-[@mysteriouspants]: https://github.com/mysteriouspants
-[@mshenrick]: https://github.com/mshenrick
+[@MonliH]: https://github.com/MonliH
 [@MOZGIII]: https://github.com/MOZGIII
-[@NieDzejkob]: https://github.com/NieDzejkob
-[@NinekoTheCat]: https://github.com/NinekoTheCat
-[@NilsIrl]: https://github.com/NilsIrl
-[@Noituri]: https://github.com/Noituri
-[@NotNorom]: https://github.com/NotNorom
-[@NovusTheory]: https://github.com/NovusTheory
+[@mshenrick]: https://github.com/mshenrick
+[@mTvare6]: https://github.com/mTvare6
+[@mysteriouspants]: https://github.com/mysteriouspants
 [@nabijaczleweli]: https://github.com/nabijaczleweli
 [@natsukagami]: https://github.com/natsukagami
 [@natto1784]: https://github.com/natto1784
 [@nickelc]: https://github.com/nickelc
+[@NieDzejkob]: https://github.com/NieDzejkob
+[@NiiightmareXD]: https://github.com/NiiightmareXD
+[@NilsIrl]: https://github.com/NilsIrl
+[@NinekoTheCat]: https://github.com/NinekoTheCat
+[@Noituri]: https://github.com/Noituri
+[@NotNorom]: https://github.com/NotNorom
+[@NovusTheory]: https://github.com/NovusTheory
 [@nycex]: https://github.com/nycex
 [@OnlyCS]: https://github.com/OnlyCS
+[@onzecki]: https://github.com/onzecki
 [@oSumAtrIX]: https://github.com/oSumAtrIX
 [@OverHash]: https://github.com/OverHash
-[@Polyhistorian]: https://github.com/Polyhistorian
-[@PvdBerg1998]: https://github.com/PvdBerg1998
-[@Proximyst]: https://github.com/Proximyst
-[@Prof-Bloodstone]: https://github.com/Prof-Bloodstone
 [@pascalharp]: https://github.com/pascalharp
 [@peppizza]: https://github.com/peppizza
 [@perryprog]: https://github.com/perryprog
+[@Polyhistorian]: https://github.com/Polyhistorian
+[@Prof-Bloodstone]: https://github.com/Prof-Bloodstone
+[@Proximyst]: https://github.com/Proximyst
+[@PvdBerg1998]: https://github.com/PvdBerg1998
 [@Qeenon]: https://github.com/Qeenon
 [@qm3ster]: https://github.com/qm3ster
 [@rand0m-cloud]: https://github.com/rand0m-cloud
-[@Roughsketch]: https://github.com/Roughsketch
-[@Rstar284]: https://github.com/Rstar284
 [@rasm47]: https://github.com/rasm47
+[@RegenJacob]: https://github.com/RegenJacob
+[@rhgndf]: https://github.com/rhgndf
+[@Roughsketch]: https://github.com/Roughsketch
 [@rsaihe]: https://github.com/rsaihe
+[@Rstar284]: https://github.com/Rstar284
 [@Ruthenic]: https://github.com/Ruthenic
-[@SOF3]: https://github.com/SOF3
-[@Sei4or]: https://github.com/Sei4or
+[@s0lst1ce]: https://github.com/s0lst1ce
 [@SadiinsoSnowfall]: https://github.com/SadiinsoSnowfall
+[@sam-kirby]: https://github.com/sam-kirby
 [@sandlotie]: https://github.com/sandlotie
+[@sbrocket]: https://github.com/sbrocket
 [@Scetch]: https://github.com/Scetch
-[@ShashankKumarSaxena]: https://github.com/ShashankKumarSaxena
+[@Sei4or]: https://github.com/Sei4or
+[@SenseiHiraku]: https://github.com/SenseiHiraku
 [@Sergiovan]: https://github.com/Sergiovan
+[@ShashankKumarSaxena]: https://github.com/ShashankKumarSaxena
+[@shnarazk]: https://github.com/shnarazk
 [@SimonZehetner]: https://github.com/SimonZehetner
 [@SinsofSloth]: https://github.com/SinsofSloth
 [@skreborn]: https://github.com/skreborn
+[@SOF3]: https://github.com/SOF3
 [@Some-Dood]: https://github.com/Some-Dood
 [@Splingush]: https://github.com/Splingush
 [@squili]: https://github.com/squili
 [@Sreyas-Sreelal]: https://github.com/Sreyas-Sreelal
-[@StckOverflw]: https://github.com/StckOverflw
-[@SunDwarf]: https://github.com/SunDwarf
-[@s0lst1ce]: https://github.com/s0lst1ce
-[@sam-kirby]: https://github.com/sam-kirby
-[@sbrocket]: https://github.com/sbrocket
-[@shnarazk]: https://github.com/shnarazk
 [@sschroe]: https://github.com/sschroe
+[@StckOverflw]: https://github.com/StckOverflw
+[@stormofice]: https://github.com/stormofice
 [@sudomann]: https://github.com/sudomann
+[@SunDwarf]: https://github.com/SunDwarf
 [@tahahawa]: https://github.com/tahahawa
+[@tarcieri]: https://github.com/tarcieri
 [@tatsuya6502]: https://github.com/tatsuya6502
 [@tazz4843]: https://github.com/tazz4843
-[@TehPers]: https://github.com/TehPers
-[@ThatsNoMoon]: https://github.com/ThatsNoMoon
-[@Th3-M4jor]: https://github.com/Th3-M4jor
-[@TheBlackfurGuy]: https://github.com/TheBlackfurGuy
-[@TheElec]: https://github.com/TheElec
-[@TheUnitedStatesOfAmerica]: https://github.com/TheUnitedStatesOfAmerica
-[@TitusEntertainment]: https://github.com/TitusEntertainment
-[@tarcieri]: https://github.com/tarcieri
 [@tedtramonte]: https://github.com/tedtramonte
-[@thelearnerofcode]: https://github.com/thelearnerofcode
+[@TehPers]: https://github.com/TehPers
+[@Th3-M4jor]: https://github.com/Th3-M4jor
+[@ThatsNoMoon]: https://github.com/ThatsNoMoon
+[@TheBlackfurGuy]: https://github.com/TheBlackfurGuy
 [@thebongy]: https://github.com/thebongy
+[@TheElec]: https://github.com/TheElec
+[@thelearnerofcode]: https://github.com/thelearnerofcode
+[@TheUnitedStatesOfAmerica]: https://github.com/TheUnitedStatesOfAmerica
+[@thmasq]: https://github.com/thmasq
+[@thou-vow]: https://github.com/thou-vow
 [@timotree3]: https://github.com/timotree3
+[@TitusEntertainment]: https://github.com/TitusEntertainment
 [@tmcarr]: https://github.com/tmcarr
 [@tverghis]: https://github.com/tverghis
 [@tweirtx]: https://github.com/tweirtx
 [@tylerd008]: https://github.com/tylerd008
-[@Unoqwy]: https://github.com/Unoqwy
 [@u5surf]: https://github.com/u5surf
+[@Unoqwy]: https://github.com/Unoqwy
 [@Vaimer9]: https://github.com/Vaimer9
+[@ValgulNecron]: https://github.com/ValgulNecron
 [@vaporoxx]: https://github.com/vaporoxx
 [@vicky5124]: https://github.com/vicky5124
+[@vidhanio]: https://github.com/vidhanio
 [@vityafx]: https://github.com/vityafx
 [@vivianhellyer]: https://github.com/vivianhellyer
 [@Web-44]: https://github.com/Web-44
 [@Wolvereness]: https://github.com/Wolvereness
 [@woongzeyi]: https://github.com/woongzeyi
-[@xMAC94x]: https://github.com/xMAC94x
-[@xSke]: https://github.com/xSke
 [@xacrimon]: https://github.com/xacrimon
 [@Xaeroxe]: https://github.com/Xaeroxe
 [@xentec]: https://github.com/xentec
 [@xfix]: https://github.com/xfix
-[@Zalaxx]: https://github.com/Zalaxx
+[@xMAC94x]: https://github.com/xMAC94x
+[@xSke]: https://github.com/xSke
+[@yanorei32]: https://github.com/yanorei32
 [@zacck]: https://github.com/zacck
 [@zack37]: https://github.com/zack37
 [@zackradisic]: https://github.com/zackradisic
+[@Zalaxx]: https://github.com/Zalaxx
 [@zeyla]: https://github.com/zeyla
 [@zzzzDev4]: https://github.com/zzzzDev4
 

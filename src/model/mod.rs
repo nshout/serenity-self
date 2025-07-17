@@ -34,6 +34,7 @@ pub mod mention;
 pub mod misc;
 pub mod monetization;
 pub mod permissions;
+pub mod soundboard;
 pub mod sticker;
 pub mod timestamp;
 pub mod user;
@@ -93,6 +94,7 @@ pub mod prelude {
         misc::*,
         monetization::*,
         permissions::*,
+        soundboard::*,
         sticker::*,
         user::*,
         voice::*,

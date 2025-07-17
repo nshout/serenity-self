@@ -4,6 +4,7 @@ use serde::Serialize;
 use crate::builder::{
     CreateChannel,
     CreateCommand,
+    CreateSoundboard,
     CreateSticker,
     EditAutoModRule,
     EditCommandPermissions,
@@ -12,6 +13,7 @@ use crate::builder::{
     EditGuildWidget,
     EditMember,
     EditRole,
+    EditSoundboard,
     EditSticker,
 };
 #[cfg(all(feature = "cache", feature = "utils", feature = "client"))]
@@ -340,6 +342,21 @@ impl PartialGuild {
         self.id.bans(http, target, limit).await
     }
 
+    /// Gets a user's ban from the guild.
+    /// See [`Http::get_bans`] for details.
+    ///
+    /// Requires the [Ban Members] permission.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if the current user lacks permission.
+    ///
+    /// [Ban Members]: Permissions::BAN_MEMBERS
+    #[inline]
+    pub async fn get_ban(&self, http: impl AsRef<Http>, user_id: UserId) -> Result<Option<Ban>> {
+        self.id.get_ban(http, user_id).await
+    }
+
     /// Gets a list of the guild's audit log entries
     ///
     /// **Note**: Requires the [View Audit Log] permission.
@@ -449,7 +466,6 @@ impl PartialGuild {
     /// long, or if the image is too large.
     ///
     /// [`EditProfile::avatar`]: crate::builder::EditProfile::avatar
-    /// [`utils::read_image`]: crate::utils::read_image
     /// [Create Guild Expressions]: Permissions::CREATE_GUILD_EXPRESSIONS
     #[inline]
     pub async fn create_emoji(
@@ -648,10 +664,10 @@ impl PartialGuild {
     /// lacks permission. Otherwise returns [`Error::Http`], as well as if invalid data is given.
     ///
     /// [Create Guild Expressions]: Permissions::CREATE_GUILD_EXPRESSIONS
-    pub async fn create_sticker<'a>(
+    pub async fn create_sticker(
         &self,
         cache_http: impl CacheHttp,
-        builder: CreateSticker<'a>,
+        builder: CreateSticker<'_>,
     ) -> Result<Sticker> {
         self.id.create_sticker(cache_http, builder).await
     }
@@ -1033,13 +1049,44 @@ impl PartialGuild {
     }
 
     /// Calculate a [`Member`]'s permissions in the guild.
+    ///
+    /// You likely want to use PartialGuild::user_permissions_in instead as this function does not
+    /// consider permission overwrites.
     #[inline]
-    #[cfg(feature = "cache")]
     #[must_use]
     pub fn member_permissions(&self, member: &Member) -> Permissions {
-        Guild::_user_permissions_in(
+        Guild::user_permissions_in_(
             None,
             member.user.id,
+            &member.roles,
+            self.id,
+            &self.roles,
+            self.owner_id,
+        )
+    }
+
+    /// Calculate a [`PartialMember`]'s permissions in the guild.
+    ///
+    /// You likely want to use PartialGuild::partial_member_permissions_in instead as this function
+    /// does not consider permission overwrites.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the passed [`UserId`] does not match the [`PartialMember`] id, if user is Some.
+    #[inline]
+    #[must_use]
+    pub fn partial_member_permissions(
+        &self,
+        member_id: UserId,
+        member: &PartialMember,
+    ) -> Permissions {
+        if let Some(user) = &member.user {
+            assert_eq!(user.id, member_id, "User::id does not match provided PartialMember");
+        }
+
+        Guild::user_permissions_in_(
+            None,
+            member_id,
             &member.roles,
             self.id,
             &self.roles,
@@ -1063,7 +1110,7 @@ impl PartialGuild {
             assert_eq!(user.id, member_id, "User::id does not match provided PartialMember");
         }
 
-        Guild::_user_permissions_in(
+        Guild::user_permissions_in_(
             Some(channel),
             member_id,
             &member.roles,
@@ -1312,7 +1359,7 @@ impl PartialGuild {
     #[inline]
     #[must_use]
     pub fn user_permissions_in(&self, channel: &GuildChannel, member: &Member) -> Permissions {
-        Guild::_user_permissions_in(
+        Guild::user_permissions_in_(
             Some(channel),
             member.user.id,
             &member.roles,
@@ -1330,7 +1377,7 @@ impl PartialGuild {
     #[inline]
     #[deprecated = "this function ignores other roles the user may have as well as user-specific permissions; use user_permissions_in instead"]
     pub fn role_permissions_in(&self, channel: &GuildChannel, role: &Role) -> Result<Permissions> {
-        Guild::_role_permissions_in(channel, role, self.id)
+        Guild::role_permissions_in_(channel, role, self.id)
     }
 
     /// Gets the number of [`Member`]s that would be pruned with the given number of days.
@@ -1531,6 +1578,76 @@ impl PartialGuild {
     /// the request is not in the guild.
     pub async fn get_active_threads(&self, http: impl AsRef<Http>) -> Result<ThreadsData> {
         self.id.get_active_threads(http).await
+    }
+
+    /// Gets a soundboard sound from the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if there is an error in the deserialization, or if the bot issuing
+    /// the request is not in the guild.
+    pub async fn get_soundboard(
+        self,
+        http: impl AsRef<Http>,
+        sound_id: SoundId,
+    ) -> Result<Soundboard> {
+        self.id.get_soundboard(http, sound_id).await
+    }
+
+    /// Gets all soundboard sounds from the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if there is an error in the deserialization, or if the bot issuing
+    /// the request is not in the guild.
+    pub async fn get_soundboards(self, http: impl AsRef<Http>) -> Result<Vec<Soundboard>> {
+        self.id.get_soundboards(http).await
+    }
+
+    /// Creates a soundboard sound for the guild.
+    ///
+    /// # Errors
+    ///
+    /// See [`CreateSoundboard::execute`] for a list of possible errors.
+    ///
+    /// [`CreateSoundboard::execute`]: ../../builder/struct.CreateSoundboard.html#method.execute
+    pub async fn create_soundboard(
+        self,
+        cache_http: impl CacheHttp,
+        builder: CreateSoundboard<'_>,
+    ) -> Result<Soundboard> {
+        self.id.create_soundboard(cache_http, builder).await
+    }
+
+    /// Edits a soundboard sound for the guild.
+    ///
+    /// # Errors
+    ///
+    /// See [`EditSoundboard::execute`] for a list of possible errors.
+    ///
+    /// [`EditSoundboard::execute`]: ../../builder/struct.EditSoundboard.html#method.execute
+    pub async fn edit_soundboard(
+        self,
+        cache_http: impl CacheHttp,
+        sound_id: SoundId,
+        builder: EditSoundboard<'_>,
+    ) -> Result<Soundboard> {
+        self.id.edit_soundboard(cache_http, sound_id, builder).await
+    }
+
+    /// Deletes a soundboard sound for the guild.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Http`] if the current user lacks permission, or if a
+    /// soundboard sound with that Id does not exist.
+    pub async fn delete_soundboard(
+        self,
+        http: impl AsRef<Http>,
+        sound_id: SoundId,
+        audit_log_reason: Option<&str>,
+    ) -> Result<()> {
+        self.id.delete_soundboard(http, sound_id, audit_log_reason).await
     }
 }
 
