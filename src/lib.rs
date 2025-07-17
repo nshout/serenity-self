@@ -1,26 +1,30 @@
-//! Serenity is a Rust library for the Discord API.
+//! Serenity-self is a fork of Serenity, a Rust library for the Discord API, with enhancements for user account support.
 //!
 //! View the [examples] on how to make and structure a bot.
 //!
-//! Serenity supports bot user authentication via the use of [`Client::builder`].
+//! Serenity-self supports user authentication via the use of [`Client::builder`].
 //!
 //! Once logged in, you may add handlers to your client to dispatch [`Event`]s, such as
-//! [`EventHandler::message`]. This will cause your handler to be called when a
-//! [`Event::MessageCreate`] is received. Each handler is given a [`Context`], giving information
-//! about the event. See the [client's module-level documentation].
+//! [`EventHandler::message`].
+//! This will cause your handler to be called when an
+//! [`Event::MessageCreate`] is received.
+//! Each handler is given a [`Context`], giving information
+//! about the event.
+//! See the [client's module-level documentation].
 //!
-//! The [`Shard`] is transparently handled by the library, removing unnecessary complexity. Sharded
-//! connections are automatically handled for you. See the [gateway's documentation][gateway docs]
-//! for more information.
+//! Serenity-self change: [`Shard`] has been removed for user account support.
 //!
-//! A [`Cache`] is also provided for you. This will be updated automatically for you as data is
-//! received from the Discord API via events. When calling a method on a [`Context`], the cache
+//! A [`Cache`] is also provided for you.
+//! This will be updated automatically for you as data is
+//! received from the Discord API via events.
+//! When calling a method on a [`Context`], the cache
 //! will first be searched for relevant data to avoid unnecessary HTTP requests to the Discord API.
 //! For more information, see the [cache's module-level documentation][cache docs].
 //!
-//! Note that, although this documentation will try to be as up-to-date and accurate as possible,
-//! Discord hosts [official documentation][docs]. If you need to be sure that some information
-//! piece is sanctioned by Discord, refer to their own documentation.
+//! Note that, although this documentation will try to be as up to date and accurate as possible,
+//! Discord hosts [official documentation][docs].
+//! If you need to be sure that Discord
+//!  sanctions some information piece, refer to their own documentation.
 //!
 //! ### Full Examples
 //!
@@ -33,7 +37,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! serenity_self ="0.12"
+//! serenity_self ="0.13.3"
 //! ```
 //!
 //! [`Cache`]: crate::cache::Cache
@@ -48,7 +52,7 @@
 //! [docs]: https://discord.com/developers/docs/intro
 //! [examples]: https://github.com/serenity-rs/serenity/tree/current/examples
 //! [gateway docs]: crate::gateway
-#![doc(html_root_url = "https://docs.rs/serenity/*")]
+#![doc(html_root_url = "https://docs.rs/serenity_self/*")]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![warn(
     unused,
@@ -82,7 +86,7 @@
     clippy::missing_panics_doc, // clippy::unwrap_used
 )]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
-#![type_length_limit = "3294819"] // needed so ShardRunner::run compiles with instrument.
+#![type_length_limit = "3294819"] // needed so ShardRunner::run compiles with an instrument.
 
 #[macro_use]
 extern crate serde;
@@ -137,7 +141,7 @@ compile_error!(
 
 /// Special module that re-exports most public items from this crate.
 ///
-/// Useful, because you don't have to remember the full paths of serenity items.
+/// Useful because you don't have to remember the full paths of serenity items.
 ///
 /// Not exported:
 /// - [`crate::json`]: it's a general-purpose JSON wrapper, not intrinsic to serenity
