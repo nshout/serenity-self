@@ -1,8 +1,8 @@
 [package]
 name = "serenity_self"
-version = "0.13.2"
-authors = ["nshot", "Alex M. M. <acdenissk69@gmail.com>"]
-description = "A Rust library for the Discord API. Forked adding user token support."
+version = "0.13.3"
+authors = ["nshout", "Alex M. M. <acdenissk69@gmail.com>"]
+description = "A Rust library for the Discord API. A fork of Serenity for user account support."
 readme = "README.md"
 include = ["src/**/*", "LICENSE.md", "README.md", "CHANGELOG.md", "build.rs"]
 
@@ -18,10 +18,10 @@ rust-version.workspace = true
 members = ["examples/*"]
 
 [workspace.package]
-documentation = "https://docs.rs/serenity"
+documentation = "https://docs.rs/serenity_self"
 homepage = "https://github.com/nshout/serenity-self"
 repository = "https://github.com/nshout/serenity-self.git"
-keywords = ["discord", "api"]
+keywords = ["discord", "api", "selfbot", "discord-selfbot"]
 license = "ISC"
 edition = "2021"
 rust-version = "1.74"

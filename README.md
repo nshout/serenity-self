@@ -108,7 +108,7 @@ Add the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-serenity_self = "0.13.2"
+serenity_self = "0.13.3"
 tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }
 ```
 
@@ -137,7 +137,7 @@ Cargo.toml:
 [dependencies.serenity_self]
 default-features = false
 features = ["pick", "your", "feature", "names", "here"]
-version = "0.13.2"
+version = "0.13.3"
 ```
 
 The default features are: `builder`, `cache`, `chrono`, `client`, `framework`, `gateway`,
