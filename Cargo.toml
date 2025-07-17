@@ -2,7 +2,7 @@
 name = "serenity_self"
 version = "0.13.3"
 authors = ["nshout", "Alex M. M. <acdenissk69@gmail.com>"]
-description = "A Rust library for the Discord API. A fork of Serenity for user account support."
+description = "Serenity-self is a fork of Serenity, a Rust library for the Discord API, with enhancements for user account support."
 readme = "README.md"
 include = ["src/**/*", "LICENSE.md", "README.md", "CHANGELOG.md", "build.rs"]
 

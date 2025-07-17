@@ -4,7 +4,7 @@
 
 ![serenity-self logo][logo]
 
-Serenity-self is a fork of the Serenity Rust library for the Discord API with the enhancement of user account support.
+Serenity-self is a fork of [Serenity](https://github.com/serenity-rs/serenity), a Rust library for the Discord API, with enhancements for user account support.
 
 ## Disclaimer:
 
